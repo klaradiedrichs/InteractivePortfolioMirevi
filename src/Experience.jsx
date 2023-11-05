@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import Player from './Player'
 
-
+  
 export default function Experience()
 {
 
@@ -15,35 +15,43 @@ export default function Experience()
       };
     
     return <>
-        {/* Performance Fenster */}
 
-        {/* um sich in der Szene umzuschauen (nur für Testzwecke)  */}
-        
-        {/* <Environment preset="night" background blur={0.2} /> */}
-        <Stage>
-            {/* NULLPUNKT */}
-            <Float>
-            <mesh position={[0,0,0]} scale={ 0.2 }>
-                <boxGeometry />
-                <meshStandardMaterial color="purple" />
+        <directionalLight position={ [ 1, 2, 3 ] } intensity={ 4.5 } castShadow />
+        {/* Floor */}
+        <mesh receiveShadow={true} rotation-x={-Math.PI / 2} position={[0, -0.1, 0]}>
+            <planeGeometry args={[100, 100]} />
+            <shadowMaterial transparent opacity={0.3} />
+        </mesh>      
+
+        {/* NULLPUNKT */}
+        <mesh position={[0,0,0]} scale={ 0.2 }>
+            <boxGeometry />
+            <meshStandardMaterial color="purple" />
+        </mesh>
+        {/* First Project */}
+        <group>
+            <mesh castShadow position-y={ 1 } position-x={ -2 } onClick={handleMeshClick} >
+                <boxGeometry/>
+                <meshStandardMaterial color="orange" />
             </mesh>
-            </Float>
-            {/* First Project */}
-            <group>
-                <mesh position-y={ 1 } position-x={ -2 } onClick={handleMeshClick} >
-                    <boxGeometry/>
-                    <meshStandardMaterial color="orange" />
-                </mesh>
-                <Text fontSize={0.3} position={[-2,2,0]}>Kassia</Text>
-            </group>
-            {/* Second Project */}
-            <group>
-                <mesh position={[-2,1,-7]} onClick={handleMeshClick}>
-                    <sphereGeometry />
-                    <meshStandardMaterial color="blue" />
-                </mesh>
-            </group>
-        </Stage>
+            <Text fontSize={0.3} position={[-2,2,0]}>Kassia</Text>
+        </group>
+        {/* Second Project */}
+        <group>
+            <mesh castShadow position={[-2,1,-4]} onClick={handleMeshClick}>
+                <sphereGeometry />
+                <meshStandardMaterial color="blue" />
+            </mesh>
+        </group>
+        {/* Third Project */}
+        <group>
+            <mesh castShadow={true} receiveShadow={true} position={[-2,1,-15]} onClick={handleMeshClick}>
+                <sphereGeometry />
+                <meshStandardMaterial color="skyblue" />
+            </mesh>
+        </group>
+
         <Player newRotation={newRotation} />
+
     </>
 }

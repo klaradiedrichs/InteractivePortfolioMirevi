@@ -2,17 +2,12 @@ import {Grid} from '@react-three/drei'
 
 export default function Ground() {
     const gridConfig = {
-      cellSize: 0.5,
-      cellThickness: 0.5,
-      cellColor: '#6f6f6f',
-      sectionSize: 3,
-      sectionThickness: 1,
+      sectionSize: 2.3,
       sectionColor: '#9d4b4b',
-      fadeDistance: 30,
+      fadeDistance: 40,
       fadeStrength: 1,
-      followCamera: false,
+      // followCamera: false,
       infiniteGrid: true
     }
-    return <Grid position={[0.1, -0.01, 0.1]} args={[10.5, 10.5]} {...gridConfig} />
+    return <Grid position={[0, -0.01, 0.1]} args={[10.5, 10.5]} {...gridConfig} />
   }
-

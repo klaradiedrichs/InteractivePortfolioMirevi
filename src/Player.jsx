@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, } from "react";
-import {CameraControls, PerspectiveCamera } from "@react-three/drei";
+import {CameraControls, OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from 'three'
 
@@ -52,11 +52,11 @@ function Player({ newRotation   }) {
     return (
     
       <>
-      <CameraControls enableZoom={false} />
+      <OrbitControls />
 
-      <PerspectiveCamera makeDefault ref={cameraRef}  position={[0, 2, 7]}/>
+      <PerspectiveCamera makeDefault ref={cameraRef}  position={[0, 4, 6]}/>
       {/* Player */}
-      <mesh ref={cubeRef} position={[0,1,4]} scale={ 0.4 }>
+      <mesh ref={cubeRef} position={[0,2,0]} scale={ 0.4 }>
             <boxGeometry />
             <meshStandardMaterial color="hotpink" />
       </mesh>  
