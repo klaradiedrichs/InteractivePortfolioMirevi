@@ -16,13 +16,7 @@ export default function Experience()
     
     return <>
 
-        <directionalLight position={ [ 1, 2, 3 ] } intensity={ 4.5 } castShadow />
-        {/* Floor */}
-        <mesh receiveShadow={true} rotation-x={-Math.PI / 2} position={[0, -0.1, 0]}>
-            <planeGeometry args={[100, 100]} />
-            <shadowMaterial transparent opacity={0.3} />
-        </mesh>      
-
+      <Stage adjustCamera={false}>
         {/* NULLPUNKT */}
         <mesh position={[0,0,0]} scale={ 0.2 }>
             <boxGeometry />
@@ -50,8 +44,7 @@ export default function Experience()
                 <meshStandardMaterial color="skyblue" />
             </mesh>
         </group>
-
         <Player newRotation={newRotation} />
-
+      </Stage>
     </>
 }
