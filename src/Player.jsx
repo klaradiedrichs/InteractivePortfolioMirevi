@@ -19,7 +19,7 @@ function Player({ newRotation   }) {
       // const rotSpeed = 0.001;
       cubeRef.current.position.z += delta * positionSpeed;
       console.log("Camera Position Z:", cubeRef.current.position.z);
-      setRotation([0,0,0]); // reset the rotaion back to 0,0,0
+      setRotation([0,0,0]); // reset the rotation back to 0,0,0
 
 
   };
@@ -54,9 +54,9 @@ function Player({ newRotation   }) {
       <>
       <OrbitControls />
 
-      <PerspectiveCamera makeDefault ref={cameraRef}  position={[0, 4, 6]}/>
+      <PerspectiveCamera makeDefault ref={cameraRef}  />
       {/* Player */}
-      <mesh ref={cubeRef} position={[0,2,0]} scale={ 0.4 }>
+      <mesh ref={cubeRef} position={[0,0.5,1]} scale={ 0.4 }>
             <boxGeometry />
             <meshStandardMaterial color="hotpink" />
       </mesh>  
