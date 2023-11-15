@@ -44,7 +44,7 @@ export default function Experience()
                 <planeGeometry />
                 <meshStandardMaterial color="white" />
             </mesh>
-            <Text fontSize={0.3} position={[7.5,6.5,-25]}>Third</Text>
+            <Text fontSize={2} rotation-x={ - Math.PI * 0.5 } position={[7.5,0.5,-25]} >Third</Text>
 
         </group>
         <group>

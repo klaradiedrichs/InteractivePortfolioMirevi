@@ -17,8 +17,8 @@ function Player({ newRotation   }) {
       const delta = e.deltaY;
       const positionSpeed = 0.01; 
       // const rotSpeed = 0.001;
-      cubeRef.current.position.z += delta * positionSpeed;
-      console.log("Camera Position Z:", cubeRef.current.position.z);
+      cameraRef.current.position.z += delta * positionSpeed;
+      console.log("Camera Position Z:", cameraRef.current.position.z);
       setRotation([0,0,0]); // reset the rotation back to 0,0,0
 
 
@@ -38,25 +38,33 @@ function Player({ newRotation   }) {
     }, [newRotation]);
 
   useFrame(() => {
-      const cubePosition = cubeRef.current.position
-      const cubeRotation = cubeRef.current.rotation
-      cameraRef.current.position.copy(cubePosition);
-      cameraRef.current.rotation.copy(cubeRotation);
+      // const cubePosition = cubeRef.current.position
+      // const cubeRotation = cubeRef.current.rotation
 
+      // set Camera Position & Rotation to Cube Position & Rotation 
+      // cameraRef.current.position.copy(cubePosition);
+      // cameraRef.current.rotation.copy(cubeRotation);
+
+      // update cube rotation to new rotation (for click event)
       cubeRef.current.rotation.x = rotation[0];
       cubeRef.current.rotation.y = rotation[1];
       cubeRef.current.rotation.z = rotation[2];
+
+      // option withput Cube Player:
+      const cameraPosition = cameraRef.current.position 
+      // Set the camera's rotation to look at itself
+      cameraRef.current.lookAt(cameraPosition);
      
 
   });
     return (
     
       <>
-      <OrbitControls />
+      <OrbitControls enableZoom={false}/>
 
-      <PerspectiveCamera makeDefault ref={cameraRef}  />
+      <PerspectiveCamera makeDefault ref={cameraRef} position={[0,2,1]} />
       {/* Player */}
-      <mesh ref={cubeRef} position={[0,0.5,1]} scale={ 0.4 }>
+      <mesh ref={cubeRef} position={[0,2,1]} rotation-y={ - Math.PI * -12 } scale={ 0.4 }>
             <boxGeometry />
             <meshStandardMaterial color="hotpink" />
       </mesh>  
