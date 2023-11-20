@@ -4,19 +4,9 @@ import { useFrame } from "@react-three/fiber";
 import Player from './Player'
 
   
-export default function Experience()
+export default function Experience({ cameraRoad })
 {
     const textRef = useRef();
-
-    const [newRotation, setNewRotation] = useState(null);
-
-    const handleMeshClick = (e) => {
-        setNewRotation([0, 0.2, 0]);
-        console.log("Text Rotation X" , textRef.current.rotation.x)
-        console.log("Text Rotation Y" , textRef.current.rotation.y)
-        console.log("Text Rotation Z" , textRef.current.rotation.z)
-
-      };
     
     return <>
 
@@ -36,14 +26,14 @@ export default function Experience()
 
         {/* Second Project */}
         <group>
-            <mesh castShadow position={[7.5,3.5,-25]} onClick={handleMeshClick} rotation-y={ - Math.PI * 0.12 } scale-x={7.5} scale-y={4}>
+            <mesh castShadow position={[7.5,3.5,-25]} rotation-y={ - Math.PI * 0.12 } scale-x={7.5} scale-y={4}>
                 <planeGeometry />
                 <meshStandardMaterial color="white" />
             </mesh>
                 <Text ref={textRef} color="black" fontSize={2} rotation={[-1.5,-0.01, -0.39]} position={[7.5,0,-25]} >Third</Text>
         </group>
         <group>
-            <mesh castShadow position={[-7.5,3.5,0]} onClick={handleMeshClick} rotation-y={ - Math.PI * -0.12 } scale-x={7.5} scale-y={4}>
+            <mesh castShadow position={[-7.5,3.5,0]} rotation-y={ - Math.PI * -0.12 } scale-x={7.5} scale-y={4}>
                 <planeGeometry />
                 <meshStandardMaterial color="white" />
             </mesh>
@@ -52,7 +42,7 @@ export default function Experience()
         </group>
         {/* Third Project */}
         <group>
-            <mesh castShadow={true} position={[-2,1,-15]} onClick={handleMeshClick}>
+            <mesh castShadow={true} position={[-2,1,-15]}>
                 <sphereGeometry />
                 <meshStandardMaterial color="skyblue" />
             </mesh>
@@ -60,7 +50,7 @@ export default function Experience()
         <ContactShadows color="black" resolution={1024} frames={1} scale={10} blur={1.5} opacity={0.65} far={0.5} />
 
         {/* Player / Camera Controller */}
-        <Player newRotation={newRotation} />
+        <Player cameraRoad={cameraRoad}/>
       {/* </Stage> */}
     </>
 }

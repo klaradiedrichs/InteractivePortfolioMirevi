@@ -7,15 +7,19 @@ import Ground from './Ground';
 import Overlay from './Overlay';
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [cameraRoad, setCameraRoad] = useState(true);
+
+  const handleToggleCameraRoad = () => {
+    setCameraRoad((prev) => !prev);
+  };
 
   return (
-// tailwind css usage
     <>
         <Canvas shadows>
-          <Experience />
+          <Experience cameraRoad={cameraRoad}/>
         </Canvas>
-        <Overlay />
+        <Overlay cameraRoad={cameraRoad} onToggleCameraRoad={handleToggleCameraRoad}/>
         
     </>
       
