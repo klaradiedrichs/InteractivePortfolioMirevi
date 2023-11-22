@@ -10,11 +10,11 @@ export default function Experience({ cameraRoad })
     
     return <>
 
-      {/* <Stage intensity={0.5} environment="city" adjustCamera={false} shadows={{ type: 'accumulative', bias: -0.001 }}> */}
-       
-       <Environment background preset="dawn" blur={0.5}></Environment>
+    <Stage adjustCamera={false} intensity={0.5} shadows="contact">      
+
+       {/* <Environment background preset="dawn" blur={0.9}></Environment> */}
        {/* CameraStart */}
-        <mesh position={[0,0,0]} scale={0.3}>
+        <mesh position={[0,0.1,0]} scale={0.3} castShadow>
             <boxGeometry />
             <meshStandardMaterial color="purple" />
         </mesh>
@@ -51,6 +51,6 @@ export default function Experience({ cameraRoad })
 
         {/* Player / Camera Controller */}
         <Player cameraRoad={cameraRoad}/>
-      {/* </Stage> */}
+      </Stage>
     </>
 }

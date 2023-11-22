@@ -8,14 +8,15 @@ body,
     width: 100%;
     height: 100%;
     overflow: hidden;
-}
+    background-image: linear-gradient(0deg, #d6a2a2 0%, #a44343 85%);
 
-/* #root {
+}
+/*
+ #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-  background-image: linear-gradient(0deg, #333232 0%, #111111 85%);
 }
 
 .logo {

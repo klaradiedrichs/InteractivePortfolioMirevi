@@ -17,6 +17,8 @@ function App() {
   return (
     <>
         <Canvas shadows>
+        <directionalLight castShadow />
+
           <Experience cameraRoad={cameraRoad}/>
         </Canvas>
         <Overlay cameraRoad={cameraRoad} onToggleCameraRoad={handleToggleCameraRoad}/>
