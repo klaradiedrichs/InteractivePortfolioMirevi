@@ -23,26 +23,27 @@ export default function Experience({ cameraRoad })
             <boxGeometry />
             <meshStandardMaterial color="gray" />
         </mesh>
-
+        {/* First */}
+        <group>
+            <mesh castShadow position={[0,3.5,4]} scale-x={7.5} scale-y={4}>
+                <planeGeometry />
+                <meshStandardMaterial color="white" />
+            </mesh>
+            <Text fontSize={0.3} position={[0,6,-10]}>First</Text>
+        </group>
+        
         {/* Second Project */}
         <group>
-            <mesh castShadow position={[7.5,3.5,-25]} rotation-y={ - Math.PI * 0.12 } scale-x={7.5} scale-y={4}>
+            <mesh castShadow position={[0,5,-25]} scale-x={7.5} scale-y={4}>
                 <planeGeometry />
                 <meshStandardMaterial color="white" />
             </mesh>
-                <Text ref={textRef} color="black" fontSize={2} rotation={[-1.5,-0.01, -0.39]} position={[7.5,0,-25]} >Third</Text>
+                <Text ref={textRef} color="black" fontSize={2} rotation={[-1.5,-0.01, -0.39]} position={[0,0,-25]} >Second</Text>
         </group>
-        <group>
-            <mesh castShadow position={[-7.5,3.5,0]} rotation-y={ - Math.PI * -0.12 } scale-x={7.5} scale-y={4}>
-                <planeGeometry />
-                <meshStandardMaterial color="white" />
-            </mesh>
-            <Text fontSize={0.3} position={[-7.5,6,0]}>Second</Text>
-
-        </group>
+        
         {/* Third Project */}
         <group>
-            <mesh castShadow={true} position={[-2,1,-15]}>
+            <mesh castShadow={true} position={[0,3.5 ,4]} scale={0.3}>
                 <sphereGeometry />
                 <meshStandardMaterial color="skyblue" />
             </mesh>

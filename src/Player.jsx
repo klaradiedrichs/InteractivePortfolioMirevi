@@ -9,8 +9,8 @@ function Player({cameraRoad}) {
 
     const cameraRef = useRef();
 
-    const [initialyPosition, setInitialYPosition] = useState(cameraRoad ? 2 : 50);
-    const [initialZPosition, setInitialZPosition] = useState(18)
+    const [initialyPosition, setInitialYPosition] = useState(cameraRoad ? 1.8 : 50);
+    const [initialZPosition, setInitialZPosition] = useState(1)
 
     const handleWheel = (e) => {
       const delta = e.deltaY;
@@ -42,9 +42,9 @@ function Player({cameraRoad}) {
 
   useFrame(() => {
 
-      const cameraPosition = cameraRef.current.position;
+      const cameraPosition = cameraRef.current.position ;
       const cameraY = cameraPosition.y; // Save the y component in another variable
-      console.log(cameraY)
+      const cameraDirection = new THREE.Vector3(0, 0, -40); // Negative z-axis
 
       // Interpolate towards the target position for a smoother transition
 
@@ -52,14 +52,15 @@ function Player({cameraRoad}) {
       // in !RoadMod Camera looks to the 0,0,0
       // && position.y <= 2 für smootheren Übergang
       if (cameraRoad){
-        cameraRef.current.lookAt(cameraPosition);
+        // Make the camera look along its own negative z-axis
+        cameraRef.current.lookAt(cameraDirection.add(cameraPosition));
         
       }
 
       // setInitialYPosition(cameraRoad ? 2 : 25);
       // // Update the initialYPosition based on the value of cameraRoad
       setInitialYPosition((prev) => {
-        const targetY = cameraRoad ? 2 : 50;
+        const targetY = cameraRoad ? 1.8 : 50;
         // Interpolate towards the targetY for a smoother transition
         return prev + (targetY - prev) * 0.1;
       });
@@ -72,7 +73,7 @@ function Player({cameraRoad}) {
       <>
       <OrbitControls enableZoom={false} />
       {/* Camera */}
-      <PerspectiveCamera makeDefault ref={cameraRef} position={[0, initialyPosition, initialZPosition]}/>
+      <PerspectiveCamera fov={45} near={2.5} far={35} makeDefault ref={cameraRef} position={[0, initialyPosition, initialZPosition]}/>
     </>
 
   );
