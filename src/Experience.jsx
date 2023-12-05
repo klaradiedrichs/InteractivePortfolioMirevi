@@ -27,9 +27,9 @@ export default function Experience({ cameraRoad })
         <group>
             <mesh castShadow position={[0,3.5,4]} scale-x={7.5} scale-y={4}>
                 <planeGeometry />
-                <meshStandardMaterial color="white" />
+                <meshStandardMaterial color="purple" />
             </mesh>
-            <Text fontSize={0.3} position={[0,6,-10]}>First</Text>
+            <Text fontSize={0.3} position={[0,3,4]}>First</Text>
         </group>
         
         {/* Second Project */}
