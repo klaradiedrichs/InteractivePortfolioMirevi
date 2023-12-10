@@ -17,7 +17,6 @@ function App() {
   return (
     <>
         <Canvas shadows>
-        <directionalLight castShadow />
           <ScrollControls pages={5} damping={0.3}>
             <Experience cameraRoad={cameraRoad}/>
           </ScrollControls>

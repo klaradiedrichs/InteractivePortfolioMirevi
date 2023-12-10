@@ -9,7 +9,7 @@ function Player({cameraRoad}) {
 
     const cameraRef = useRef();
 
-    const [initialyPosition, setInitialYPosition] = useState(cameraRoad ? 1.8 : 50);
+    const [initialyPosition, setInitialYPosition] = useState(cameraRoad ? 1.8 : 90);
     const [initialZPosition, setInitialZPosition] = useState(1)
 
     const handleWheel = (e) => {
@@ -57,10 +57,15 @@ function Player({cameraRoad}) {
         
       }
 
+      else if(!cameraRoad){
+        cameraRef.current.lookAt(0,0,20)
+        setInitialZPosition(-40)
+      }
+
       // setInitialYPosition(cameraRoad ? 2 : 25);
       // // Update the initialYPosition based on the value of cameraRoad
       setInitialYPosition((prev) => {
-        const targetY = cameraRoad ? 1.8 : 50;
+        const targetY = cameraRoad ? 1.8 : 100;
         // Interpolate towards the targetY for a smoother transition
         return prev + (targetY - prev) * 0.1;
       });
@@ -73,7 +78,7 @@ function Player({cameraRoad}) {
       <>
       <OrbitControls enableZoom={false} />
       {/* Camera */}
-      <PerspectiveCamera fov={45} near={2.5} far={35} makeDefault ref={cameraRef} position={[0, initialyPosition, initialZPosition]}/>
+      <PerspectiveCamera fov={70} near={2.5} far={300} makeDefault ref={cameraRef} position={[0, initialyPosition, initialZPosition]}/>
     </>
 
   );
