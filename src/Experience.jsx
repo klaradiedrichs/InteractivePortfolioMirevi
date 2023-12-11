@@ -10,20 +10,24 @@ export default function Experience({ cameraRoad })
     const textRef = useRef();
     
     return <>
-
-    <Stage adjustCamera={false} environment="apartment" intensity={0.7}>      
-
-       {/* <Environment background preset="dawn" blur={0.9}></Environment> */}
+    <Stage adjustCamera={false}>
        {/* CameraStart */}
-        <mesh position={[0,0.1,0]} scale={0.3} castShadow>
+        {/* <mesh castShadow position={[0,1,0]} scale={3}>
             <boxGeometry />
             <meshStandardMaterial color="grey" />
-        </mesh>
+        </mesh> */}
         {/* Mitte */}
         <mesh castshadow position={[0,0.1,-30]} scale={0.3} castShadow>
             <boxGeometry />
             <meshStandardMaterial color="darkgrey" />
         </mesh>
+        {/* <group position={[0,3,-7]}>
+            <spotLight intensity={0}/>
+            <mesh scale={0.2}>
+                <sphereGeometry />
+                <meshStandardMaterial color="white" />
+            </mesh>
+        </group> */}
         {/* First */}
         <group>
             <mesh castShadow position={[0,3,-8]} scale-x={7.5} scale-y={4}>
@@ -43,7 +47,7 @@ export default function Experience({ cameraRoad })
         </group>
         {/* Third Project */}
         <group>
-            <mesh castShadow position={[50,3,-88]} scale-x={7.5} scale-y={4}>
+            <mesh castShadow position={[45,3,-88]} scale-x={7.5} scale-y={4} scale-z={0.4}>
                 <planeGeometry />
                 <meshStandardMaterial color="dimgrey" />
             </mesh>
@@ -58,11 +62,18 @@ export default function Experience({ cameraRoad })
             </mesh>
                 <Text ref={textRef} color="black" fontSize={2} rotation={[-1.5,-0.01, -0.39]} position={[0,0,-25]} >Second</Text>
         </group>
-        <ContactShadows color="black" resolution={1024} frames={1} scale={10} blur={1.5} opacity={0.65} far={0.5} />
+        {/* Fifth */}
+        <group>
+            <mesh castShadow position={[115,3,-135]} scale-x={7.5} scale-y={4}>
+                <planeGeometry />
+                <meshStandardMaterial color="dimgrey" />
+            </mesh>
+                <Text ref={textRef} color="black" fontSize={2} rotation={[-1.5,-0.01, -0.39]} position={[0,0,-25]} >Second</Text>
+        </group>
+        {/* <ContactShadows color="black" resolution={1024} frames={1} scale={10} blur={1.5} opacity={0.65} far={0.5} /> */}
 
         {/* Player / Camera Controller */}
         <Player cameraRoad={cameraRoad}/>
-        {/* <PlayerOld cameraRoad={cameraRoad}/> */}
-      </Stage>
+    </Stage>
     </>
 }

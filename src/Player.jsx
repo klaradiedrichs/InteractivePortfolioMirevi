@@ -12,21 +12,44 @@ function Player({cameraRoad}) {
     return new THREE.CatmullRomCurve3(
       [
         // // Camera Start
-        new THREE.Vector3(-4, 0, 30),
+        new THREE.Vector3(-4, 0, 23),
         // Wendepunkt
-        new THREE.Vector3(-4, 0, 5),
+        new THREE.Vector3(-2, 0, 4),
         // Viewpoint1
-        new THREE.Vector3(0.5, 0, 0),
+        // new THREE.Vector3(0.5, 0, 0),
         // Wendepunkt
-        new THREE.Vector3(7, 0, -8),
+        new THREE.Vector3(7, 0, -6),
         // Viewpoint 2
-        new THREE.Vector3(18, 0, -33),
-        // Wendepunkt
-        new THREE.Vector3(23, 0, -40),
-        new THREE.Vector3(33, 0, -60),
-        new THREE.Vector3(40, 0, -70),
-        new THREE.Vector3(51, 0, -80),
-        new THREE.Vector3(60, 0, -90),
+        new THREE.Vector3(12, 0, -32),
+        // Drehung 2
+        new THREE.Vector3(27, 0, -42),
+        // Weg
+        // new THREE.Vector3(32, 0, -60),
+        new THREE.Vector3(34, 0, -66),
+        // Viewpint 3
+        new THREE.Vector3(39, 0, -75),
+        // Drehung 3
+        new THREE.Vector3(52, 0, -82),
+        // Weg 
+        new THREE.Vector3(63, 0, -100),
+        // Viewpoint 4
+        new THREE.Vector3(75, 0, -115),
+        // Drehung
+        new THREE.Vector3(88, 0, -122),
+        //Weg
+        new THREE.Vector3(110, 0, -126),
+
+
+
+        // new THREE.Vector3(43, 0, -74),
+        // new THREE.Vector3(55, 0, -80),
+        // new THREE.Vector3(63, 0, -90),
+        // new THREE.Vector3(68, 0, -100),
+        // new THREE.Vector3(76, 0, -115),
+        // new THREE.Vector3(81, 0, -120),
+        // new THREE.Vector3(90, 0, -125),
+        // new THREE.Vector3(95, 0, -130),
+        // new THREE.Vector3(-60, 0, -150),
 
 
         // Kreis:
@@ -149,8 +172,6 @@ function Player({cameraRoad}) {
         setInitialZPosition(30)
       }
       });
-
-      
   
     return (
     
@@ -163,10 +184,10 @@ function Player({cameraRoad}) {
       {/* Camera */}
       {/* gruppieren, um Y Position der Camera nicht zu manipulieren */}
       <group ref={cameraGroup}>
-        <PerspectiveCamera fov={45} near={4} far={300} makeDefault ref={cameraRef} position-x={initialXPosition} position-y={initialyPosition} position-z={initialZPosition}/>
+        <PerspectiveCamera shadow fov={45} near={4} far={300} makeDefault ref={cameraRef} position-x={initialXPosition} position-y={initialyPosition} position-z={initialZPosition}/>
       </group>
       {/* LINE */}
-      <group position-y={0}>
+      <group position-y={-1}>
         <mesh>
           <extrudeGeometry
             args={[
