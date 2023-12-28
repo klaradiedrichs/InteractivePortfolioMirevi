@@ -17,7 +17,7 @@ export default function Experience({ cameraRoad })
             <meshStandardMaterial color="grey" />
         </mesh> */}
         {/* Mitte */}
-        <mesh castshadow position={[0,0.1,-30]} scale={0.3} castShadow>
+        <mesh castshadow position={[0,0.1,0]} scale={0.3} castShadow>
             <boxGeometry />
             <meshStandardMaterial color="darkgrey" />
         </mesh>

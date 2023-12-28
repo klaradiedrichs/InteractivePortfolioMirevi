@@ -99,28 +99,25 @@ function Player({cameraRoad}) {
     if (cameraRoad) {
       setInitialZPosition(0)
       setInitialXPosition(0)
-      // CameraRoad logic here
+      setInitialYPosition(1.8)
       // Set FOV to 45
-      // You may want to update initial position or other properties
     } else {
-      cameraGroup.current.position.x = -4;
-      cameraGroup.current.position.z = 30;
-      cameraRef.current.lookAt(0,0,80)
+      cameraGroup.current.position.x = 70;
+      cameraGroup.current.position.z = 85;
+      cameraGroup.current.lookAt(0,0,70)
+      setInitialYPosition(100)
     }
   }, [cameraRoad]);
 
   // method gets calles each Frame
   useFrame((_state, delta) => {
       
-      const cameraPosition = cameraRef.current.position ;
-      const cameraDirection = new THREE.Vector3(0, 0, 0); // Negative z-axis
-
       // Update the initialYPosition based on the value of cameraRoad
-      setInitialYPosition((prev) => {
-        const targetY = cameraRoad ? 1.8 : 100;
-        // Interpolate towards the targetY for a smoother transition
-        return prev + (targetY - prev) * 0.1;
-      });
+      // setInitialYPosition((prev) => {
+      //   const targetY = cameraRoad ? 1.8 : 100;
+      //   // Interpolate towards the targetY for a smoother transition
+      //   return prev + (targetY - prev) * 0.1;
+      // });
 
       // Set the camera's rotation to look at itself (only in RoadMod)
       // in !RoadMod Camera looks to the 0,0,0
@@ -141,17 +138,14 @@ function Player({cameraRoad}) {
         // Make the camera look at the current point on the curve
         cameraRef.current.lookAt(curPoint);
 
-        const pointAhead =
-          linePoints[Math.min(curPointIndex + 1, linePoints.length - 1)];
+        const pointAhead = linePoints[Math.min(curPointIndex + 1, linePoints.length - 1)];
     
         const xDisplacement = (pointAhead.x - curPoint.x) * 80;
     
         // Math.PI / 2 -> LEFT
         // -Math.PI / 2 -> RIGHT
     
-        const angleRotation =
-          (xDisplacement < 0 ? 1 : -1) *
-          Math.min(Math.abs(xDisplacement), Math.PI / 3);
+        const angleRotation = (xDisplacement < 0 ? 1 : -1) * Math.min(Math.abs(xDisplacement), Math.PI / 3);
     
         const targetCameraQuaternion = new THREE.Quaternion().setFromEuler(
           new THREE.Euler(
@@ -167,9 +161,9 @@ function Player({cameraRoad}) {
       }
 
       else if(!cameraRoad){
-        cameraRef.current.lookAt(0,0,80)
-        setInitialXPosition(-4)
-        setInitialZPosition(30)
+        cameraRef.current.lookAt(0,0,70)
+        // setInitialXPosition(-4)
+        // setInitialZPosition(30)
       }
       });
   
@@ -181,10 +175,14 @@ function Player({cameraRoad}) {
             <boxGeometry />
             <meshStandardMaterial color="white" />
         </mesh>
+        <mesh castshadow position={[0,0.1,1]} scale={0.3}>
+            <boxGeometry />
+            <meshStandardMaterial color="darkgrey" />
+        </mesh>
       {/* Camera */}
       {/* gruppieren, um Y Position der Camera nicht zu manipulieren */}
       <group ref={cameraGroup}>
-        <PerspectiveCamera shadow fov={45} near={4} far={300} makeDefault ref={cameraRef} position-x={initialXPosition} position-y={initialyPosition} position-z={initialZPosition}/>
+        <PerspectiveCamera shadow fov={45} near={4} far={800} makeDefault ref={cameraRef} position-x={initialXPosition} position-y={initialyPosition} position-z={initialZPosition}/>
       </group>
       {/* LINE */}
       <group position-y={-1}>
