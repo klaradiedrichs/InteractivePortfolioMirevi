@@ -2,25 +2,43 @@ import { Environment, Stage, Float, Text, ContactShadows, TransformControls} fro
 import React, { useState, useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import Player from './Player'
-import PlayerOld from './PlayerOld'
+import { useSpring } from 'react-spring';
 
   
-export default function Experience({ cameraRoad })
+function Experience({ cameraRoad })
 {
     const textRef = useRef();
+
     
-    return <>
+    const [rotationAngle, setRotationAngle] = useState([0,0,0])
+    const [scale, setScale] = useState([7.5,4,0])
+    // const [position, setPosition] = useState[[]]
+    
+    const handleRotate =() =>{
+        setRotationAngle([0, -0.2, 0]);
+        setScale([9.5,5.1,0])
+    }
+    const handleScroll = () => {
+        // Reset rotation and scale to default values
+        setRotationAngle([0, 0, 0]);
+        setScale([7.5,4,0])
+    };
+
+    // Add event listener for wheel event
+    useEffect(() => {
+        document.addEventListener('wheel', handleScroll);
+
+        // Cleanup the event listener on component unmount
+        return () => {
+            document.removeEventListener('wheel', handleScroll);
+        };
+    }, []);
+    
+
+    return (
     <Stage adjustCamera={false}>
-       {/* CameraStart */}
-        {/* <mesh castShadow position={[0,1,0]} scale={3}>
-            <boxGeometry />
-            <meshStandardMaterial color="grey" />
-        </mesh> */}
         {/* Mitte */}
-        <mesh castshadow position={[0,0.1,0]} scale={0.3} castShadow>
-            <boxGeometry />
-            <meshStandardMaterial color="darkgrey" />
-        </mesh>
+        
         {/* <group position={[0,3,-7]}>
             <spotLight intensity={0}/>
             <mesh scale={0.2}>
@@ -30,7 +48,8 @@ export default function Experience({ cameraRoad })
         </group> */}
         {/* First */}
         <group>
-            <mesh castShadow position={[0,3,-8]} scale-x={7.5} scale-y={4}>
+            <mesh onClick={handleRotate} castShadow position={[0,2.8,-8]} scale-x={scale[0]} scale-y={scale[1]} rotation={rotationAngle} // Set the rotation here
+>
                 <planeGeometry />
                 <meshStandardMaterial color="dimgrey" />
             </mesh>
@@ -39,7 +58,7 @@ export default function Experience({ cameraRoad })
         
         {/* Second Project */}
         <group>
-            <mesh castShadow position={[20,3,-48]} scale-x={7.5} scale-y={4}>
+            <mesh onClick={handleRotate} castShadow position={[20,2.8,-48]} scale-x={scale[0]} scale-y={scale[1]} rotation={rotationAngle}>
                 <planeGeometry />
                 <meshStandardMaterial color="dimgrey" />
             </mesh>
@@ -47,7 +66,7 @@ export default function Experience({ cameraRoad })
         </group>
         {/* Third Project */}
         <group>
-            <mesh castShadow position={[45,3,-88]} scale-x={7.5} scale-y={4} scale-z={0.4}>
+            <mesh onClick={handleRotate} castShadow position={[45,2.8,-88]} scale-x={scale[0]} scale-y={scale[1]} rotation={rotationAngle}>
                 <planeGeometry />
                 <meshStandardMaterial color="dimgrey" />
             </mesh>
@@ -56,7 +75,7 @@ export default function Experience({ cameraRoad })
         
         {/* Fourth Project */}
         <group>
-            <mesh castShadow position={[80,3,-128]} scale-x={7.5} scale-y={4}>
+            <mesh onClick={handleRotate} castShadow position={[80,2.8,-128]} scale-x={scale[0]} scale-y={scale[1]} rotation={rotationAngle}>
                 <planeGeometry />
                 <meshStandardMaterial color="dimgrey" />
             </mesh>
@@ -64,7 +83,7 @@ export default function Experience({ cameraRoad })
         </group>
         {/* Fifth */}
         <group>
-            <mesh castShadow position={[115,3,-135]} scale-x={7.5} scale-y={4}>
+            <mesh onClick={handleRotate} castShadow position={[115,2.8,-168]} scale-x={scale[0]} scale-y={scale[1]} rotation={rotationAngle}>
                 <planeGeometry />
                 <meshStandardMaterial color="dimgrey" />
             </mesh>
@@ -75,5 +94,8 @@ export default function Experience({ cameraRoad })
         {/* Player / Camera Controller */}
         <Player cameraRoad={cameraRoad}/>
     </Stage>
-    </>
+    )
+    
 }
+
+export default Experience;

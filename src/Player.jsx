@@ -2,8 +2,9 @@ import React, { useRef, useState, useEffect, useMemo } from "react";
 import {CameraControls, OrbitControls, PerspectiveCamera, Html, Line , useScroll} from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from 'three'
+import { useSpring,animated } from "react-spring";
 
-const LINE_NB_POINTS = 12000;
+const LINE_NB_POINTS = 20000;
 
 function Player({cameraRoad}) {
 
@@ -12,7 +13,7 @@ function Player({cameraRoad}) {
     return new THREE.CatmullRomCurve3(
       [
         // // Camera Start
-        new THREE.Vector3(-4, 0, 23),
+        new THREE.Vector3(-4, 0, 17),
         // Wendepunkt
         new THREE.Vector3(-2, 0, 4),
         // Viewpoint1
@@ -24,23 +25,24 @@ function Player({cameraRoad}) {
         // Drehung 2
         new THREE.Vector3(27, 0, -42),
         // Weg
-        // new THREE.Vector3(32, 0, -60),
         new THREE.Vector3(34, 0, -66),
-        // Viewpint 3
-        new THREE.Vector3(39, 0, -75),
+        // Viewpoint 3
+        new THREE.Vector3(42, 0, -75),
         // Drehung 3
         new THREE.Vector3(52, 0, -82),
         // Weg 
         new THREE.Vector3(63, 0, -100),
         // Viewpoint 4
         new THREE.Vector3(75, 0, -115),
-        // Drehung
+        // Drehung 4
         new THREE.Vector3(88, 0, -122),
-        //Weg
-        new THREE.Vector3(110, 0, -126),
-
-
-
+        // Weg
+        new THREE.Vector3(95, 0, -130),
+        // VW 5
+        new THREE.Vector3(112, 0, -155),
+        // Drehung
+        new THREE.Vector3(122, 0, -162)
+        
         // new THREE.Vector3(43, 0, -74),
         // new THREE.Vector3(55, 0, -80),
         // new THREE.Vector3(63, 0, -90),
@@ -102,10 +104,9 @@ function Player({cameraRoad}) {
       setInitialYPosition(1.8)
       // Set FOV to 45
     } else {
-      cameraGroup.current.position.x = 70;
-      cameraGroup.current.position.z = 85;
-      cameraGroup.current.lookAt(0,0,70)
-      setInitialYPosition(100)
+      cameraGroup.current.position.x = 90;
+      cameraGroup.current.position.z = 120;
+      setInitialYPosition(30)
     }
   }, [cameraRoad]);
 
@@ -145,15 +146,15 @@ function Player({cameraRoad}) {
         // Math.PI / 2 -> LEFT
         // -Math.PI / 2 -> RIGHT
     
-        const angleRotation = (xDisplacement < 0 ? 1 : -1) * Math.min(Math.abs(xDisplacement), Math.PI / 3);
+        // const angleRotation = (xDisplacement < 0 ? 1 : -1) * Math.min(Math.abs(xDisplacement), Math.PI / 3);
     
-        const targetCameraQuaternion = new THREE.Quaternion().setFromEuler(
-          new THREE.Euler(
-            cameraGroup.current.rotation.x,
-            angleRotation,
-            cameraGroup.current.rotation.z
-          )
-      );
+      //   const targetCameraQuaternion = new THREE.Quaternion().setFromEuler(
+      //     new THREE.Euler(
+      //       cameraGroup.current.rotation.x,
+      //       angleRotation,
+      //       cameraGroup.current.rotation.z
+      //     )
+      // );
     
         // cameraGroup.current.quaternion.slerp(targetCameraQuaternion, delta * 2);
         cameraGroup.current.position.lerp(curPoint, delta * 24);
@@ -170,20 +171,18 @@ function Player({cameraRoad}) {
     return (
     
       <>
-      <OrbitControls enableZoom={false} enableRotate={false} enablePan={false}/>
-      <mesh position={[0,0.1,-300]} scale={0.3} castShadow>
-            <boxGeometry />
-            <meshStandardMaterial color="white" />
-        </mesh>
-        <mesh castshadow position={[0,0.1,1]} scale={0.3}>
-            <boxGeometry />
-            <meshStandardMaterial color="darkgrey" />
-        </mesh>
+      <OrbitControls enableZoom={false} enableRotate={false} enablePan={cameraRoad ? false : true}/>
+      
+       
       {/* Camera */}
       {/* gruppieren, um Y Position der Camera nicht zu manipulieren */}
       <group ref={cameraGroup}>
-        <PerspectiveCamera shadow fov={45} near={4} far={800} makeDefault ref={cameraRef} position-x={initialXPosition} position-y={initialyPosition} position-z={initialZPosition}/>
+        <PerspectiveCamera shadow fov={cameraRoad ? 45 : 35} near={4} far={cameraRoad ? 55 : 400} makeDefault ref={cameraRef} position-x={initialXPosition} position-y={initialyPosition} position-z={initialZPosition}/>
       </group>
+      <mesh position={[0,0.1,-500]} scale={0.3} castShadow>
+            <boxGeometry />
+            <meshStandardMaterial color="white" />
+        </mesh>
       {/* LINE */}
       <group position-y={-1}>
         <mesh>
