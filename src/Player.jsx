@@ -43,29 +43,6 @@ function Player({cameraRoad}) {
         // Drehung
         new THREE.Vector3(122, 0, -162)
         
-        // new THREE.Vector3(43, 0, -74),
-        // new THREE.Vector3(55, 0, -80),
-        // new THREE.Vector3(63, 0, -90),
-        // new THREE.Vector3(68, 0, -100),
-        // new THREE.Vector3(76, 0, -115),
-        // new THREE.Vector3(81, 0, -120),
-        // new THREE.Vector3(90, 0, -125),
-        // new THREE.Vector3(95, 0, -130),
-        // new THREE.Vector3(-60, 0, -150),
-
-
-        // Kreis:
-        //Camera Start
-        // new THREE.Vector3(0, 0, 10),
-        // new THREE.Vector3(0, 0, -1.65),
-        // new THREE.Vector3(-20, 0, -10),
-        // new THREE.Vector3(-28, 0, -30),
-        // new THREE.Vector3(-19.82, 0, -50.27),
-        // // mitte
-        // new THREE.Vector3(0, 0, -58.27),
-        // new THREE.Vector3(19.82, 0, -50.27),
-        // new THREE.Vector3(28, 0, -30),
-        // new THREE.Vector3(20, 0, -10),
 
               ],
       false,
@@ -91,7 +68,7 @@ function Player({cameraRoad}) {
   const cameraGroup = useRef();
 
   // const [fov, setFov] = useState(cameraRoad ? 45 : 65);
-  const [initialyPosition, setInitialYPosition] = useState(cameraRoad ? 1.8 : 100);
+  const [initialyPosition, setInitialYPosition] = useState(cameraRoad ? 1.8 : 10);
   const [initialZPosition, setInitialZPosition] = useState(0)
   const [initialXPosition, setInitialXPosition] = useState(0)
 
@@ -104,12 +81,15 @@ function Player({cameraRoad}) {
       setInitialYPosition(1.8)
       // Set FOV to 45
     } else {
-      cameraGroup.current.position.x = 90;
+      cameraGroup.current.position.x = 80;
       cameraGroup.current.position.z = 120;
-      setInitialYPosition(30)
+      setInitialYPosition(20)
+      // cameraRef.current.lookAt(0,0,0)
+
     }
   }, [cameraRoad]);
 
+  // position={[45,2.8,-88]}
   // method gets calles each Frame
   useFrame((_state, delta) => {
       
@@ -162,7 +142,7 @@ function Player({cameraRoad}) {
       }
 
       else if(!cameraRoad){
-        cameraRef.current.lookAt(0,0,70)
+        cameraRef.current.lookAt(0,0,90)
         // setInitialXPosition(-4)
         // setInitialZPosition(30)
       }
@@ -196,7 +176,7 @@ function Player({cameraRoad}) {
               },
             ]} 
           />
-          <meshStandardMaterial color={"white"} opacity={0.1} transparent />
+          <meshStandardMaterial color={"white"} opacity={0.6} transparent />
         </mesh>
       </group>
     </>

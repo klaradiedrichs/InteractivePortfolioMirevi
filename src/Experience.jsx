@@ -1,4 +1,4 @@
-import { Environment, Stage, Float, Text, ContactShadows, TransformControls} from '@react-three/drei'
+import { Environment, Stage, Float, Text, ContactShadows, TransformControls, MeshDistortMaterial, MeshReflectorMaterial, Sparkles} from '@react-three/drei'
 import React, { useState, useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import Player from './Player'
@@ -9,7 +9,8 @@ function Experience({ cameraRoad })
 {
     const textRef = useRef();
 
-    
+    const plane = useRef()
+
     const [rotationAngle, setRotationAngle] = useState([0,0,0])
     const [scale, setScale] = useState([7.5,4,0])
     // const [position, setPosition] = useState[[]]
@@ -36,7 +37,11 @@ function Experience({ cameraRoad })
     
 
     return (
-    <Stage adjustCamera={false}>
+        <>
+        <Stage adjustCamera={false}>
+        <Environment preset="night" background blur={0.4}></Environment>
+
+        
         {/* Mitte */}
         
         {/* <group position={[0,3,-7]}>
@@ -48,14 +53,30 @@ function Experience({ cameraRoad })
         </group> */}
         {/* First */}
         <group>
-            <mesh onClick={handleRotate} castShadow position={[0,2.8,-8]} scale-x={scale[0]} scale-y={scale[1]} rotation={rotationAngle} // Set the rotation here
->
+            <mesh onClick={handleRotate} castShadow position={[0,2.8,-8]} scale-x={scale[0]} scale-y={scale[1]} rotation={rotationAngle}>
                 <planeGeometry />
                 <meshStandardMaterial color="dimgrey" />
             </mesh>
             <Text fontSize={0.3} position={[0,3,-7]}>First</Text>
         </group>
-        
+
+
+        <group>
+            <Sparkles
+                    size={ 10 }
+                    scale={ [ 250, 25, 60 ] }
+                    position={ [50, 5,-100] }
+                    rotation={[0, -Math.PI / -3.2, 0]}
+                    speed={ 0.9 }
+                    count={ 250 }
+            />
+        </group>
+
+        {/* <TransformControls object={plane} mode="rotate"/> */}
+
+        {/* <mesh ref={ plane } rotation={[0, -Math.PI / -3.2, 0]} scale={[130,1,0]} position={[10,0,-30]}>
+            <boxGeometry/>
+        </mesh> */}
         {/* Second Project */}
         <group>
             <mesh onClick={handleRotate} castShadow position={[20,2.8,-48]} scale-x={scale[0]} scale-y={scale[1]} rotation={rotationAngle}>
@@ -93,8 +114,9 @@ function Experience({ cameraRoad })
 
         {/* Player / Camera Controller */}
         <Player cameraRoad={cameraRoad}/>
-    </Stage>
-    )
+        </Stage>
+        </>
+        )
     
 }
 
