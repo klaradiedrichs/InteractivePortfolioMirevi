@@ -18,11 +18,9 @@ function App() {
   return (
     <>
         <Canvas shadows>
-          <ScrollControls pages={5} damping={0.3}>
              <Experience cameraRoad={cameraRoad}/>
             {/* <ambientLight intensity={0.5} /> */}
             {/* <Room cameraRoad={cameraRoad}/> */}
-          </ScrollControls>
         </Canvas>
         <Overlay cameraRoad={cameraRoad} onToggleCameraRoad={handleToggleCameraRoad}/>
         
