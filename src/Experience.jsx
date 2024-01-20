@@ -156,7 +156,7 @@ export default function Experience({ cameraRoad })
         {/* <ContactShadows color="black" resolution={1024} frames={1} scale={10} blur={1.5} opacity={0.65} far={0.5} /> */}
 
         {/* PLAYER  */}
-        {active === null && <PlayerNew cameraRoad={cameraRoad} />}
+        <PlayerNew cameraRoad={cameraRoad} />
         </>
         )
     
