@@ -12,6 +12,8 @@ function Player({cameraRoad}) {
   const curve = useMemo(() => {
     return new THREE.CatmullRomCurve3(
       [
+        new THREE.Vector3(-4, 0, 30),
+
         // // Camera Start
         new THREE.Vector3(-4, 0, 17),
         // Wendepunkt
@@ -63,39 +65,43 @@ function Player({cameraRoad}) {
     return shape;
   }, [curve]);
 
-    const cameraRef = useRef();
+  // Reference to Perspective Camera (thats follows along the curve)
+  const cameraRef = useRef();
 
-    const [initialyPosition, setInitialYPosition] = useState(cameraRoad ? 1.8 : 90);
-    const [initialZPosition, setInitialZPosition] = useState(1)
+  // Camera Position
+  // safe in useState to be able to change depending on CameraRoad
+  const [initialYPos, setinitialYPos] = useState(cameraRoad ? 1.8 : 90);
+  const [initialZPos, setInitialZPos] = useState(1)
+  const [initialXPos, setInitalXPos] = useState(0)
+  // scrollPosition
+  const [scrollOffset, setScrollOffset] = useState(0);
 
-
-    const [scrollOffset, setScrollOffset] = useState(0);
-
-    const handleWheel = (e) => {
-      console.log("hi")
-        const delta = e.deltaY;
-        const scrollSpeed = 0.5;
-  
-        // Update the scroll position based on the delta
-        // scroll.onWheel({ deltaY: delta * scrollSpeed });
-        setScrollOffset((prevOffset) => prevOffset + delta * scrollSpeed);
-
+  // called when user scrolls  
+  const handleWheel = (e) => {
+      const delta = e.deltaY;
+      const scrollSpeed = 0.5;
+      // Update the scroll position based on the delta
+      // this offset is than used to determine the camera position along the curve
+      setScrollOffset((prevOffset) => prevOffset + delta * scrollSpeed);
   };
 
+  // runs on every render or when cameraRoad changes
   useEffect(() => {
-    console.log("CameraRoad?"+ cameraRoad)
-
+    // wheel eventListener only active in cameraRoad Modus
     if(cameraRoad){
     window.addEventListener("wheel", handleWheel);
+    // go back to CameraRoad Position:
+    setInitalXPos(-4);
+    setInitialZPos(17);
+    setinitialYPos(0)
     }
     else if(!cameraRoad){
       window.removeEventListener("wheel", handleWheel);
-      cameraRef.current.position.x = 80;
-      setInitialZPosition(-60);
-      setInitialYPosition(70)
+      // go to Overview Position:
+      setInitalXPos(75);
+      setInitialZPos(34);
+      setinitialYPos(20)
     }
-
-    // window.addEventListener("wheel", handleWheel);
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
@@ -103,23 +109,28 @@ function Player({cameraRoad}) {
     
   }, [cameraRoad]);
 
-
+  // runs every frame
   useFrame(() => {
+    console.log("Pos X" + cameraRef.current.position.x)
+    console.log("Pos Y" + cameraRef.current.position.y)
+    console.log("Pos Z" + cameraRef.current.position.z)
+    // move Camera on Curve Calculation:
     if(cameraRoad){
+    
+    // Clamp the scroll offset to ensure it stays within the valid range of curve points
     const clampedScrollOffset = Math.max(0, Math.min(scrollOffset, linePoints.length - 1));
+    // Find the current index of the point along the curve
     const curPointIndex = Math.round(clampedScrollOffset);
+    // Calculate the interpolation factor between the current and next point
     const alpha = clampedScrollOffset - curPointIndex;
-
-    // const curPointIndex = Math.min(
-    //   Math.round(scroll.offset * linePoints.length),
-    //   linePoints.length - 1
-    // );
-
+    
+    // calculate current and next point on the curve
     const curPoint = linePoints[curPointIndex];
     const nextPoint = linePoints[Math.min(curPointIndex + 1, linePoints.length - 1)];
-
+    // interpolate between current and next point for smooth movement
     const interpolatedPoint = new THREE.Vector3().lerpVectors(curPoint, nextPoint, alpha);
-
+    
+    // set camera position to the interpolated point on the curve 
     cameraRef.current.position.copy(interpolatedPoint);
 
     // Look at the next point on the curve
@@ -127,18 +138,19 @@ function Player({cameraRoad}) {
     cameraRef.current.lookAt(pointAhead);
     }
     else if(!cameraRoad){
-      // cameraRef.current.lookAt(0,0,90)
+      // const targetPosition = new THREE.Vector3(75, 20, 34);
+      // cameraRef.current.position.lerp(targetPosition, 0.1);
+      cameraRef.current.lookAt(0, 0, -90);
     }
-  
   });
 
   
     return (
     
       <>
-      <OrbitControls enableZoom={false} />
+      {!cameraRoad && <OrbitControls />}
       {/* Camera */}
-      <PerspectiveCamera fov={70} near={1} far={300} makeDefault ref={cameraRef} position={[0, initialyPosition, initialZPosition]} />
+      <PerspectiveCamera fov={70} near={1} far={300} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} />
       <group position-y={-1}>
         <mesh>
           <extrudeGeometry

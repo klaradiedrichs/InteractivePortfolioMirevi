@@ -68,7 +68,7 @@ function Player({cameraRoad}) {
   const cameraGroup = useRef();
 
   // const [fov, setFov] = useState(cameraRoad ? 45 : 65);
-  const [initialyPosition, setInitialYPosition] = useState(cameraRoad ? 1.8 : 10);
+  const [initialYPos, setinitialYPos] = useState(cameraRoad ? 1.8 : 10);
   const [initialZPosition, setInitialZPosition] = useState(0)
   const [initialXPosition, setInitialXPosition] = useState(0)
 
@@ -78,12 +78,12 @@ function Player({cameraRoad}) {
     if (cameraRoad) {
       setInitialZPosition(0)
       setInitialXPosition(0)
-      setInitialYPosition(1.8)
+      setinitialYPos(1.8)
       // Set FOV to 45
     } else {
       cameraGroup.current.position.x = 80;
       cameraGroup.current.position.z = 120;
-      setInitialYPosition(20)
+      setinitialYPos(20)
       // cameraRef.current.lookAt(0,0,0)
 
     }
@@ -93,8 +93,8 @@ function Player({cameraRoad}) {
   // method gets calles each Frame
   useFrame((_state, delta) => {
       
-      // Update the initialYPosition based on the value of cameraRoad
-      // setInitialYPosition((prev) => {
+      // Update the initialYPos based on the value of cameraRoad
+      // setinitialYPos((prev) => {
       //   const targetY = cameraRoad ? 1.8 : 100;
       //   // Interpolate towards the targetY for a smoother transition
       //   return prev + (targetY - prev) * 0.1;
@@ -157,7 +157,7 @@ function Player({cameraRoad}) {
       {/* Camera */}
       {/* gruppieren, um Y Position der Camera nicht zu manipulieren */}
       <group ref={cameraGroup}>
-        <PerspectiveCamera shadow fov={cameraRoad ? 45 : 35} near={4} far={cameraRoad ? 55 : 400} makeDefault ref={cameraRef} position-x={initialXPosition} position-y={initialyPosition} position-z={initialZPosition}/>
+        <PerspectiveCamera shadow fov={cameraRoad ? 45 : 35} near={4} far={cameraRoad ? 55 : 400} makeDefault ref={cameraRef} position-x={initialXPosition} position-y={initialYPos} position-z={initialZPosition}/>
       </group>
       <mesh position={[0,0.1,-500]} scale={0.3} castShadow>
             <boxGeometry />

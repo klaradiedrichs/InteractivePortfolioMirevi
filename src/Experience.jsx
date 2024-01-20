@@ -3,9 +3,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import Player from './Player'
 import { useSpring } from 'react-spring';
-import PlayerOld from './PlayerOld';
+import PlayerNew from './PlayerNew';
 import * as THREE from "three";
-import CameraControls from 'camera-controls';
+import Frame from './Frame';
 
 // import Frame from './fFrame';
   
@@ -41,33 +41,14 @@ export default function Experience({ cameraRoad })
             document.removeEventListener('wheel', handleScroll);
         };
     }, []);
-    
+    const map = useTexture("textures/anime_art_style_a_water_based_pokemon_like_environ.jpg");
+
 
     return (
         <>
-        {/* <Stage adjustCamera={false}> */}
         <ambientLight intensity={0.5} />
         <Environment preset="night" background blur={0.4}></Environment>
         {active !== null && <OrbitControls />}
-        <Frame name="Fraktale" color="#38adcf" texture={
-          "textures/anime_art_style_a_water_based_pokemon_like_environ.jpg"
-        } active={active} setActive={setActive}> 
-            <mesh>
-                <planeGeometry />
-                <meshStandardMaterial color="blue" />
-            </mesh>
-        </Frame>
-    
-        {/* First */}
-        <group>
-            <mesh onClick={handleRotate} castShadow position={[0,2.8,-8]} scale-x={scale[0]} scale-y={scale[1]} rotation={rotationAngle}>
-                <planeGeometry />
-                <meshStandardMaterial color="dimgrey" />
-            </mesh>
-            <Text fontSize={0.3} position={[0,3,-7]}>First</Text>
-        </group>
-
-
         <group>
             <Sparkles
                     size={ 10 }
@@ -78,6 +59,61 @@ export default function Experience({ cameraRoad })
                     count={ 250 }
             />
         </group>
+{/* 
+        <RoundedBox args={[2,3,0.1]} position={[20,2.8,-48]} >
+            <MeshPortalMaterial side={THREE.DoubleSide}>
+                <ambientLight />
+                <Environment preset="sunset" />
+                <mesh>
+                    <boxGeometry />
+                    <meshStandardMaterial color="blue" />
+                </mesh>
+                <mesh>
+                    <sphereGeometry args={[5,64,64]} />
+                    <meshStandardMaterial map={map} side={THREE.BackSide} />
+                </mesh>
+            </MeshPortalMaterial>
+        </RoundedBox> */}
+        
+        {/* Erstes Projekt */}
+        <Frame position={[0,2.5,-8]} spherePos={[0,0,8]} name="Fraktale" color="#38adcf" active={active} setActive={setActive}> 
+            <mesh  position={[0,-2,0]}>
+                <planeGeometry/>
+                <meshStandardMaterial color="blue" />
+            </mesh>
+        </Frame>
+
+        <Frame position={[20,2.8,-48]} spherePos={[-20,0,48]} name="Fraktale" color="#38adcf"  active={active} setActive={setActive}> 
+            <mesh>
+                <planeGeometry />
+                <meshStandardMaterial color="blue" />
+            </mesh>
+        </Frame>
+
+        <Frame position={[45,2.8,-88]} spherePos={[-45,0,88]} name="Fraktale" color="#38adcf" active={active} setActive={setActive}> 
+            <mesh>
+                <planeGeometry />
+                <meshStandardMaterial color="blue" />
+            </mesh>
+        </Frame>
+        <Frame position={[80,2.8,-128]} spherePos={[-80,0,128]}name="Fraktale" color="#38adcf" active={active} setActive={setActive}> 
+            <mesh>
+                <planeGeometry />
+                <meshStandardMaterial color="blue" />
+            </mesh>
+        </Frame>
+    
+        {/* First */}
+        {/* <group>
+            <mesh onClick={handleRotate} castShadow position={[0,2.8,-8]} scale-x={scale[0]} scale-y={scale[1]} rotation={rotationAngle}>
+                <planeGeometry />
+                <meshStandardMaterial color="dimgrey" />
+            </mesh>
+            <Text fontSize={0.3} position={[0,3,-7]}>First</Text>
+        </group>  */}
+
+
+        
 
         {/* <TransformControls object={plane} mode="rotate"/> */}
 
@@ -119,37 +155,9 @@ export default function Experience({ cameraRoad })
         </group>
         {/* <ContactShadows color="black" resolution={1024} frames={1} scale={10} blur={1.5} opacity={0.65} far={0.5} /> */}
 
-        {/* Player / Camera Controller */}
-        {/* disable when active === !null */}
-        {active === null && <PlayerOld cameraRoad={cameraRoad} />}
-        {/* </Stage> */}
+        {/* PLAYER  */}
+        {active === null && <PlayerNew cameraRoad={cameraRoad} />}
         </>
         )
     
 };
-
-const Frame = ({children,name,active, setActive,...props}) => {
-    
-    const map = useTexture("textures/anime_art_style_a_water_based_pokemon_like_environ.jpg");
-
-      return(
-      <group {...props}>
-        <Text font="fonts/PlayfairDisplay-Regular.ttf" fontSize={0.3} position={[0,-1.3,0.051]} anchorY={"bottom"}>
-            {name}
-        </Text>
-        <RoundedBox onDoubleClick={() => setActive(active === name ? null : name)}
-            args={[7.5,4,0.1]}>
-            <MeshPortalMaterial side={THREE.DoubleSide} blend={active === name ? 1 : 0 }>
-                <ambientLight intensity={0.5} />
-                <Environment preset="night" background blur={0.4}></Environment>
-                {children}
-                <mesh>
-                    <sphereGeometry args={[5,60,60]} />
-                    <meshStandardMaterial map={map} side={THREE.BackSide} />
-                </mesh>
-            </MeshPortalMaterial>
-        </RoundedBox>
-      </group>
-      )
-    
-  };
