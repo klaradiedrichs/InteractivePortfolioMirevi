@@ -1,4 +1,4 @@
-import { Environment, useTexture, RoundedBox,MeshPortalMaterial, Stage, Float, Text, ContactShadows, TransformControls, MeshDistortMaterial, MeshReflectorMaterial, Sparkles, OrbitControls} from '@react-three/drei'
+import { Environment, useTexture, RoundedBox,MeshPortalMaterial, Stage, Float, Text, ContactShadows, TransformControls, MeshDistortMaterial, MeshReflectorMaterial, Sparkles, OrbitControls, CameraControls} from '@react-three/drei'
 import React, { useState, useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import Player from './Player'
@@ -41,14 +41,15 @@ export default function Experience({ cameraRoad })
             document.removeEventListener('wheel', handleScroll);
         };
     }, []);
-    const map = useTexture("textures/anime_art_style_a_water_based_pokemon_like_environ.jpg");
+    const map1 = useTexture("textures/anime_art_style_a_water_based_pokemon_like_environ.jpg");
+    // const map = useTexture("textures/modern_buildings_2_2k.hdr");
 
 
     return (
         <>
         <ambientLight intensity={0.5} />
         <Environment preset="night" background blur={0.4}></Environment>
-        {active !== null && <OrbitControls />}
+        {active !== null && <CameraControls />}
         <group>
             <Sparkles
                     size={ 10 }
@@ -59,7 +60,12 @@ export default function Experience({ cameraRoad })
                     count={ 250 }
             />
         </group>
-{/* 
+{/* {active === 'otherScene' && (
+            <mesh>
+                <planeGeometry />
+                <meshStandardMaterial color="blue" transparent opacity={opacity} />
+            </mesh>
+        )}
         <RoundedBox args={[2,3,0.1]} position={[20,2.8,-48]} >
             <MeshPortalMaterial side={THREE.DoubleSide}>
                 <ambientLight />
@@ -77,6 +83,7 @@ export default function Experience({ cameraRoad })
         
         {/* Erstes Projekt */}
         <Frame position={[0,2.5,-8]} spherePos={[0,0,8]} name="Fraktale" color="#38adcf" active={active} setActive={setActive}> 
+        {/* Hier können individuelle Objekte platziert werden */}
             <mesh  position={[0,-2,0]}>
                 <planeGeometry/>
                 <meshStandardMaterial color="blue" />
@@ -96,7 +103,7 @@ export default function Experience({ cameraRoad })
                 <meshStandardMaterial color="blue" />
             </mesh>
         </Frame>
-        <Frame position={[80,2.8,-128]} spherePos={[-80,0,128]}name="Fraktale" color="#38adcf" active={active} setActive={setActive}> 
+        <Frame position={[80,2.8,-128]} spherePos={[-80,0,128]} name="Fraktale" color="#38adcf" active={active} setActive={setActive}> 
             <mesh>
                 <planeGeometry />
                 <meshStandardMaterial color="blue" />
@@ -105,6 +112,7 @@ export default function Experience({ cameraRoad })
     
         {/* First */}
         {/* <group>
+            // if normalState: normale Plane mit textur anzeigen
             <mesh onClick={handleRotate} castShadow position={[0,2.8,-8]} scale-x={scale[0]} scale-y={scale[1]} rotation={rotationAngle}>
                 <planeGeometry />
                 <meshStandardMaterial color="dimgrey" />
@@ -138,24 +146,25 @@ export default function Experience({ cameraRoad })
         </group> */}
         
         {/* Fourth Project */}
-        <group>
+        {/* <group>
             <mesh onClick={handleRotate} castShadow position={[80,2.8,-128]} scale-x={scale[0]} scale-y={scale[1]} rotation={rotationAngle}>
                 <planeGeometry />
                 <meshStandardMaterial color="dimgrey" />
             </mesh>
                 <Text ref={textRef} color="black" fontSize={2} rotation={[-1.5,-0.01, -0.39]} position={[0,0,-25]} >Second</Text>
-        </group>
+        </group> */}
         {/* Fifth */}
-        <group>
+        {/* <group>
             <mesh onClick={handleRotate} castShadow position={[115,2.8,-168]} scale-x={scale[0]} scale-y={scale[1]} rotation={rotationAngle}>
                 <planeGeometry />
                 <meshStandardMaterial color="dimgrey" />
             </mesh>
                 <Text ref={textRef} color="black" fontSize={2} rotation={[-1.5,-0.01, -0.39]} position={[0,0,-25]} >Second</Text>
-        </group>
+        </group> */}
         {/* <ContactShadows color="black" resolution={1024} frames={1} scale={10} blur={1.5} opacity={0.65} far={0.5} /> */}
 
         {/* PLAYER  */}
+        {active === null && <PlayerNew cameraRoad={cameraRoad} />}
         <PlayerNew cameraRoad={cameraRoad} />
         </>
         )

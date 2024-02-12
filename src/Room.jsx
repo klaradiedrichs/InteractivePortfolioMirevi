@@ -80,7 +80,6 @@ function Room ({cameraRoad }) {
                     <Text ref={textRef} color="black" fontSize={2} rotation={[-1.5,-0.01, -0.39]} position={[0,0,-25]} >Second</Text>
             </group>
             
-        <Player cameraRoad={cameraRoad}/>
         </Stage>
         </>
     )

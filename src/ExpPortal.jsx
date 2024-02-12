@@ -1,8 +1,8 @@
 import { Environment, Stage, Float, Text, ContactShadows, TransformControls, MeshDistortMaterial, MeshReflectorMaterial, Sparkles, useCursor, CameraControls, OrbitControls, MeshPortalMaterial, useTexture, RoundedBox} from '@react-three/drei'
 import React, { useState, useEffect, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
-import Player from './Player'
-import Frame from './fFrame'
+import Player from './PlayerNew'
+import Frame from './Frame'
 import * as THREE from "three";
 
   
@@ -23,7 +23,13 @@ function ExpPortal({ cameraRoad })
         <Environment preset="night" background blur={0.4}></Environment>
         <OrbitControls />
         {/* First */}
-        
+         {/* Erstes Projekt */}
+        <Frame position={[0,2.5,-8]} spherePos={[0,0,8]} name="Fraktale" color="#38adcf" active={active} setActive={setActive}> 
+            <mesh  position={[0,-2,0]}>
+                <planeGeometry/>
+                <meshStandardMaterial color="blue" />
+            </mesh>
+        </Frame>
         
         <Frame name="Fraktale" color="#38adcf" texture={
           "textures/anime_art_style_a_water_based_pokemon_like_environ.jpg"
@@ -41,7 +47,7 @@ function ExpPortal({ cameraRoad })
             </mesh>
         </Frame>
 
-        <Player cameraRoad={cameraRoad}/>
+        {/* <Player cameraRoad={cameraRoad}/> */}
         </>
         )
     
