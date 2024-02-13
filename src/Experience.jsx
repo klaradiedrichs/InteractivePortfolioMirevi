@@ -48,8 +48,8 @@ export default function Experience({ cameraRoad })
     return (
         <>
         <ambientLight intensity={0.5} />
-        <Environment preset="night" background blur={0.4}></Environment>
-        {active !== null && <CameraControls />}
+        <Environment preset="night" background blur={0.6}></Environment>
+        {/* {active !== null && <CameraControls />} */}
         <group>
             <Sparkles
                     size={ 10 }
@@ -66,23 +66,9 @@ export default function Experience({ cameraRoad })
                 <meshStandardMaterial color="blue" transparent opacity={opacity} />
             </mesh>
         )}
-        <RoundedBox args={[2,3,0.1]} position={[20,2.8,-48]} >
-            <MeshPortalMaterial side={THREE.DoubleSide}>
-                <ambientLight />
-                <Environment preset="sunset" />
-                <mesh>
-                    <boxGeometry />
-                    <meshStandardMaterial color="blue" />
-                </mesh>
-                <mesh>
-                    <sphereGeometry args={[5,64,64]} />
-                    <meshStandardMaterial map={map} side={THREE.BackSide} />
-                </mesh>
-            </MeshPortalMaterial>
-        </RoundedBox> */}
-        
+
         {/* Erstes Projekt */}
-        <Frame position={[0,2.5,-8]} spherePos={[0,0,8]} name="Fraktale" color="#38adcf" active={active} setActive={setActive}> 
+        <Frame position={[0,2.5,-8]} name="Fraktale" color="#38adcf" active={active} setActive={setActive}> 
         {/* Hier können individuelle Objekte platziert werden */}
             <mesh  position={[0,-2,0]}>
                 <planeGeometry/>
@@ -165,7 +151,7 @@ export default function Experience({ cameraRoad })
 
         {/* PLAYER  */}
         {active === null && <PlayerNew cameraRoad={cameraRoad} />}
-        <PlayerNew cameraRoad={cameraRoad} />
+        {/* <PlayerNew cameraRoad={cameraRoad} /> */}
         </>
         )
     
