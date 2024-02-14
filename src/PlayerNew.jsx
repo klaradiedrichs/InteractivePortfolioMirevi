@@ -4,9 +4,9 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from 'three'
 
 
-const LINE_NB_POINTS = 8000;
+const LINE_NB_POINTS = 20000;
 
-function Player({cameraRoad}) {
+function Player({backToStart, setBackToStart, cameraRoad}) {
 
   // Curve Points
   const curve = useMemo(() => {
@@ -70,7 +70,7 @@ function Player({cameraRoad}) {
 
   // Camera Position
   // safe in useState to be able to change depending on CameraRoad
-  const [initialYPos, setinitialYPos] = useState(cameraRoad ? 1.8 : 90);
+  const [initialYPos, setinitialYPos] = useState(cameraRoad ? 2 : 90);
   const [initialZPos, setInitialZPos] = useState(1)
   const [initialXPos, setInitalXPos] = useState(0)
   // scrollPosition
@@ -87,13 +87,14 @@ function Player({cameraRoad}) {
 
   // runs on every render or when cameraRoad changes
   useEffect(() => {
+    
     // wheel eventListener only active in cameraRoad Modus
-    if(cameraRoad){
+    if(cameraRoad && !backToStart){
     window.addEventListener("wheel", handleWheel);
     // go back to CameraRoad Position:
     setInitalXPos(-4);
     setInitialZPos(17);
-    setinitialYPos(0)
+    setinitialYPos(2)
     }
     else if(!cameraRoad){
       window.removeEventListener("wheel", handleWheel);
@@ -102,12 +103,12 @@ function Player({cameraRoad}) {
       setInitialZPos(34);
       setinitialYPos(20)
     }
-
+    
     return () => {
       window.removeEventListener("wheel", handleWheel);
     };
     
-  }, [cameraRoad]);
+  }, [cameraRoad, backToStart]);
 
   // runs every frame
   useFrame(() => {
@@ -115,7 +116,7 @@ function Player({cameraRoad}) {
     // console.log("Pos Y" + cameraRef.current.position.y)
     // console.log("Pos Z" + cameraRef.current.position.z)
     // move Camera on Curve Calculation:
-    if(cameraRoad){
+    if(cameraRoad && !backToStart){
     
     // Clamp the scroll offset to ensure it stays within the valid range of curve points
     const clampedScrollOffset = Math.max(0, Math.min(scrollOffset, linePoints.length - 1));
@@ -142,6 +143,12 @@ function Player({cameraRoad}) {
       // cameraRef.current.position.lerp(targetPosition, 0.1);
       cameraRef.current.lookAt(0, 0, -90);
     }
+    else if(backToStart){
+      //find te first point
+      const firstPoint = linePoints[0]
+      cameraRef.current.position.copy(firstPoint)
+    }
+
   });
 
   
@@ -150,7 +157,7 @@ function Player({cameraRoad}) {
       <>
       {!cameraRoad && <OrbitControls />}
       {/* Camera */}
-      <PerspectiveCamera fov={70} near={1} far={300} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} />
+      <PerspectiveCamera fov={40} near={1} far={cameraRoad ? 35 : 300} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} />
       <group position-y={-1}>
         <mesh>
           <extrudeGeometry

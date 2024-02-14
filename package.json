@@ -14,6 +14,8 @@
     "@react-three/drei": "^9.88.11",
     "@react-three/fiber": "^8.15.9",
     "leva": "^0.9.35",
+    "maath": "^0.10.7",
+    "r3dy": "^1.1.0",
     "r3f-perf": "^7.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
