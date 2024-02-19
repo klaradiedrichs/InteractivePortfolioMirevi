@@ -1,35 +1,37 @@
 import React, { useRef, useState, useEffect, useMemo } from "react";
-import {CameraControls, OrbitControls, PerspectiveCamera, Html, useScroll } from "@react-three/drei";
+import {CameraControls, OrbitControls, PerspectiveCamera, Html, useScroll, Line } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from 'three'
 
 
-const LINE_NB_POINTS = 20000;
+const LINE_NB_POINTS = 18000;
 
 function Player({backToStart, setBackToStart, cameraRoad}) {
 
   // Curve Points
-  const curve = useMemo(() => {
+  const curve1 = useMemo(() => {
     return new THREE.CatmullRomCurve3(
       [
-        new THREE.Vector3(-4, 0, 30),
+        new THREE.Vector3(-10, 0, 40),
+
+        new THREE.Vector3(0, 0, 30),
 
         // // Camera Start
-        new THREE.Vector3(-4, 0, 17),
+        new THREE.Vector3(0, 0, 5),
         // Wendepunkt
-        new THREE.Vector3(-2, 0, 4),
+        new THREE.Vector3(3, 0, -5),
         // Viewpoint1
         // new THREE.Vector3(0.5, 0, 0),
         // Wendepunkt
-        new THREE.Vector3(7, 0, -6),
+        new THREE.Vector3(15, 0, -15),
         // Viewpoint 2
-        new THREE.Vector3(12, 0, -32),
+        new THREE.Vector3(12, 0, -40),
         // Drehung 2
-        new THREE.Vector3(27, 0, -42),
+        new THREE.Vector3(-8, 0, -55),
         // Weg
         new THREE.Vector3(34, 0, -66),
         // Viewpoint 3
-        new THREE.Vector3(42, 0, -75),
+        new THREE.Vector3(40, 0, -75),
         // Drehung 3
         new THREE.Vector3(52, 0, -82),
         // Weg 
@@ -43,7 +45,51 @@ function Player({backToStart, setBackToStart, cameraRoad}) {
         // VW 5
         new THREE.Vector3(112, 0, -155),
         // Drehung
-        new THREE.Vector3(122, 0, -162)
+        
+
+              ],
+      false,
+      "catmullrom",
+      0.6
+    );
+  }, []);
+  const curve = useMemo(() => {
+    return new THREE.CatmullRomCurve3(
+      [
+        // Start
+        new THREE.Vector3(-8, 0, 40),
+        new THREE.Vector3(-2, 0, 30),
+        new THREE.Vector3(-2, 0, 17),
+        // Viewpoint1
+        new THREE.Vector3(0, 0, 3),
+        // Wendepunkt
+        new THREE.Vector3(15, 0, -12),
+        // Viewpoint 2
+        new THREE.Vector3(20, 0, -32),
+        // Drehung 2
+        new THREE.Vector3(5, 0, -48),
+        // Weg
+        // Viewpoint 3
+        
+        // Drehung 3
+        new THREE.Vector3(5, 0, -70),
+        new THREE.Vector3(10, 0, -80),
+        
+        new THREE.Vector3(20, 0, -90),
+        new THREE.Vector3(32, 0, -100),
+        new THREE.Vector3(35, 0, -115),
+        
+        new THREE.Vector3(25, 0, -124),
+        new THREE.Vector3(18, 0, -130),
+        new THREE.Vector3(14, 0, -140),
+        new THREE.Vector3(22, 0, -150),
+        new THREE.Vector3(40, 0, -160),
+        // Drehung 4
+        // Weg
+        // VW 5
+        // Drehung
+        
+
         
 
               ],
@@ -70,7 +116,7 @@ function Player({backToStart, setBackToStart, cameraRoad}) {
 
   // Camera Position
   // safe in useState to be able to change depending on CameraRoad
-  const [initialYPos, setinitialYPos] = useState(cameraRoad ? 2 : 90);
+  const [initialYPos, setinitialYPos] = useState(cameraRoad ? 5 : 90);
   const [initialZPos, setInitialZPos] = useState(1)
   const [initialXPos, setInitalXPos] = useState(0)
   // scrollPosition
@@ -94,14 +140,14 @@ function Player({backToStart, setBackToStart, cameraRoad}) {
     // go back to CameraRoad Position:
     setInitalXPos(-4);
     setInitialZPos(17);
-    setinitialYPos(2)
+    setinitialYPos(5)
     }
     else if(!cameraRoad){
       window.removeEventListener("wheel", handleWheel);
       // go to Overview Position:
-      setInitalXPos(75);
-      setInitialZPos(34);
-      setinitialYPos(20)
+      setInitalXPos(97);
+      setInitialZPos(44);
+      setinitialYPos(41)
     }
     
     return () => {
@@ -112,9 +158,10 @@ function Player({backToStart, setBackToStart, cameraRoad}) {
 
   // runs every frame
   useFrame(() => {
-    // console.log("Pos X" + cameraRef.current.position.x)
-    // console.log("Pos Y" + cameraRef.current.position.y)
-    // console.log("Pos Z" + cameraRef.current.position.z)
+    console.log("Pos X" + cameraRef.current.position.x)
+    console.log("Pos Y" + cameraRef.current.position.y)
+    console.log("Pos Z" + cameraRef.current.position.z)
+    
     // move Camera on Curve Calculation:
     if(cameraRoad && !backToStart){
     
@@ -135,7 +182,7 @@ function Player({backToStart, setBackToStart, cameraRoad}) {
     cameraRef.current.position.copy(interpolatedPoint);
 
     // Look at the next point on the curve
-    const pointAhead = linePoints[Math.min(curPointIndex + 1, linePoints.length - 1)];
+    const pointAhead = linePoints[Math.min(curPointIndex + 20, linePoints.length - 1)];
     cameraRef.current.lookAt(pointAhead);
     }
     else if(!cameraRoad){
@@ -157,20 +204,22 @@ function Player({backToStart, setBackToStart, cameraRoad}) {
       <>
       {!cameraRoad && <OrbitControls />}
       {/* Camera */}
-      <PerspectiveCamera fov={40} near={1} far={cameraRoad ? 35 : 300} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} />
-      <group position-y={-1}>
+      <PerspectiveCamera fov={35} near={0.4} far={cameraRoad ? 90 : 400} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} />
+      <group position-y={-1.8}>
         <mesh>
           <extrudeGeometry
             args={[
               shape,
               {
                 steps: LINE_NB_POINTS,
-                bevelEnabled: false,
+                bevelEnabled: true,
                 extrudePath: curve,
+                curveSegments: 50,
+                bevelThickness: 10
               },
             ]}
           />
-          <meshStandardMaterial color={"white"} opacity={0.6} transparent />
+          <meshStandardMaterial color={"grey"} opacity={0.6} transparent />
         </mesh>
       </group>
     </>

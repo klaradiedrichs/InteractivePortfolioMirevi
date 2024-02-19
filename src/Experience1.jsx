@@ -48,7 +48,7 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad })
     return (
         <>
         <ambientLight intensity={0.5} />
-        <Environment preset="night" background blur={0.6}></Environment>
+        <Environment preset="dawn" background blur={0.6}></Environment>
         {/* {active !== null && <CameraControls />} */}
         <group>
             <Sparkles
@@ -60,6 +60,8 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad })
                     count={ 250 }
             />
         </group>
+        
+            
 {/* {active === 'otherScene' && (
             <mesh>
                 <planeGeometry />
@@ -68,33 +70,16 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad })
         )}
 
         {/* Erstes Projekt */}
-        <Frame position={[0,2.5,-8]} name="Fraktale" color="white" active={active} setActive={setActive}> 
+        {/* <Frame position={[0,2.5,-8]} name="Fraktale" color="white" active={active} setActive={setActive}>  */}
         {/* Hier können individuelle Objekte platziert werden */}
-            <mesh  position={[0,-2,0]}>
+            {/* <mesh  position={[0,-2,0]}>
                 <planeGeometry/>
                 <meshStandardMaterial color="blue" />
             </mesh>
-        </Frame>
+        </Frame> */}
+        
 
-        <Frame position={[20,2.8,-48]} spherePos={[-20,0,48]} name="Fraktale" color="#38adcf"  active={active} setActive={setActive}> 
-            <mesh>
-                <planeGeometry />
-                <meshStandardMaterial color="blue" />
-            </mesh>
-        </Frame>
-
-        <Frame position={[45,2.8,-88]} spherePos={[-45,0,88]} name="Fraktale" color="#38adcf" active={active} setActive={setActive}> 
-            <mesh>
-                <planeGeometry />
-                <meshStandardMaterial color="blue" />
-            </mesh>
-        </Frame>
-        <Frame position={[80,2.8,-128]} spherePos={[-80,0,128]} name="Fraktale" color="#38adcf" active={active} setActive={setActive}> 
-            <mesh>
-                <planeGeometry />
-                <meshStandardMaterial color="blue" />
-            </mesh>
-        </Frame>
+        
     
         {/* First */}
         {/* <group>
@@ -149,6 +134,35 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad })
         </group> */}
         {/* <ContactShadows color="black" resolution={1024} frames={1} scale={10} blur={1.5} opacity={0.65} far={0.5} /> */}
 
+
+
+        {/* PROJEKTE MIT SPHEREPOS */}
+        {/* Erstes Projekt */}
+        <Frame position={[-1.3,2.0,-6]} name="eins" color="#38adcf" active={active} setActive={setActive}> 
+            <mesh  position={[0,-2,0]}>
+                <boxGeometry/>
+                <meshStandardMaterial color="red" />
+            </mesh>
+        </Frame>
+        <Frame position={[21,2.0,-48]} name="zwei" color="#38adcf"  active={active} setActive={setActive}> 
+            <mesh>
+                <planeGeometry />
+                <meshStandardMaterial color="blue" />
+            </mesh>
+        </Frame>
+
+        <Frame position={[6,2.0,-88]} name="Drei" color="#38adcf" active={active} setActive={setActive}> 
+            <mesh>
+                <planeGeometry />
+                <meshStandardMaterial color="blue" />
+            </mesh>
+        </Frame>
+        <Frame position={[35,2.0,-132]} spherePos={[-80,0,128]} name="vier" color="#38adcf" active={active} setActive={setActive}> 
+            <mesh>
+                <planeGeometry />
+                <meshStandardMaterial color="blue" />
+            </mesh>
+        </Frame>
         {/* PLAYER  */}
         {active === null && <PlayerNew setBackToStart={setBackToStart} backToStart={backToStart} cameraRoad={cameraRoad} />}
         {/* <PlayerNew cameraRoad={cameraRoad} /> */}
