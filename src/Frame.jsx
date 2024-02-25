@@ -76,7 +76,7 @@ const Frame = ({children,name,color,active,spherePos, setActive,...props}) => {
         args={[7, 3.5, 0.2]} position-z={0.1}>
         <MeshPortalMaterial ref={portalMaterial} side={THREE.DoubleSide}>
           <ambientLight intensity={0.5} />
-          <OrbitControls />
+          {/* <OrbitControls /> */}
           <Environment preset="sunset" background blur={0.5}></Environment>
           {/* <Html onClick={handleBackClick}>Back</Html> */}
           {/*Individuelle Objekte */}

@@ -1,6 +1,5 @@
 import { CameraControls, Environment , Stage, Text, SpotLight, useDepthBuffer, OrbitControls} from "@react-three/drei";
 import { useControls } from 'leva';
-import Player from "./Player";
 import React, { useRef } from "react";
 
 

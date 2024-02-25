@@ -3,11 +3,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import Player from './Player'
 import { useSpring } from 'react-spring';
-import PlayerNew from './PlayerNew';
+import PlayerNew from './PlayerRoad';
 import * as THREE from "three";
 import Frame from './Frame';
-
-// import Frame from './fFrame';
+import Room from './Room';
+import DemoWall from './DemoWall';
+import WallExperience from './WallExperience'
   
 export default function Experience({ setBackToStart,backToStart, cameraRoad })
 {
@@ -139,16 +140,16 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad })
         {/* PROJEKTE MIT SPHEREPOS */}
         {/* Erstes Projekt */}
         <Frame position={[-1.3,2.0,-6]} name="eins" color="#38adcf" active={active} setActive={setActive}> 
-            <mesh  position={[0,-2,0]}>
-                <boxGeometry/>
-                <meshStandardMaterial color="red" />
-            </mesh>
+            <WallExperience />
+
         </Frame>
         <Frame position={[21,2.0,-48]} name="zwei" color="#38adcf"  active={active} setActive={setActive}> 
             <mesh>
                 <planeGeometry />
                 <meshStandardMaterial color="blue" />
             </mesh>
+            <Room />
+
         </Frame>
 
         <Frame position={[6,2.0,-88]} name="Drei" color="#38adcf" active={active} setActive={setActive}> 
@@ -156,6 +157,8 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad })
                 <planeGeometry />
                 <meshStandardMaterial color="blue" />
             </mesh>
+            <Room />
+
         </Frame>
         <Frame position={[35,2.0,-132]} spherePos={[-80,0,128]} name="vier" color="#38adcf" active={active} setActive={setActive}> 
             <mesh>
@@ -163,6 +166,7 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad })
                 <meshStandardMaterial color="blue" />
             </mesh>
         </Frame>
+
         {/* PLAYER  */}
         {active === null && <PlayerNew setBackToStart={setBackToStart} backToStart={backToStart} cameraRoad={cameraRoad} />}
         {/* <PlayerNew cameraRoad={cameraRoad} /> */}
