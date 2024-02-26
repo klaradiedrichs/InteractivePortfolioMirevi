@@ -84,7 +84,7 @@ const Frame = ({children,name,color,active,spherePos, setActive,...props}) => {
         </MeshPortalMaterial>
       </RoundedBox>
       )}
-      {/* {spherePos != null && (
+      {spherePos != null && (
         <RoundedBox
           args={[8, 4.5, 0.1]} position-z={0.1}>
             <MeshPortalMaterial ref={portalMaterial} side={THREE.DoubleSide}>
@@ -98,7 +98,7 @@ const Frame = ({children,name,color,active,spherePos, setActive,...props}) => {
               </mesh>
             </MeshPortalMaterial>
           </RoundedBox>
-      )} */}
+      )}
       </>
       )}
     </group>

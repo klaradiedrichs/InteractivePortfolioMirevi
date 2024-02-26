@@ -204,7 +204,7 @@ function Player({backToStart, setBackToStart, cameraRoad}) {
       <>
       {!cameraRoad && <OrbitControls />}
       {/* Camera */}
-      <PerspectiveCamera fov={35} near={0.4} far={cameraRoad ? 90 : 400} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} />
+      <PerspectiveCamera fov={35} near={0.4} far={cameraRoad ? 40 : 400} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} />
       <group position-y={-1.8}>
         <mesh>
           <extrudeGeometry
