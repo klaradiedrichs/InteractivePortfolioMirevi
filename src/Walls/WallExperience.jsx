@@ -37,31 +37,77 @@ export default function Experience()
         <directionalLight castShadow position={ [ 1, 2, 3 ] } intensity={ 1.5 } />
         <ambientLight intensity={ 0.5 } />
         <Stage adjustCamera={false}>
-        <Html position={[0, 2, 0]}>
+            <Html position={[0, 2, 0]}>
                 <div className= "top-3" style={{ textAlign: 'center', color: 'white', fontSize: '20px', opacity: 0.5 }}>
                     Control with W, A, S, D
                 </div>
             </Html>
-            {/* <Text3D size={0.7} position-y={0} position-z={-12} position-x={8} font="/Inter_Bold.json">
-                bottom right
-                <meshStandardMaterial color="black" />
-            </Text3D> */}
-            <mesh castShadow position={ [ 8, 2, -13 ] } scale-x={5} scale-y={3.5}>
+            
+            <group position={ [ 8, 2, -13.001 ] }>
+            <mesh scale-x={5.07} scale-y={3.57} >
+                <planeGeometry />
+                <meshStandardMaterial color="black"/>
+            </mesh>
+            <mesh castShadow scale-x={5} scale-y={3.5}>
                 <planeGeometry />
                 <VideoMaterial url="M09-1317.mp4" />
+                <Text fontSize={0.05} font="fonts/PlayfairDisplay-Regular.ttf" position-y={0.54} position-x={-0.31} color="grey">
+                IQAROS
+                </Text>
             </mesh>
-            <mesh castShadow position={ [ 9, 2, -7 ] } scale-x={5} scale-y={3.5}>
+            </group>
+            <group position={ [ 9, 2, -7 ] }>
+            <mesh scale-x={5.07} scale-y={3.57} >
+                <planeGeometry />
+                <meshStandardMaterial color="black"/>
+            </mesh>
+            <mesh castShadow scale-x={5} scale-y={3.5}>
                 <planeGeometry />
                 <VideoMaterial url="M09-1317.mp4" />
+                <Text fontSize={0.05} font="fonts/PlayfairDisplay-Regular.ttf" position-y={0.54} position-x={-0.31} color="grey">
+                IQAROS
+                </Text>
             </mesh>
-            <mesh castShadow position={ [ -3, 2, -13 ] } scale-x={5} scale-y={3.5}>
+            </group>
+            <group position={ [ -3, 2, -13 ] }>
+            <mesh scale-x={5.07} scale-y={3.57} >
+                <planeGeometry />
+                <meshStandardMaterial color="black"/>
+            </mesh>
+            <mesh castShadow scale-x={5} scale-y={3.5}>
                 <planeGeometry />
                 <VideoMaterial url="M09-1317.mp4" />
+                <Text fontSize={0.05} font="fonts/PlayfairDisplay-Regular.ttf" position-y={0.54} position-x={-0.31} color="grey">
+                IQAROS
+                </Text>
             </mesh>
-            <mesh castShadow position={ [ -9.8, 2, -9 ] } scale-x={5} scale-y={3.5}>
+            </group>
+            <group position={ [ -9.8, 2, -9 ] }>
+            <mesh scale-x={5.07} scale-y={3.57} >
+                <planeGeometry />
+                <meshStandardMaterial color="black"/>
+            </mesh>
+            <mesh castShadow scale-x={5} scale-y={3.5}>
                 <planeGeometry />
                 <VideoMaterial url="M09-1317.mp4" />
+                <Text fontSize={0.05} font="fonts/PlayfairDisplay-Regular.ttf" position-y={0.54} position-x={-0.31} color="grey">
+                IQAROS
+                </Text>
             </mesh>
+            </group>
+            <group position={ [ 8, 2, -13.001 ] }>
+            <mesh scale-x={5.07} scale-y={3.57} >
+                <planeGeometry />
+                <meshStandardMaterial color="black"/>
+            </mesh>
+            <mesh castShadow scale-x={5} scale-y={3.5}>
+                <planeGeometry />
+                <VideoMaterial url="M09-1317.mp4" />
+                <Text fontSize={0.05} font="fonts/PlayfairDisplay-Regular.ttf" position-y={0.54} position-x={-0.31} color="grey">
+                IQAROS
+                </Text>
+            </mesh>
+            </group>
     
             {/* Walls and Floor */}
             <mesh position-y={ 0 } position-z={-10} rotation-x={ - Math.PI * 0.5 } scale={ 60 }>
