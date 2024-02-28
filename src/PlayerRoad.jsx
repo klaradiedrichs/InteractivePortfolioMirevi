@@ -57,33 +57,45 @@ function Player({backToStart, setBackToStart, cameraRoad}) {
     return new THREE.CatmullRomCurve3(
       [
         // Start
-        new THREE.Vector3(-8, 0, 40),
-        new THREE.Vector3(-2, 0, 30),
-        new THREE.Vector3(-2, 0, 17),
+        new THREE.Vector3(-20, 0, 58),
+        new THREE.Vector3(-2, 0, 45),
+        // new THREE.Vector3(-2, 0, 30),
+        // new THREE.Vector3(-2, 0, 17),
         // Viewpoint1
         new THREE.Vector3(0, 0, 3),
         // Wendepunkt
-        new THREE.Vector3(15, 0, -12),
+        new THREE.Vector3(20, 0, -10),
         // Viewpoint 2
-        new THREE.Vector3(20, 0, -32),
+        new THREE.Vector3(22, 0, -32),
         // Drehung 2
         new THREE.Vector3(5, 0, -48),
         // Weg
         // Viewpoint 3
         
         // Drehung 3
-        new THREE.Vector3(5, 0, -70),
-        new THREE.Vector3(10, 0, -80),
+        new THREE.Vector3(0, 0, -70),
+        // new THREE.Vector3(10, 0, -80),
         
-        new THREE.Vector3(20, 0, -90),
-        new THREE.Vector3(32, 0, -100),
-        new THREE.Vector3(35, 0, -115),
+        new THREE.Vector3(33, 0, -100),
+        new THREE.Vector3(37, 0, -115),
         
         new THREE.Vector3(25, 0, -124),
-        new THREE.Vector3(18, 0, -130),
-        new THREE.Vector3(14, 0, -140),
-        new THREE.Vector3(22, 0, -150),
-        new THREE.Vector3(40, 0, -160),
+        new THREE.Vector3(21, 0, -130),
+        new THREE.Vector3(19, 0, -140),
+        new THREE.Vector3(18, 0, -150),
+        new THREE.Vector3(18, 0, -160),
+        new THREE.Vector3(22, 0, -165),
+        new THREE.Vector3(30, 0, -170),
+        new THREE.Vector3(50, 0, -180),
+        new THREE.Vector3(57, 0, -190),
+        new THREE.Vector3(57, 0, -200),
+        new THREE.Vector3(50, 0, -205),
+        new THREE.Vector3(40, 0, -210),
+        new THREE.Vector3(33, 0, -220),
+        new THREE.Vector3(31, 0, -230),
+        new THREE.Vector3(35, 0, -240),
+        new THREE.Vector3(55, 0, -255),
+        new THREE.Vector3(65, 0, -270),
         // Drehung 4
         // Weg
         // VW 5
@@ -204,7 +216,7 @@ function Player({backToStart, setBackToStart, cameraRoad}) {
       <>
       {!cameraRoad && <OrbitControls />}
       {/* Camera */}
-      <PerspectiveCamera fov={35} near={0.4} far={cameraRoad ? 40 : 400} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} />
+      <PerspectiveCamera fov={35} near={0.4} far={cameraRoad ? 40 : 600} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} />
       <group position-y={-1.8}>
         <mesh>
           <extrudeGeometry
@@ -219,7 +231,7 @@ function Player({backToStart, setBackToStart, cameraRoad}) {
               },
             ]}
           />
-          <meshStandardMaterial color={"grey"} opacity={0.6} transparent />
+          <meshStandardMaterial color={"yellow"} opacity={0.3} transparent />
         </mesh>
       </group>
     </>

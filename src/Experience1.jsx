@@ -1,10 +1,11 @@
-import { Environment, useTexture, RoundedBox,MeshPortalMaterial, Stage, Float, Text, ContactShadows, TransformControls, MeshDistortMaterial, MeshReflectorMaterial, Sparkles, OrbitControls, CameraControls} from '@react-three/drei'
+import { Environment, useTexture, RoundedBox,MeshPortalMaterial, useVideoTexture, Stage, Float, Text, ContactShadows, TransformControls, MeshDistortMaterial, MeshReflectorMaterial, Sparkles, OrbitControls, CameraControls, PerspectiveCamera} from '@react-three/drei'
 import React, { useState, useEffect, useRef } from "react";
 import PlayerRoad from './PlayerRoad';
 import * as THREE from "three";
 import Frame from './Frame';
 import Room from './old/Room';
 import WallExperience from './Walls/WallExperience'
+import FraktaleSphere from './Fraktale/FraktaleSphere'
   
 export default function Experience({ setBackToStart,backToStart, cameraRoad })
 {
@@ -30,26 +31,46 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad })
         {/* PROJEKTE */}
 
         {/* Erstes Projekt (Fraktale) */}
-        <Frame position={[-1.3,2.0,-6]} name="eins" color="#38adcf" active={active} setActive={setActive}> 
-            <WallExperience />
+        <Frame position={[-1.3,1.8,-4]} name="eins" color="#38adcf" active={active} setActive={setActive}> 
+            {/* <FraktaleSphere /> */}
+            <OrbitControls />
+            <mesh position={[1.5,-2,4]}>
+                <sphereGeometry args={[16,120,120]}/>
+                {/* <meshStandardMaterial color="red" side={THREE.BackSide}/> */}
+                <VideoMaterial url="M09-1317.mp4" />
+            </mesh>
+            
         </Frame>
+        
         {/* Zweites Projekt (_kin) */}
-        <Frame position={[21,2.0,-48]} name="zwei" color="#38adcf"  active={active} setActive={setActive}> 
+        <Frame position={[24,1.8,-43]} name="zwei" color="#38adcf"  active={active} setActive={setActive}> 
             <mesh>
                 <planeGeometry />
                 <meshStandardMaterial color="blue" />
             </mesh>
         </Frame>
         {/* Drittes Projekt (Klima) */}
-        <Frame position={[6,2.0,-88]} name="Drei" color="#38adcf" active={active} setActive={setActive}> 
+        <Frame position={[-1,1.8,-84]} name="Drei" color="#38adcf" active={active} setActive={setActive}> 
             <mesh>
                 <planeGeometry />
                 <meshStandardMaterial color="blue" />
             </mesh>
         </Frame>
         {/* Viertes Projekt (Wall)  */}
-        <Frame position={[35,2.0,-132]} name="vier" color="#38adcf" active={active} setActive={setActive}> 
+        <Frame position={[38,1.8,-130]} name="vier" color="#38adcf" active={active} setActive={setActive}> 
             <WallExperience />
+        </Frame>
+        {/* FÜnftes Projekt (leer) */}
+        <Frame position={[18,1.8,-177]} name="fünf" color="#38adcf" active={active} setActive={setActive}> 
+            
+        </Frame>
+        {/* Sechstes Projekt (leer) */}
+        <Frame position={[58.5,1.8,-215]} name="sechs" color="#38adcf" active={active} setActive={setActive}> 
+            
+        </Frame>
+        {/* Siebtes Projekt (leer) */}
+        <Frame position={[31,2.0,-249]} name="sieben" color="#38adcf" active={active} setActive={setActive}> 
+            
         </Frame>
 
         {/* PLAYER  */}
@@ -58,4 +79,8 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad })
         </>
         )
     
+        function VideoMaterial({ url }) {
+            const texture = useVideoTexture(url)
+            return <meshBasicMaterial map={texture} toneMapped={false}  side={THREE.DoubleSide} />
+          }
 };

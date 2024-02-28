@@ -57,11 +57,11 @@ const Frame = ({children,name,color,active,spherePos, setActive,...props}) => {
         </group>
         
         {/* Buttons */}
-        <mesh onClick={handleRoundedBoxDoubleClick} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} position={[0, 3.5, 0]}>
+        <mesh onClick={handleRoundedBoxDoubleClick} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} position={[0, 3.9, 0]}>
             <Button text="EXPLORE" color="black" onPointerOver="#ffffff" font="fonts/PlayfairDisplay-Regular.ttf" scale={0.3} />
         </mesh>
-        {/* Fenster für Video: */}
-        <RoundedBox args={[10,6,0.2]} radius={0.2}>
+        {/* Fenster für Poster: */}
+        <RoundedBox args={[11,6.7,0.2]} radius={0.2}>
           {/* hier wird Video Texture sein */}
           <meshPhongMaterial color="#DDBAC7" />
         </RoundedBox>
@@ -73,10 +73,10 @@ const Frame = ({children,name,color,active,spherePos, setActive,...props}) => {
       <>
       {spherePos == null && (
       <RoundedBox
-        args={[7, 3.5, 0.2]} position-z={0.1}>
+        args={[9.5, 5.5, 0.2]} position-z={0.1}>
         <MeshPortalMaterial ref={portalMaterial} side={THREE.DoubleSide}>
           <ambientLight intensity={0.5} />
-          {/* <OrbitControls /> */}
+          <OrbitControls />
           <Environment preset="sunset" background blur={0.5}></Environment>
           {/* <Html onClick={handleBackClick}>Back</Html> */}
           {/*Individuelle Objekte */}
@@ -89,11 +89,10 @@ const Frame = ({children,name,color,active,spherePos, setActive,...props}) => {
           args={[8, 4.5, 0.1]} position-z={0.1}>
             <MeshPortalMaterial ref={portalMaterial} side={THREE.DoubleSide}>
               <ambientLight intensity={0.5} />
-              <OrbitControls /> 
               <Environment preset="night" background blur={0.4}></Environment>
               <mesh position={spherePos}>
-                <sphereGeometry args={[120, 120, 120]} />
-                <VideoMaterial url="FraktaleFIrst.mp4" />
+                {/* <sphereGeometry args={[120, 120, 120]} /> */}
+                {/* <VideoMaterial url="FraktaleSecondHD.mp4" /> */}
                 {children}
               </mesh>
             </MeshPortalMaterial>
@@ -109,7 +108,7 @@ const Frame = ({children,name,color,active,spherePos, setActive,...props}) => {
 
 function VideoMaterial({ url }) {
   const texture = useVideoTexture(url)
-  return <meshBasicMaterial map={texture} toneMapped={false}  side={THREE.DoubleSide} />
+  return <meshBasicMaterial map={texture} toneMapped={false}  side={THREE.FrontSide} />
 }
 
   export default Frame; 

@@ -45,7 +45,7 @@ function App() {
               {/* <Room cameraRoad={cameraRoad}/> */}
         </Canvas>
         </KeyboardControls>
-        {/* <Overlay cameraRoad={cameraRoad}  onToggleCameraRoad={handleToggleCameraRoad} backToStart={backToStart} handleStart={handleStart}/> */}
+        <Overlay cameraRoad={cameraRoad}  onToggleCameraRoad={handleToggleCameraRoad} backToStart={backToStart} handleStart={handleStart}/>
         
     </>
       
