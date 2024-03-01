@@ -170,9 +170,9 @@ function Player({backToStart, setBackToStart, cameraRoad}) {
 
   // runs every frame
   useFrame(() => {
-    console.log("Pos X" + cameraRef.current.position.x)
-    console.log("Pos Y" + cameraRef.current.position.y)
-    console.log("Pos Z" + cameraRef.current.position.z)
+    // console.log("Pos X" + cameraRef.current.position.x)
+    // console.log("Pos Y" + cameraRef.current.position.y)
+    // console.log("Pos Z" + cameraRef.current.position.z)
     
     // move Camera on Curve Calculation:
     if(cameraRoad && !backToStart){

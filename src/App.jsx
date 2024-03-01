@@ -1,18 +1,13 @@
+
+import React, { useRef } from 'react';
+import * as THREE from 'three';
 import { useState , useEffect} from 'react'
 import './App.css'
-import {Canvas} from "@react-three/fiber";
-import {OrbitControls, Scroll, ScrollControls, Sparkles, Stage, KeyboardControls,PointerLockControls, Environment} from "@react-three/drei";
-import Ground from './Ground';
+import {Canvas, useThree, useFrame} from "@react-three/fiber";
+import {KeyboardControls,PointerLockControls, Environment, PerspectiveCamera} from "@react-three/drei";
 import Overlay from './Overlay';
-import Room from './old/Room';
-import { useSpring, a } from '@react-spring/three';
 import { Perf } from 'r3f-perf';
 import Experience from './Experience1';
-import DemoWall from './Walls/DemoWall';
-import WallExperience from './Walls/WallExperience';
-import { CuboidCollider,Debug,Physics,RigidBody} from "@react-three/rapier";
-import { PlayerTest } from './Walls/PlayerTest';
-import FraktaleSphere from './Fraktale/FraktaleSphere.jsx'
 
 function App() {
 
@@ -40,11 +35,9 @@ function App() {
         { name: 'leftward', keys: [ 'ArrowLeft', 'KeyA' ] },
         { name: 'rightward', keys: [ 'ArrowRight', 'KeyD' ] },
     ] }>
-        <Canvas shadows camera={{ fov: 45 }}>
+        <Canvas shadows>
               {/* <Perf position='top-right'/> */}
               <Experience setBackToStart={setBackToStart} backToStart={backToStart} cameraRoad={cameraRoad}/>
-              {/* <ambientLight intensity={0.5} /> */}
-              {/* <Room cameraRoad={cameraRoad}/> */}
               {/* <FraktaleSphere /> */}
         </Canvas>
         </KeyboardControls>
@@ -56,3 +49,44 @@ function App() {
 }
 
 export default App
+
+
+
+// function Scene() {
+//   const cameraRef = useRef();
+ 
+
+//   return (
+//     <>
+//       <ambientLight intensity={0.6} />
+//       <hemisphereLight args={[0xffffbb, 0x080820, 0.7]} />
+
+//       <spotLight position={[4, 7, 23]} intensity={0.5} />
+//       <spotLight position={[4, 7, -23]} intensity={0.5} />
+
+//       <mesh>
+//         <boxGeometry args={[1, 1, 1]} />
+//         <meshLambertMaterial color={0x00ff00} />
+//       </mesh>
+//       <Run />
+//         <Runback />
+
+//       <OrbitControls ref={cameraRef} />
+//       <PerspectiveCamera ref={cameraRef} fov={45} near={0.1} far={10000} />
+//     </>
+
+//   );
+// }
+
+// function App() {
+//   return (
+//     <Canvas
+//       style={{ background: 'transparent' }}
+//       camera={{ position: [-1.57, -1.95, 1.64], fov: 45 }}
+//     >
+//       <Scene />
+//     </Canvas>
+//   );
+// }
+
+// export default App;

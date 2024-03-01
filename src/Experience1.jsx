@@ -6,7 +6,10 @@ import Frame from './Frame';
 import Room from './old/Room';
 import WallExperience from './Walls/WallExperience'
 import FraktaleSphere from './Fraktale/FraktaleSphere'
-  
+import Kin from './kin/kinScene';
+import Run from './kin/Run';
+import Run2 from './kin/Run2';
+
 export default function Experience({ setBackToStart,backToStart, cameraRoad })
 {
     // track if user is in World or not
@@ -42,13 +45,19 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad })
             <FraktaleSphere />
             
         </Frame>
-        
-        {/* Zweites Projekt (_kin) */}
+        <mesh>
+            <boxGeometry />
+            <meshStandardMaterial />
+        </mesh>
+        {/* Zweites Projekt (kin) */}
         <Frame position={[24,1.8,-43]} name="zwei" color="#38adcf"  active={active} setActive={setActive}> 
-            <mesh>
+            <Kin />
+            {/* <mesh>
                 <planeGeometry />
                 <meshStandardMaterial color="blue" />
-            </mesh>
+            </mesh> */}
+            {/* <Run />
+            <Run2 /> */}
         </Frame>
         {/* Drittes Projekt (Klima) */}
         <Frame position={[-1,1.8,-84]} name="Drei" color="#38adcf" active={active} setActive={setActive}> 
