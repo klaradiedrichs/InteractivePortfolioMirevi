@@ -12,6 +12,8 @@ import DemoWall from './Walls/DemoWall';
 import WallExperience from './Walls/WallExperience';
 import { CuboidCollider,Debug,Physics,RigidBody} from "@react-three/rapier";
 import { PlayerTest } from './Walls/PlayerTest';
+import FraktaleSphere from './Fraktale/FraktaleSphere.jsx'
+
 function App() {
 
   const [cameraRoad, setCameraRoad] = useState(true);
@@ -43,6 +45,7 @@ function App() {
               <Experience setBackToStart={setBackToStart} backToStart={backToStart} cameraRoad={cameraRoad}/>
               {/* <ambientLight intensity={0.5} /> */}
               {/* <Room cameraRoad={cameraRoad}/> */}
+              {/* <FraktaleSphere /> */}
         </Canvas>
         </KeyboardControls>
         <Overlay cameraRoad={cameraRoad}  onToggleCameraRoad={handleToggleCameraRoad} backToStart={backToStart} handleStart={handleStart}/>

@@ -33,12 +33,13 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad })
         {/* Erstes Projekt (Fraktale) */}
         <Frame position={[-1.3,1.8,-4]} name="eins" color="#38adcf" active={active} setActive={setActive}> 
             {/* <FraktaleSphere /> */}
-            <OrbitControls />
-            <mesh position={[1.5,-2,4]}>
-                <sphereGeometry args={[16,120,120]}/>
+            {/* <OrbitControls /> */}
+            {/* <mesh position={[1.5,-2,4]}>
+                <sphereGeometry args={[16,120,120]}/> */}
                 {/* <meshStandardMaterial color="red" side={THREE.BackSide}/> */}
-                <VideoMaterial url="M09-1317.mp4" />
-            </mesh>
+                {/* <VideoMaterial url="M09-1317.mp4" />
+            </mesh> */}
+            <FraktaleSphere />
             
         </Frame>
         

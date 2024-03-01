@@ -8,9 +8,10 @@ export default function Experience()
     return <>
         
         <OrbitControls /> 
-        <mesh>
-            <sphereGeometry args={[100, 200, 200]} />
-            <VideoMaterial url="FraktaleSecondHD.mp4" />
+        <mesh position={[1.5,-2,4]}>
+            <sphereGeometry args={[9, 200, 200]} />
+            {/* Radius nochmal verringert -> vorher 16  */}
+            <VideoMaterial url="M09-1317.mp4" />
             {/* <meshStandardMaterial color="red" /> */}
         </mesh>
            
