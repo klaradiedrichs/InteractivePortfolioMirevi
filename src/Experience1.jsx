@@ -45,10 +45,6 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad })
             <FraktaleSphere />
             
         </Frame>
-        <mesh>
-            <boxGeometry />
-            <meshStandardMaterial />
-        </mesh>
         {/* Zweites Projekt (kin) */}
         <Frame position={[24,1.8,-43]} name="zwei" color="#38adcf"  active={active} setActive={setActive}> 
             <Kin />
@@ -70,7 +66,7 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad })
         <Frame position={[38,1.8,-130]} name="vier" color="#38adcf" active={active} setActive={setActive}> 
             <WallExperience />
         </Frame>
-        {/* FÜnftes Projekt (leer) */}
+        {/* Fünftes Projekt (leer) */}
         <Frame position={[18,1.8,-177]} name="fünf" color="#38adcf" active={active} setActive={setActive}> 
             
         </Frame>
