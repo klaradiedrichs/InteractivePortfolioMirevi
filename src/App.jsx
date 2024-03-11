@@ -7,7 +7,7 @@ import {Canvas, useThree, useFrame} from "@react-three/fiber";
 import {KeyboardControls,PointerLockControls, Environment, PerspectiveCamera} from "@react-three/drei";
 import Overlay from './Overlay';
 import { Perf } from 'r3f-perf';
-import Experience from './Experience1';
+import Experience from './Experience2';
 
 function App() {
 

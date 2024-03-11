@@ -6,13 +6,15 @@ import { useControls } from 'leva';
 import { Physics } from '@react-three/rapier';
 import { useKeyboardControls, PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
- 
+import { useStore } from '../stores/useStore';
+
 export default function Experience() {
  
-  const { showPerformance } = useControls({
-    showPerformance: false,
-  });
+  // const { showPerformance } = useControls({
+  //   showPerformance: false,
+  // });
  
+
   return (
     <>
  
@@ -95,6 +97,8 @@ function VideoMaterial({ url }) {
 }
  
 export function Player() {
+  const active = useStore((state) => state.active);
+
   const cameraRef = useRef();
   const [subscribeKeys, getKeys] = useKeyboardControls();
   const controlsRef = useRef();
@@ -126,7 +130,7 @@ export function Player() {
   return (
     <>
       <PerspectiveCamera ref={cameraRef} makeDefault fov={70} position-y={2} />
-      <PointerLockControls ref={controlsRef} args={[cameraRef.current]} />
+      <PointerLockControls enabled={active === null ? false : true} ref={controlsRef} args={[cameraRef.current]} />
     </>
   );
 }
