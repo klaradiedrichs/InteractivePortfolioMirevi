@@ -13,6 +13,7 @@ export default function Model(props) {
   const { nodes, materials, animations } = useGLTF('/run.glb')
   const { actions } = useAnimations(animations, group)
   useEffect(() => {
+    console.log("anims Mixamo" + animations)
     actions.run.play();
   })
   const cameraRef = useRef();

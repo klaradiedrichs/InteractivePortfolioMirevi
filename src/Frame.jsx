@@ -11,30 +11,39 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { Button } from "r3dy";
 import { easing } from "maath";
 import { useEffect, useRef, useState } from "react";
+import { useStore } from './stores/useStore';
 
 import * as THREE from "three";
 
-const Frame = ({children,name,color,active,spherePos, setActive,...props}) => {
-  
-  // const map = useTexture("textures/modern_buildings_2_2k.hdr");
-  // const spherePos = [position[0], position[1], position[2] + 0.1]; // Adjust the offset as needed
-  const [hovered,setHovered] = useState(false)
-  const [clicked, setClicked] = useState(false)
+const Frame = ({children,name,color,spherePos,...props}) => {
 
+  const setActive = useStore((state) => state.setActive);
+  const setClickedFrame = useStore((state) => state.setClickedFrame);
+  const active = useStore((state) => state.active);
+  const clickedFrame = useStore((state) => state.clickedFrame);
+  
+
+  const [hovered,setHovered] = useState(false)
+  // const [clicked, setClicked] = useState(false)
+
+  // enter Portal: 
   const handleRoundedBoxDoubleClick = () => {
-    setClicked(true)
+    setClickedFrame(name);
     setActive(active === name ? null : name);
   };
+
   const handleBackClick = () => {
-    setClicked(true)
-    setActive(active === name ? null : name);
+    setHovered(false);
+    setClicked(false);
+    setActive(null);
   };
+
   const portalMaterial = useRef();
 
   useFrame((_state, delta) => {
     const worldOpen = active === name;
     if (hovered === true) {
-      easing.damp(portalMaterial.current, "blend", worldOpen ? 1 : 0, 0.25, delta);
+      easing.damp(portalMaterial.current, "blend", worldOpen ? 1 : 0, 0, delta);
       }
   });
   return( 
@@ -46,7 +55,7 @@ const Frame = ({children,name,color,active,spherePos, setActive,...props}) => {
       muss als texture Übergabeparameter bekommen (in Experience)
        */}
        
-      {!clicked && 
+      {active === null && 
         <>
         {/* Titel */}
         <group>
@@ -61,7 +70,7 @@ const Frame = ({children,name,color,active,spherePos, setActive,...props}) => {
             <Button text="EXPLORE" color="black" onPointerOver="#ffffff" font="fonts/PlayfairDisplay-Regular.ttf" scale={0.3} />
         </mesh>
         {/* Fenster für Poster: */}
-        <RoundedBox args={[11,6.7,0.2]} radius={0.2}>
+        <RoundedBox onPointerOver={() => setHovered(false)} args={[11,6.7,0.2]} radius={0.2}>
           {/* hier wird Video Texture sein */}
           <meshPhongMaterial color="#DDBAC7" />
         </RoundedBox>
@@ -71,32 +80,16 @@ const Frame = ({children,name,color,active,spherePos, setActive,...props}) => {
       {/* Fenster für Portal: */}
       {hovered && (
       <>
-      {spherePos == null && (
+      
       <RoundedBox
         args={[9.5, 5.5, 0.2]} position-z={0.1}>
         <MeshPortalMaterial ref={portalMaterial} side={THREE.DoubleSide}>
           <ambientLight intensity={0.5} />
           <Environment preset="sunset" background blur={0.5}></Environment>
-          {/* <Html onClick={handleBackClick}>Back</Html> */}
           {/*Individuelle Objekte */}
           {children}
         </MeshPortalMaterial>
       </RoundedBox>
-      )}
-      {spherePos != null && (
-        <RoundedBox
-          args={[8, 4.5, 0.1]} position-z={0.1}>
-            <MeshPortalMaterial ref={portalMaterial} side={THREE.DoubleSide}>
-              <ambientLight intensity={0.5} />
-              <Environment preset="night" background blur={0.4}></Environment>
-              <mesh position={spherePos}>
-                {/* <sphereGeometry args={[120, 120, 120]} /> */}
-                {/* <VideoMaterial url="FraktaleSecondHD.mp4" /> */}
-                {children}
-              </mesh>
-            </MeshPortalMaterial>
-          </RoundedBox>
-      )}
       </>
       )}
     </group>

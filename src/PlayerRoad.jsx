@@ -1,12 +1,12 @@
 import React, { useRef, useState, useEffect, useMemo } from "react";
 import {CameraControls, OrbitControls, PerspectiveCamera, Html, useScroll, Line } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { act, useFrame } from "@react-three/fiber";
 import * as THREE from 'three'
 
 
 const LINE_NB_POINTS = 18000;
 
-function Player({backToStart, setBackToStart, cameraRoad}) {
+function Player({backToStart, setBackToStart, cameraRoad, active}) {
 
   // Curve Points
   const curve1 = useMemo(() => {
@@ -175,7 +175,7 @@ function Player({backToStart, setBackToStart, cameraRoad}) {
     // console.log("Pos Z" + cameraRef.current.position.z)
     
     // move Camera on Curve Calculation:
-    if(cameraRoad && !backToStart){
+    if(cameraRoad && !backToStart && active == null){
     
     // Clamp the scroll offset to ensure it stays within the valid range of curve points
     const clampedScrollOffset = Math.max(0, Math.min(scrollOffset, linePoints.length - 1));
@@ -214,26 +214,25 @@ function Player({backToStart, setBackToStart, cameraRoad}) {
     return (
     
       <>
-      {!cameraRoad && <OrbitControls />}
+      {/* {!cameraRoad && active === null && <OrbitControls />} */}
       {/* Camera */}
-      <PerspectiveCamera fov={35} near={0.4} far={cameraRoad ? 40 : 600} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} />
-      <group position-y={-1.8}>
-        <mesh>
-          <extrudeGeometry
-            args={[
-              shape,
-              {
-                steps: LINE_NB_POINTS,
-                bevelEnabled: true,
-                extrudePath: curve,
-                curveSegments: 50,
-                bevelThickness: 10
-              },
-            ]}
-          />
-          <meshStandardMaterial color={"yellow"} opacity={0.3} transparent />
-        </mesh>
-      </group>
+      {active === null && <><PerspectiveCamera fov={35} near={0.4} far={cameraRoad ? 40 : 600} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} /><group position-y={-1.8}>
+          <mesh>
+            <extrudeGeometry
+              args={[
+                shape,
+                {
+                  steps: LINE_NB_POINTS,
+                  bevelEnabled: true,
+                  extrudePath: curve,
+                  curveSegments: 50,
+                  bevelThickness: 10
+                },
+              ]} />
+            <meshStandardMaterial color={"white"} opacity={0.3} transparent />
+          </mesh>
+        </group></>
+      }
     </>
 
   );

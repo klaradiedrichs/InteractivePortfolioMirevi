@@ -9,12 +9,16 @@ import FraktaleSphere from './Fraktale/FraktaleSphere'
 import Kin from './kin/kinScene';
 import Run from './kin/Run';
 import Run2 from './kin/Run2';
+import { useStore } from './stores/useStore';
 
-export default function Experience({ setBackToStart,backToStart, cameraRoad })
+export default function Experience({ setBackToStart,backToStart, cameraRoad})
 {
     // track if user is in World or not
     // by default: null -> in no world
-    const [active,setActive] = useState(null)
+    // when active !== null -> PlayerRoad muss anders sein CHECK
+    // const [active,setActive] = useState(null)
+    const setActive = useStore((state) => state.setActive);
+    const active = useStore((state) => state.active);
 
     return (
         <>
@@ -35,28 +39,14 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad })
 
         {/* Erstes Projekt (Fraktale) */}
         <Frame position={[-1.3,1.8,-4]} name="eins" color="#38adcf" active={active} setActive={setActive}> 
-            {/* <FraktaleSphere /> */}
-            {/* <OrbitControls /> */}
-            {/* <mesh position={[1.5,-2,4]}>
-                <sphereGeometry args={[16,120,120]}/> */}
-                {/* <meshStandardMaterial color="red" side={THREE.BackSide}/> */}
-                {/* <VideoMaterial url="M09-1317.mp4" />
-            </mesh> */}
             <FraktaleSphere />
-            
         </Frame>
         {/* Zweites Projekt (kin) */}
-        <Frame position={[24,1.8,-43]} name="zwei" color="#38adcf"  active={active} setActive={setActive}> 
+        <Frame position={[24,1.8,-43]} name="zwei" color="#38adcf" active={active} setActive={setActive} > 
             <Kin />
-            {/* <mesh>
-                <planeGeometry />
-                <meshStandardMaterial color="blue" />
-            </mesh> */}
-            {/* <Run />
-            <Run2 /> */}
         </Frame>
         {/* Drittes Projekt (Klima) */}
-        <Frame position={[-1,1.8,-84]} name="Drei" color="#38adcf" active={active} setActive={setActive}> 
+        <Frame position={[-1,1.8,-84]} name="Drei" color="#38adcf" active={active } setActive={setActive}> 
             <mesh>
                 <planeGeometry />
                 <meshStandardMaterial color="blue" />
@@ -67,7 +57,7 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad })
             <WallExperience />
         </Frame>
         {/* Fünftes Projekt (leer) */}
-        <Frame position={[18,1.8,-177]} name="fünf" color="#38adcf" active={active} setActive={setActive}> 
+        <Frame position={[18,1.8,-177]} name="fünf" color="#38adcf" active={active} setActive={setActive} > 
             
         </Frame>
         {/* Sechstes Projekt (leer) */}
@@ -75,18 +65,14 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad })
             
         </Frame>
         {/* Siebtes Projekt (leer) */}
-        <Frame position={[31,2.0,-249]} name="sieben" color="#38adcf" active={active} setActive={setActive}> 
+        <Frame position={[31,2.0,-249]} name="sieben" color="#38adcf" active={active} setActive={setActive} > 
             
         </Frame>
 
         {/* PLAYER  */}
-        {active === null && <PlayerRoad setBackToStart={setBackToStart} backToStart={backToStart} cameraRoad={cameraRoad} />}
-        {/* <PlayerNew cameraRoad={cameraRoad} /> */}
+        {/* Player muss immer aktiv sein, um nach Portal wieder an selbe Stelle zu gelangen */}
+        <PlayerRoad active={active} setBackToStart={setBackToStart} backToStart={backToStart} cameraRoad={cameraRoad} />
         </>
         )
     
-        function VideoMaterial({ url }) {
-            const texture = useVideoTexture(url)
-            return <meshBasicMaterial map={texture} toneMapped={false}  side={THREE.DoubleSide} />
-          }
 };
