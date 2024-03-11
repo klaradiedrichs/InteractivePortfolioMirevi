@@ -76,13 +76,14 @@ function Player({backToStart, setBackToStart, cameraRoad}) {
         new THREE.Vector3(0, 0, -70),
         // new THREE.Vector3(10, 0, -80),
         
-        new THREE.Vector3(33, 0, -100),
-        new THREE.Vector3(37, 0, -115),
+        new THREE.Vector3(34, 0, -100),
+        // VP 4
+        new THREE.Vector3(37, 0, -121),
         
-        new THREE.Vector3(25, 0, -124),
-        new THREE.Vector3(21, 0, -130),
-        new THREE.Vector3(19, 0, -140),
-        new THREE.Vector3(18, 0, -150),
+        new THREE.Vector3(25, 0, -129),
+        // new THREE.Vector3(21, 0, -138),
+        // new THREE.Vector3(19, 0, -140),
+        new THREE.Vector3(17, 0, -150),
         new THREE.Vector3(18, 0, -160),
         new THREE.Vector3(22, 0, -165),
         new THREE.Vector3(30, 0, -170),

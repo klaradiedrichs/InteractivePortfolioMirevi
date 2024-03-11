@@ -63,11 +63,11 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad })
             </mesh>
         </Frame>
         {/* Viertes Projekt (Wall)  */}
-        <Frame position={[38,1.8,-130]} name="vier" color="#38adcf" active={active} setActive={setActive}> 
+        <Frame position={[39,1.8,-132]} name="vier" color="#38adcf" active={active} setActive={setActive}> 
             <WallExperience />
         </Frame>
         {/* Fünftes Projekt (leer) */}
-        <Frame position={[18,1.8,-177]} name="fünf" color="#38adcf" active={active} setActive={setActive}> 
+        <Frame position={[18,1.8,-174]} name="fünf" color="#38adcf" active={active} setActive={setActive}> 
             
         </Frame>
         {/* Sechstes Projekt (leer) */}
