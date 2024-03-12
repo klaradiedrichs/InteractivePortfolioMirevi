@@ -19,7 +19,7 @@ export default function Kin()
 
     return <>
        
-        
+
         <group ref={group} position={[-1,-5,-10]}>
             <primitive object={scene} />
         </group>

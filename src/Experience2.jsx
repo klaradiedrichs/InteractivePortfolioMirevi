@@ -3,12 +3,10 @@ import React, { useState, useEffect, useRef } from "react";
 import PlayerRoad from './PlayerRoad';
 import * as THREE from "three";
 import Frame from './Frame';
-import Room from './old/Room';
 import WallExperience from './Walls/WallsExp';
 import FraktaleSphere from './Fraktale/FraktaleSphere'
 import Kin from './kin/kinScene';
-import Run from './kin/Run';
-import Run2 from './kin/Run2';
+import WDRScene from './wdr/WDRScene'
 import { useStore } from './stores/useStore';
 
 export default function Experience({ setBackToStart,backToStart, cameraRoad})
@@ -51,6 +49,7 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
                 <planeGeometry />
                 <meshStandardMaterial color="blue" />
             </mesh>
+            <WDRScene />
         </Frame>
         {/* Viertes Projekt (Wall)  */}
         <Frame position={[39,1.8,-132]} name="vier" color="#38adcf" > 
