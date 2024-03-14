@@ -8,6 +8,7 @@ import {KeyboardControls,PointerLockControls, Environment, PerspectiveCamera} fr
 import Overlay from './Overlay';
 import { Perf } from 'r3f-perf';
 import Experience from './Experience2';
+import WallExp from './Walls/WallsExp'
 
 function App() {
 
@@ -39,6 +40,7 @@ function App() {
               {/* <Perf position='top-right'/> */}
               <Experience setBackToStart={setBackToStart} backToStart={backToStart} cameraRoad={cameraRoad}/>
               {/* <FraktaleSphere /> */}
+              {/* <WallExp /> */}
         </Canvas>
         </KeyboardControls>
         <Overlay cameraRoad={cameraRoad}  onToggleCameraRoad={handleToggleCameraRoad} backToStart={backToStart} handleStart={handleStart}/>

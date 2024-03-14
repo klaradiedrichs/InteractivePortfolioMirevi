@@ -53,7 +53,7 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
         </Frame>
         {/* Viertes Projekt (Wall)  */}
         <Frame position={[39,1.8,-132]} name="vier" color="#38adcf" > 
-            <WallExperience active={active}/>
+            <WallExperience/>
         </Frame>
         {/* Fünftes Projekt (leer) */}
         <Frame position={[18,1.8,-174]} name="fünf" color="#38adcf"  > 
