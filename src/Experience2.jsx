@@ -52,7 +52,7 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
             <WDRScene />
         </Frame>
         {/* Viertes Projekt (Wall)  */}
-        <Frame position={[39,1.8,-132]} name="vier" color="#38adcf" > 
+        <Frame position={[39,1.8,-132]} name="WallExperience" color="#38adcf" > 
             <WallExperience/>
         </Frame>
         {/* Fünftes Projekt (leer) */}

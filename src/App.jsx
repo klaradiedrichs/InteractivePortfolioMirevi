@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { useState , useEffect} from 'react'
 import './App.css'
 import {Canvas, useThree, useFrame} from "@react-three/fiber";
-import {KeyboardControls,PointerLockControls, Environment, PerspectiveCamera} from "@react-three/drei";
+import {KeyboardControls, Environment, PerspectiveCamera} from "@react-three/drei";
 import Overlay from './Overlay';
 import { Perf } from 'r3f-perf';
 import Experience from './Experience2';

@@ -85,7 +85,7 @@ const Frame = ({children,name,color,spherePos,...props}) => {
         args={[9.5, 5.5, 0.2]} position-z={0.1}>
         <MeshPortalMaterial ref={portalMaterial} side={THREE.DoubleSide}>
           <ambientLight intensity={0.5} />
-          <Environment preset="dawn" background blur={0.5}></Environment>
+          {/* <Environment preset="dawn" background blur={0.5}></Environment> */}
           {/*Individuelle Objekte */}
           {children}
         </MeshPortalMaterial>
