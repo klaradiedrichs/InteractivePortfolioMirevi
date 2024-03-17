@@ -38,6 +38,7 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
         {/* Erstes Projekt (Fraktale) */}
         <Frame position={[-1.3,1.8,-4]} name="eins" color="#38adcf" > 
             <FraktaleSphere />
+            {/* <WDRScene /> */}
         </Frame>
         {/* Zweites Projekt (kin) */}
         <Frame position={[24,1.8,-43]} name="zwei" color="#38adcf"  > 
@@ -45,10 +46,10 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
         </Frame>
         {/* Drittes Projekt (Klima) */}
         <Frame position={[-1,1.8,-84]} name="Drei" color="#38adcf" > 
-            <mesh>
+            {/* <mesh>
                 <planeGeometry />
                 <meshStandardMaterial color="blue" />
-            </mesh>
+            </mesh> */}
             <WDRScene />
         </Frame>
         {/* Viertes Projekt (Wall)  */}
