@@ -73,17 +73,8 @@ const Frame = ({children,name,color,spherePos,...props}) => {
             2023
             <meshBasicMaterial color="white" toneMapped={false} />
           </Text>   */}
-          <Html transform position-x={-0.2}>
-            <div className="text-white text-sm flex flex-col gap-y-2">
-              <p>{name}</p>
-              <p>Test</p>
-              <p>Test</p>
-            </div>
-          </Html>
         </group>
-        <group>
-
-        </group>
+        
         
         {/* Buttons */}
         <mesh onClick={handleRoundedBoxDoubleClick} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} position={[0, 3.9, 0]}>

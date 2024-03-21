@@ -1,4 +1,4 @@
-import { Environment, useTexture, RoundedBox,MeshPortalMaterial, useVideoTexture, Stage, Float, Text, ContactShadows, TransformControls, MeshDistortMaterial, MeshReflectorMaterial, Sparkles, OrbitControls, CameraControls, PerspectiveCamera} from '@react-three/drei'
+import { Environment, useTexture, Html, Stage, Float, Text, ContactShadows, MeshReflectorMaterial, Sparkles, OrbitControls, CameraControls, PerspectiveCamera} from '@react-three/drei'
 import React, { useState, useEffect, useRef } from "react";
 import PlayerRoad from './PlayerRoad';
 import * as THREE from "three";
@@ -38,24 +38,36 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
         {/* Erstes Projekt (Fraktale) */}
         <Frame position={[-1.3,1.8,-4]} name="fraktale" color="#38adcf" > 
             <FraktaleSphere />
-            {/* <WDRScene /> */}
+            {/* <WDRScene /> */} 
         </Frame>
-        <Text position={[-1.3,0.5,35]} font="fonts/PlayfairDisplay-Regular.ttf" fontSize={0.3}>
+        <Text position={[-1.3,0.5,34]} font="fonts/PlayfairDisplay-Regular.ttf" fontSize={1}>
             Fraktale
-            <meshBasicMaterial color="white" opacity={0.3} toneMapped={false} />
+            <meshBasicMaterial color="black" opacity={0.3} toneMapped={false} />
         </Text>
         {/* Zweites Projekt (kin) */}
         <Frame position={[24,1.8,-43]} name="Kin" color="#38adcf"  > 
             <Kin />
         </Frame>
+        <Text position={[23,0.3,-17]} font="fonts/PlayfairDisplay-Regular.ttf" fontSize={1}>
+            Kin
+            <meshBasicMaterial color="black" opacity={0.2} toneMapped={false} />
+        </Text>
         {/* Drittes Projekt (Klima) */}
         <Frame position={[-1,1.8,-84]} name="WDR Klima" color="#38adcf" > 
             <WDRScene />
         </Frame>
+        <Text position={[-1,0.4,-55]} font="fonts/PlayfairDisplay-Regular.ttf" fontSize={1}>
+            WDR Klima
+            <meshBasicMaterial color="black" opacity={0.2} toneMapped={false} />
+        </Text>
         {/* Viertes Projekt (Wall)  */}
         <Frame position={[39,1.8,-132]} name="WallExperience" color="#38adcf" > 
             <WallExperience/>
         </Frame>
+        <Text position={[39,0.3,-110]} font="fonts/PlayfairDisplay-Regular.ttf" fontSize={1}>
+            Video Wall
+            <meshBasicMaterial color="black" opacity={0.2} toneMapped={false} />
+        </Text>
         {/* Fünftes Projekt (leer) */}
         <Frame position={[18,1.8,-174]} name="fünf" color="#38adcf"  > 
             
