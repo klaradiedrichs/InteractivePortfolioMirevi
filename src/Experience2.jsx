@@ -58,28 +58,28 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
         }}
         />
         {/* Erstes Projekt (Fraktale) */}
-        <Frame position={[-1.3,1.8,-4]} name="fraktale" color="#38adcf" > 
+        <Frame position={[1,2,-4]} name="persona fractalis ||" color="#38adcf" > 
             <FraktaleSphere />
             {/* <WDRScene /> */} 
         </Frame>
         <TextComp name="fraktale" position={[-1.3,0.5,34]} rotation={[0, 0, 0]}/>
         {/* Zweites Projekt (kin) */}
-        <Frame position={[24,1.8,-43]} name="Kin" color="#38adcf"  > 
+        <Frame position={[22.5,1.8,-43]} name="Kin" color="#38adcf"  > 
             <Kin />
         </Frame>
         <TextComp name="Kin" position={[23,0.3,-17]} rotation={[0, -0.5, 0]}/>
         {/* Drittes Projekt (Klima) */}
-        <Frame position={[-1,1.8,-84]} name="WDR Klima" color="#38adcf" > 
+        <Frame position={[-1,1.8,-83]} name="WDR Klima" color="#38adcf" > 
             <WDRScene />
         </Frame>
         <TextComp name="WDR Klima" position={[-1,0.4,-57]} rotation={[0, 0.5, 0]}/>
         {/* Viertes Projekt (Wall)  */}
-        <Frame position={[39,1.8,-132]} name="WallExperience" color="#38adcf" > 
+        <Frame position={[38,1.8,-132]} name="WallExperience" color="#38adcf" > 
             <WallExperience/>
         </Frame>
         <TextComp name="Video Wall" position={[39,0.3,-110]} rotation={[0, -0.2, 0]} />
         {/* Fünftes Projekt (leer) */}
-        <Frame position={[18,1.8,-174]} name="fünf" color="#38adcf"  > 
+        <Frame position={[19,1.8,-173]} name="fünf" color="#38adcf"  > 
             
         </Frame>
         {/* Sechstes Projekt (leer) */}

@@ -26,10 +26,10 @@ export default function Overlay({cameraRoad, onToggleCameraRoad, backToStart, ha
       };
   }, []);
 
-    //   const handleBackToRoadClick = () => {
-    //     setActive(null); // Set the active state back to null
-    //     setHovered(false)
-    // };
+      const handleBackToRoadClick = () => {
+        setActive(null); // Set the active state back to null
+        setHovered(false)
+    };
 
     return (
         <div className="z-[2]" tabIndex={0}>
@@ -55,7 +55,7 @@ export default function Overlay({cameraRoad, onToggleCameraRoad, backToStart, ha
           </div>
         </>
       ) : (
-        <div className="text-base fixed top-3 left-3 cursor-pointer">
+        <div onClick={handleBackToRoadClick} className="z-20 text-base fixed top-3 left-3 cursor-pointer">
           Click 'Enter' to leave
         </div>
       )}

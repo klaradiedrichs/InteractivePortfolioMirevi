@@ -58,26 +58,31 @@ const Frame = ({children,name,color,spherePos,...props}) => {
       {active === null && 
         <>
         {/* Infos */}
-        <group position={[6.7, 0, 0]}>
-          <mesh scale={[2,4,0]} position-z={-0.01}>
+        <group position={[0,0,0.02]}>
+          {/* <mesh scale={[2,4,0]} position-z={-0.01}>
             <planeGeometry/>
             <meshBasicMaterial color={"white"} opacity={0.2} transparent/>
-          </mesh>
+          </mesh> */}
           {/*Titel  */}
           {/* <Text font="fonts/PlayfairDisplay-Regular.ttf" fontSize={0.3} position={[-0.4,0.8,0]}>
             {name}
             <meshBasicMaterial color="white" toneMapped={false} />
           </Text> */}
           {/* Jahr */}
-          {/* <Text font="fonts/PlayfairDisplay-Regular.ttf" fontSize={0.3} position={[-0.4,0.4,0]}>
-            2023
+          <Text fontSize={0.3} position={[-4.2, 3.55, 0]} anchorX={1}>
+            {name}
+            <meshBasicMaterial color="white" toneMapped={false} />
+          </Text>
+
+          {/* <Text fontSize={0.3} position={[-5.5,3,0]}>
+            {name}
             <meshBasicMaterial color="white" toneMapped={false} />
           </Text>   */}
         </group>
         
         
         {/* Buttons */}
-        <mesh onClick={handleRoundedBoxDoubleClick} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} position={[0, 3.9, 0]}>
+        <mesh onClick={handleRoundedBoxDoubleClick} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} anchorY="bottom" position={[0, -3.8, 0]}>
             <Button text="EXPLORE" color="black" onPointerOver="#ffffff" font="fonts/PlayfairDisplay-Regular.ttf" scale={0.3} />
         </mesh>
         {/* Fenster für Poster: */}

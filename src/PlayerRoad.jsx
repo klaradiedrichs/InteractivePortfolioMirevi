@@ -63,7 +63,7 @@ function Player({backToStart, setBackToStart, cameraRoad, active}) {
         // new THREE.Vector3(-2, 0, 30),
         // new THREE.Vector3(-2, 0, 17),
         // Viewpoint1
-        new THREE.Vector3(0, 0, 5),
+        new THREE.Vector3(1, 0, 5),
         // Wendepunkt
         new THREE.Vector3(20, 0, -10),
         // Viewpoint 2
@@ -74,7 +74,7 @@ function Player({backToStart, setBackToStart, cameraRoad, active}) {
         // Viewpoint 3
         
         // Drehung 3
-        new THREE.Vector3(0, 0, -70),
+        new THREE.Vector3(-1, 0, -70),
         // new THREE.Vector3(10, 0, -80),
         
         new THREE.Vector3(34, 0, -100),
@@ -130,7 +130,7 @@ function Player({backToStart, setBackToStart, cameraRoad, active}) {
 
   // Camera Position
   // safe in useState to be able to change depending on CameraRoad
-  const [initialYPos, setinitialYPos] = useState(cameraRoad ? 5 : 90);
+  const [initialYPos, setinitialYPos] = useState(cameraRoad ? 2 : 90);
   const [initialZPos, setInitialZPos] = useState(1)
   const [initialXPos, setInitalXPos] = useState(0)
   // scrollPosition
@@ -154,7 +154,7 @@ function Player({backToStart, setBackToStart, cameraRoad, active}) {
     // go back to CameraRoad Position:
     setInitalXPos(-4);
     setInitialZPos(17);
-    setinitialYPos(5)
+    setinitialYPos(2)
     }
     else if(!cameraRoad){
       window.removeEventListener("wheel", handleWheel);
@@ -218,7 +218,8 @@ function Player({backToStart, setBackToStart, cameraRoad, active}) {
       <>
       {!cameraRoad && active === null && <OrbitControls />}
       {/* Camera */}
-      {active === null && <><PerspectiveCamera fov={35} near={0.4} far={cameraRoad ? 40 : 600} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} /><group position-y={-1.8}>
+      {active === null && <><PerspectiveCamera fov={35} near={0.4} far={cameraRoad ? 40 : 600} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} />
+      <group position-y={-1.8}>
           <mesh>
             <extrudeGeometry
               args={[
@@ -231,7 +232,7 @@ function Player({backToStart, setBackToStart, cameraRoad, active}) {
                   bevelThickness: 10
                 },
               ]} />
-            <meshStandardMaterial color={"white"} opacity={0.3} transparent />
+            <meshStandardMaterial color={"white"} opacity={0.2} transparent />
           </mesh>
         </group></>
       }
