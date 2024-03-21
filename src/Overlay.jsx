@@ -32,17 +32,26 @@ export default function Overlay({cameraRoad, onToggleCameraRoad, backToStart, ha
     // };
 
     return (
-        <div className="" tabIndex={0}>
+        <div className="z-[2]" tabIndex={0}>
             {active === null ? (
         <>
           <a href="https://mirevi.de/" target="_blank" className="absolute bottom-5 left-5 text-black hover:text-white">
             mirevi.de
           </a>
-          <div className="text-xl absolute top-3 left-3 cursor-pointer" onClick={onToggleCameraRoad}>
-            {cameraRoad ? 'OVERVIEW' : 'ROADVIEW'}
+          <div className="text-base absolute top-3 left-2 cursor-pointer" onClick={onToggleCameraRoad}>
+            {cameraRoad ? 'Overview' : 'ROADVIEW'}
           </div>
-          <div className="text-xl absolute top-16 left-3 cursor-pointer" onClick={handleStart}>
-            BACK TO START
+          {/* <div className="text-9xl text-white opacity-50 italic absolute top-[330px] left-[430px] cursor-pointer" >
+            {cameraRoad ? 'FRAKTALE' : 'Roadview'}
+          </div>
+          <div className="text-6xl text-white italic absolute top-[440px] left-[400px] cursor-pointer" >
+            --------------------------
+          </div>
+          <div className="text-6xl text-white italic absolute top-[480px] left-[400px] cursor-pointer" >
+            fraktalis minimalis 2023
+          </div> */}
+          <div className="text-base absolute top-10 left-2 cursor-pointer" onClick={handleStart}>
+            Back to Start
           </div>
         </>
       ) : (

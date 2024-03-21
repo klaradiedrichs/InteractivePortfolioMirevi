@@ -57,12 +57,32 @@ const Frame = ({children,name,color,spherePos,...props}) => {
        
       {active === null && 
         <>
-        {/* Titel */}
+        {/* Infos */}
+        <group position={[6.7, 0, 0]}>
+          <mesh scale={[2,4,0]} position-z={-0.01}>
+            <planeGeometry/>
+            <meshBasicMaterial color={"white"} opacity={0.2} transparent/>
+          </mesh>
+          {/*Titel  */}
+          {/* <Text font="fonts/PlayfairDisplay-Regular.ttf" fontSize={0.3} position={[-0.4,0.8,0]}>
+            {name}
+            <meshBasicMaterial color="white" toneMapped={false} />
+          </Text> */}
+          {/* Jahr */}
+          {/* <Text font="fonts/PlayfairDisplay-Regular.ttf" fontSize={0.3} position={[-0.4,0.4,0]}>
+            2023
+            <meshBasicMaterial color="white" toneMapped={false} />
+          </Text>   */}
+          <Html transform position-x={-0.2}>
+            <div className="text-white text-sm flex flex-col gap-y-2">
+              <p>{name}</p>
+              <p>Test</p>
+              <p>Test</p>
+            </div>
+          </Html>
+        </group>
         <group>
-        <Text font="fonts/PlayfairDisplay-Regular.ttf" fontSize={0.3} position={[0, -2, 0.21]} anchorY={"bottom"}>
-          {name}
-          <meshBasicMaterial color={color} toneMapped={false} />
-        </Text>  
+
         </group>
         
         {/* Buttons */}

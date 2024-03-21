@@ -24,6 +24,7 @@ export default function Experience() {
   return (
     <>
         <OrbitControls target={[-1,1.8,-84]}/>
+        <Environment preset='night' background blur={0.5} />
         {/* Earth Modell */}
         {!virtualGame && !generationSpeaks && (
         <>

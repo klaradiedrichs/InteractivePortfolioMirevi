@@ -20,7 +20,8 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
 
     return (
         <>
-        <Environment preset="night" background blur={0.6}></Environment>
+        <Environment preset="dawn" background blur={0.6}></Environment>
+
         <group>
             <Sparkles
                     size={ 10 }
@@ -31,25 +32,24 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
                     count={ 250 }
             />
         </group>
-        
 
         {/* PROJEKTE */}
 
         {/* Erstes Projekt (Fraktale) */}
-        <Frame position={[-1.3,1.8,-4]} name="eins" color="#38adcf" > 
+        <Frame position={[-1.3,1.8,-4]} name="fraktale" color="#38adcf" > 
             <FraktaleSphere />
             {/* <WDRScene /> */}
         </Frame>
+        <Text position={[-1.3,0.5,35]} font="fonts/PlayfairDisplay-Regular.ttf" fontSize={0.3}>
+            Fraktale
+            <meshBasicMaterial color="white" opacity={0.3} toneMapped={false} />
+        </Text>
         {/* Zweites Projekt (kin) */}
-        <Frame position={[24,1.8,-43]} name="zwei" color="#38adcf"  > 
+        <Frame position={[24,1.8,-43]} name="Kin" color="#38adcf"  > 
             <Kin />
         </Frame>
         {/* Drittes Projekt (Klima) */}
-        <Frame position={[-1,1.8,-84]} name="Drei" color="#38adcf" > 
-            {/* <mesh>
-                <planeGeometry />
-                <meshStandardMaterial color="blue" />
-            </mesh> */}
+        <Frame position={[-1,1.8,-84]} name="WDR Klima" color="#38adcf" > 
             <WDRScene />
         </Frame>
         {/* Viertes Projekt (Wall)  */}
