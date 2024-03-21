@@ -57,12 +57,13 @@ function Player({backToStart, setBackToStart, cameraRoad, active}) {
     return new THREE.CatmullRomCurve3(
       [
         // Start
-        new THREE.Vector3(-20, 0, 58),
-        new THREE.Vector3(-2, 0, 45),
+        new THREE.Vector3(-35, 0, 70),
+        // new THREE.Vector3(-20, 0, 58),
+        new THREE.Vector3(-2, 0, 50),
         // new THREE.Vector3(-2, 0, 30),
         // new THREE.Vector3(-2, 0, 17),
         // Viewpoint1
-        new THREE.Vector3(0, 0, 3),
+        new THREE.Vector3(0, 0, 5),
         // Wendepunkt
         new THREE.Vector3(20, 0, -10),
         // Viewpoint 2
@@ -80,7 +81,7 @@ function Player({backToStart, setBackToStart, cameraRoad, active}) {
         // VP 4
         new THREE.Vector3(37, 0, -121),
         
-        new THREE.Vector3(25, 0, -129),
+        new THREE.Vector3(22, 0, -135),
         // new THREE.Vector3(21, 0, -138),
         // new THREE.Vector3(19, 0, -140),
         new THREE.Vector3(17, 0, -150),
