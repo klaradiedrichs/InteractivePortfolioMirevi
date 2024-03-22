@@ -43,7 +43,7 @@ const Frame = ({children,name,color,spherePos,...props}) => {
   useFrame((_state, delta) => {
     const worldOpen = active === name;
     if (hovered === true) {
-      easing.damp(portalMaterial.current, "blend", worldOpen ? 1 : 0, 0, delta);
+      easing.damp(portalMaterial.current, "blend", worldOpen ? 1 : 0, 0.4, delta);
       }
   });
   return( 

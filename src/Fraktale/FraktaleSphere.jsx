@@ -8,8 +8,8 @@ export default function Experience()
     return <>
         
         <OrbitControls/> 
-        <mesh position={[1.5,-2,4]}>
-            <sphereGeometry args={[10, 200, 200]} />
+        <mesh position={[1.5,-2,5]}>
+            <sphereGeometry args={[11, 200, 200]} />
             {/* Radius nochmal verringert -> vorher 16  */}
             <VideoMaterial url="M09-1317.mp4" />
             {/* <meshStandardMaterial color="red" /> */}
