@@ -9,10 +9,8 @@ import Kin from './kin/kinScene';
 import WDRScene from './wdr/WDRScene'
 import { useStore } from './stores/useStore';
 import TextComp from './TextComp';
-import Logo from './Logo';
 import svg from '/mirevi_logo.svg';
 import { act, useFrame } from "@react-three/fiber";
-
 
 const LINE_NB_POINTS = 25000;
 
@@ -43,7 +41,6 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
             new THREE.Vector3(30, 0, -95),
             // VP 4
             new THREE.Vector3(29, 0, -112),
-            
             new THREE.Vector3(13, 0, -131),
             // new THREE.Vector3(21, 0, -138),
             new THREE.Vector3(12, 0, -162),
@@ -56,12 +53,9 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
             new THREE.Vector3(32, 0, -240),
             new THREE.Vector3(54, 0, -249),
             new THREE.Vector3(57, 0, -269),
-            ],
-        false,
-        "catmullrom",
-        0.5
-        );
+            ], false, "catmullrom", 0.5 );
     }, []);
+    
     const linePoints = useMemo(() => {
         return curve.getPoints(LINE_NB_POINTS);
       }, [curve]);
@@ -76,30 +70,25 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
     
     const cameraRef = useRef();
     // Camera Position -> safe in useState to be able to change depending on CameraRoad
-    const [initialYPos, setinitialYPos] = useState(cameraRoad ? 2 : 90);
+    const [initialYPos, setinitialYPos] = useState();
     const [initialZPos, setInitialZPos] = useState(1)
     const [initialXPos, setInitalXPos] = useState(0)
     // scrollPosition
     const [scrollOffset, setScrollOffset] = useState(0);
     const active = useStore((state) => state.active);
-    const textYPos = 0.7;
+    const textYPos = 0.3;
     const textRef = useRef();
-    const [showText, setShowText] = useState(false);
 
-    const [opacity, setOpacity] = useState({
-        title1: 0,
-        title2: 0,
-        title3: 0,
-        // Add more titles as needed
-    });
+    const [opacity, setOpacity] = useState({ title1: 0.4, title2: 0.4,title3: 0.4,title4: 0.4,title5: 0.4,title6: 0.4,title7: 0.4});
+
     const titlePosition = {
-        title1: new THREE.Vector3(0.7, textYPos, 26),
+        title1: new THREE.Vector3(0.7, textYPos, 22),
         title2: new THREE.Vector3(23,textYPos,-20),
-        title3: new THREE.Vector3(-3,textYPos,-59),
-        // title4: new THREE.Vector3(5.5,positiony,-25),
-        // title5: new THREE.Vector3(-5.5,positiony,-25),
-        // title6: new THREE.Vector3(-15,positiony,-20),
-        // title7: new THREE.Vector3(-19,positiony,-10),
+        title3: new THREE.Vector3(-2,textYPos,-60),
+        title4: new THREE.Vector3(31,textYPos,-100),
+        title5: new THREE.Vector3(10,textYPos,-146),
+        title6: new THREE.Vector3(40.5,textYPos,-191),
+        title7: new THREE.Vector3(29,textYPos,-222),
     };
 
     // called when user scrolls  
@@ -113,7 +102,6 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
     // runs on every render or when cameraRoad changes
     useEffect(() => {
         
-        // wheel eventListener only active in cameraRoad Modus
         if(cameraRoad && !backToStart){
         window.addEventListener("wheel", handleWheel);
         // go back to CameraRoad Position:
@@ -123,10 +111,6 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
         }
         else if(!cameraRoad){
         window.removeEventListener("wheel", handleWheel);
-        // go to Overview Position:
-        setInitalXPos(97);
-        setInitialZPos(44);
-        setinitialYPos(41)
         }
         
         return () => {
@@ -140,37 +124,23 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
         if(cameraRoad && !backToStart && active == null){
 
         const cameraPos = cameraRef.current.position;
-        const range = 10;
-
-        Object.entries(titlePosition).forEach(([title, position]) => {
-            console.log("Title:", title);
-            console.log("Title position:", position);
-            const distance = cameraPos.distanceTo(position);
-            let newOpacity;
-
-            // Change opacity based on distance
-            if (distance < range) {
-                // If camera is within range of the title position
-                newOpacity = Math.min(opacity[title] + 0.03, 0.6); // Increase opacity up to 0.6
-            } else {
-                // If camera is outside the range of the title position
-                newOpacity = Math.max(opacity[title] - 0.03, 0); // Decrease opacity to 0
-            }
-
-            // Update opacity for the current title
-            setOpacity((prevOpacity) => ({
-                ...prevOpacity,
-                [title]: newOpacity,
-            }));
-        });
-
-        // const distance = cameraRef.current.position.distanceTo(textRef.current.position);
-        // const newOpacity = distance < 17 ? Math.min(opacity + 0.03, 0.6) : Math.max(opacity - 0.03, 0);
-        // setOpacity(newOpacity);
+        const range = 17;
+        // Object.entries(titlePosition).forEach(([title, position]) => {
+        //     const distance = cameraPos.distanceTo(position);
+        //     let newOpacity;
+        //     // Change opacity based on distance
+        //     if (distance < range) {
+        //         newOpacity = Math.min(opacity[title] + 0.05, 0.6); // Increase opacity up to 0.6 If camera is within range of title position
+        //     } else {
+        //         newOpacity = Math.max(opacity[title] - 0.05, 0); // Decrease opacity to 0 if camera is outside the range of title position
+        //     }
+        //     // Update opacity for the current title
+        //     setOpacity((prevOpacity) => ({
+        //         ...prevOpacity,
+        //         [title]: newOpacity,
+        //     }));
+        // });
         // console.log("Pos X" + cameraRef.current.position.x)
-        // console.log("Pos Y" + cameraRef.current.position.y)
-        // console.log("Pos Z" + cameraRef.current.position.z)
-        
         // move Camera on Curve Calculation:
         // Clamp the scroll offset to ensure it stays within the valid range of curve points
         const clampedScrollOffset = Math.max(0, Math.min(scrollOffset, linePoints.length - 1));
@@ -184,127 +154,123 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
         const nextPoint = linePoints[Math.min(curPointIndex + 1, linePoints.length - 1)];
         // interpolate between current and next point for smooth movement
         const interpolatedPoint = new THREE.Vector3().lerpVectors(curPoint, nextPoint, alpha);
-        
         // set camera position to the interpolated point on the curve 
         cameraRef.current.position.copy(interpolatedPoint);
-
         // Look at the next point on the curve
         const pointAhead = linePoints[Math.min(curPointIndex + 20, linePoints.length - 1)];
         cameraRef.current.lookAt(pointAhead);
         }
         else if(!cameraRoad){
         cameraRef.current.lookAt(0, 0, -90);
+        setInitalXPos(97);
+        setInitialZPos(44);
+        setinitialYPos(41)
         }
         else if(backToStart){
-        //find te first point
+        //find the first point
         const firstPoint = linePoints[0]
         cameraRef.current.position.copy(firstPoint)
+        // setBackToStart(false)
         }
-
     });
 
-    
-
-
-
     return (
-        <>
-        
+    <>
         <Environment preset="dawn" background blur={0.6}></Environment>
         <group>
-            <Sparkles
-                    size={ 15 }
-                    scale={ [ 250, 25, 60 ] }
-                    position={ [50, 5,-100] }
-                    rotation={[0, -Math.PI / -3.2, 0]}
-                    speed={ 0.9 }
-                    count={ 300 }
-            />
+            <Sparkles size={ 15 } scale={ [ 250, 25, 60 ] } position={ [50, 5,-100] } rotation={[0, -Math.PI / -3.2, 0]} speed={ 0.9 } count={ 300 }/>
         </group>
-        <Text ref={textRef} position={titlePosition.title1}>
-            Your Text Here
-            <meshBasicMaterial color="grey" opacity={opacity.title1} toneMapped={false} />
-        </Text>
+        
         {/* Mirevi Start Logo */}
         {/* <TextComp name="MIREVI" position={[-27, 0.5, 65]} rotation={[0, -1, 0]}/> */}
-        {/* <Logo /> */}
         <Svg position={[-30, 0.5, 67]} rotation={[0, -1, 0]} scale={0.008} src={svg}/>
         
         {/* PROJEKTE */}
+
         {/* Erstes Projekt (Fraktale) */}
         <Frame position={[1,2,-5]} name="persona fractalis ||" color="#38adcf" > 
             <FraktaleSphere />
             {/* <WDRScene /> */} 
         </Frame>
+        <Text ref={textRef} position={titlePosition.title1}>
+            persona fractalis           
+            <meshBasicMaterial color="grey" opacity={cameraRoad ? opacity.title1 : 1} toneMapped={false} />
+        </Text>
         {/* <TextComp name="fraktale" position={[0.7,textYPos,26]} rotation={[0, 0, 0]}/> */}
+
         {/* Zweites Projekt (kin) */}
         <Text ref={textRef} position={titlePosition.title2}>
             Kin_
-            <meshBasicMaterial color="grey" opacity={opacity.title2} toneMapped={false} />
+            <meshBasicMaterial color="grey" opacity={cameraRoad ? opacity.title2 : 1} toneMapped={false} />
         </Text>
         <Frame position={[22.5,1.8,-43]} name="Kin" color="#38adcf"  > 
             <Kin />
         </Frame>
         {/* <TextComp name="Kin" position={[23,textYPos,-20]} rotation={[0, -0.2, 0]}/> */}
+        
         {/* Drittes Projekt (Klima) */}
         <Frame position={[-2.5,1.8,-81]} name="WDR Klima" color="#38adcf" > 
             <WDRScene />
         </Frame>
         {/* <TextComp name="WDR Klima" position={[-3,textYPos,-59]} rotation={[0, 0.1, 0]}/> */}
-        <Text ref={textRef} position={[-3,textYPos,-59]}>
+        <Text ref={textRef} position={titlePosition.title3} rotation={[0, 0.1, 0]}>
             WDR
             <meshBasicMaterial color="grey" opacity={opacity.title3} toneMapped={false} />
         </Text>
+
         {/* Viertes Projekt (Wall)  */}
         <Frame position={[31,1.8,-123]} name="WallExperience" color="#38adcf" > 
             <WallExperience/>
         </Frame>
-        <TextComp name="Video Wall" position={[31,textYPos,-100]} rotation={[0, -0.2, 0]} />
+        {/* <TextComp name="Video Wall" position={titlePosition.title4}  /> */}
+        <Text ref={textRef} position={titlePosition.title4} rotation={[0, -0.2, 0]}>
+            Video Wall
+            <meshBasicMaterial color="grey" opacity={opacity.title4} toneMapped={false} />
+        </Text>
+
         {/* Fünftes Projekt (leer) */}
         <Frame position={[11,1.8,-170]} name="fünf" color="#38adcf"  > 
-            
         </Frame>
-        <TextComp name="Video Wall" position={[9,textYPos,-146]} rotation={[0, 0.15, 0]} />
+        {/* <TextComp name="Fünf" position={[9,textYPos,-146]} rotation={[0, 0.15, 0]} /> */}
+        <Text ref={textRef} position={titlePosition.title5} rotation={[0, -0.2, 0]}>
+            Fünf            
+            <meshBasicMaterial color="grey" opacity={opacity.title5} toneMapped={false} />
+        </Text>
 
         {/* Sechstes Projekt (leer) */}
         <Frame position={[41,1.8,-213]} name="sechs" color="#38adcf" > 
-            
         </Frame>
-        <TextComp name="Sechs" position={[40.5,textYPos,-191]} rotation={[0, -0.1, 0]} />
-
+        {/* <TextComp name="Sechs" position={[40.5,textYPos,-191]} rotation={[0, -0.1, 0]} /> */}
+        <Text ref={textRef} position={titlePosition.title6} rotation={[0, -0.2, 0]}>
+            Sechs            
+            <meshBasicMaterial color="grey" opacity={opacity.title6} toneMapped={false} />
+        </Text>
+    
         {/* Siebtes Projekt (leer) */}
         <Frame position={[30,2.0,-248]} name="sieben" color="#38adcf" > 
-            
         </Frame>
         <TextComp name="Sieben" position={[29,textYPos,-222]} rotation={[0, 0.25, 0]} />
+        <Text ref={textRef} position={titlePosition.title7} rotation={[0, -0.2, 0]}>
+            Sechs            
+            <meshBasicMaterial color="grey" opacity={opacity.title7} toneMapped={false} />
+        </Text>
 
         {!cameraRoad && active === null && <OrbitControls />}
         {/* Camera */}
         {active === null && 
         <>
-        <PerspectiveCamera fov={35} near={0.4} far={cameraRoad ? 39 : 600} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} />
-        <group position-y={-1.8}>
-            <mesh>
-                <extrudeGeometry
-                args={[
-                    shape,
-                    {
-                    steps: LINE_NB_POINTS,
-                    bevelEnabled: true,
-                    extrudePath: curve,
-                    curveSegments: 50,
-                    bevelThickness: 10
-                    },
-                ]} />
-                <meshStandardMaterial color={"white"} opacity={0.2} transparent />
-            </mesh>
+            <PerspectiveCamera fov={35} near={0.4} far={cameraRoad ? 37 : 600} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} />
+            <group position-y={-1.8}>
+                <mesh>
+                    <extrudeGeometry
+                    args={[ shape, { steps: LINE_NB_POINTS, bevelEnabled: true, extrudePath: curve,curveSegments: 50, bevelThickness: 10 },]} />
+                    <meshStandardMaterial color={"white"} opacity={0.2} transparent />
+                </mesh>
             </group>
-            </>
+        </>
         }
-        {/* PLAYER  */}
         {/* Player muss immer aktiv sein, um nach Portal wieder an selbe Stelle zu gelangen */}
         {/* <PlayerRoad active={active} setBackToStart={setBackToStart} backToStart={backToStart} cameraRoad={cameraRoad} /> */}
-        </>
-        )
-    
+    </>
+    )
 };

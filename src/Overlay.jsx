@@ -14,7 +14,7 @@ export default function Overlay({cameraRoad, onToggleCameraRoad, backToStart, ha
       const handleKeyDown = (event) => {
           if (event.key === 'Enter') {
             setActive(null); // Set the active state back to null
-            setHovered(false)
+            setHovered(null)
           }
       };
       console.log("actvie" + active)
@@ -28,7 +28,7 @@ export default function Overlay({cameraRoad, onToggleCameraRoad, backToStart, ha
 
       const handleBackToRoadClick = () => {
         setActive(null); // Set the active state back to null
-        setHovered(false)
+        setHovered(null)
     };
 
     return (

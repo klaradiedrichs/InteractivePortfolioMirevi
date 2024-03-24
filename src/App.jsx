@@ -38,14 +38,10 @@ function App() {
         <Canvas shadows>
               {/* <Perf position='top-right'/> */}
               <Experience setBackToStart={setBackToStart} backToStart={backToStart} cameraRoad={cameraRoad}/>
-              {/* <FraktaleSphere /> */}
-              {/* <WallExp /> */}
         </Canvas>
         </KeyboardControls>
-        <Overlay cameraRoad={cameraRoad} onToggleCameraRoad={handleToggleCameraRoad} backToStart={backToStart} handleStart={handleStart}/>
-        
+        <Overlay cameraRoad={cameraRoad} onToggleCameraRoad={handleToggleCameraRoad} backToStart={backToStart} handleStart={handleStart}/> 
     </>
-      
   )
 }
 

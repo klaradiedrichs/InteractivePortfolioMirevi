@@ -1,41 +1,42 @@
-import {
-CameraControls,
-    Environment,
-    MeshPortalMaterial,
-    RoundedBox,
-    Text, Stage,
-    useCursor,
-    useTexture, OrbitControls, Html, useVideoTexture
-  } from "@react-three/drei";
+import { CameraControls, Environment,MeshPortalMaterial,RoundedBox,Text, Stage,useCursor,useTexture, OrbitControls, Html, useVideoTexture} from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Button } from "r3dy";
 import { easing } from "maath";
 import { useEffect, useRef, useState } from "react";
 import { useStore } from './stores/useStore';
-
 import * as THREE from "three";
+import { useSpring, animated } from '@react-spring/three'
+
 
 const Frame = ({children,name,color,spherePos,...props}) => {
 
   const setActive = useStore((state) => state.setActive);
   const setClickedFrame = useStore((state) => state.setClickedFrame);
   const active = useStore((state) => state.active);
-  const clickedFrame = useStore((state) => state.clickedFrame);
-  
+  const [boxactive, setBoxActive] = useState(false);
+  const {scale} = useSpring({ scale: boxactive ? 0.6 : 1})
+  const myMesh = useRef();
 
   const [hovered,setHovered] = useState(false)
-  // const [clicked, setClicked] = useState(false)
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+          setHovered(false)
+        }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+        document.removeEventListener('keydown', handleKeyDown);
+    };
+}, []);
 
   // enter Portal: 
   const handleRoundedBoxDoubleClick = () => {
     setClickedFrame(name);
-    setActive(active === name ? null : name);
-  };
-
-  const handleBackClick = () => {
-    setHovered(false);
-    setClicked(false);
-    setActive(null);
+    setActive(name);
   };
 
   const portalMaterial = useRef();
@@ -85,16 +86,26 @@ const Frame = ({children,name,color,spherePos,...props}) => {
         <mesh onClick={handleRoundedBoxDoubleClick} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} anchorY="bottom" position={[0, -3.8, 0]}>
             <Button text="EXPLORE" color="black" onPointerOver="#ffffff" font="fonts/PlayfairDisplay-Regular.ttf" scale={0.3} />
         </mesh>
+
         {/* Fenster für Poster: */}
-        <RoundedBox onPointerOver={() => setHovered(false)} args={[11,6.7,0.2]} radius={0.2}>
-          {/* hier wird Video Texture sein */}
+        {/* <animated.mesh>
+        <RoundedBox ref={myMesh} onClick={() => setBoxActive(!boxactive)} args={[11,6.7,0.2]} scale={scale} radius={0.2}>
           <meshPhongMaterial color="#DDBAC7" />
         </RoundedBox>
+        </animated.mesh> */}
+
+        <animated.mesh
+              onPointerOver={() => setBoxActive(true)}
+              onPointerOut={() => setBoxActive(false)}
+              ref={myMesh} scale={scale}>
+              <planeGeometry args={[11,6.7]}/>
+              <meshPhongMaterial color="royalblue" />
+          </animated.mesh>
         </>
       }
 
       {/* Fenster für Portal: */}
-      {hovered && (
+      {hovered  && (
       <>
       
       <RoundedBox
@@ -113,6 +124,6 @@ const Frame = ({children,name,color,spherePos,...props}) => {
   
 };
 
-
-  export default Frame; 
+export default Frame; 
+  
   
