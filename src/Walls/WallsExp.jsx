@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useTexture, Text, Html, MeshReflectorMaterial, PointerLockControls, useVideoTexture, Environment } from '@react-three/drei';
+import { useHelper, useTexture, Text, Html, MeshReflectorMaterial, PointerLockControls, useVideoTexture, Environment } from '@react-three/drei';
 import { Perf } from 'r3f-perf';
 import { useControls } from 'leva';
 import { Physics } from '@react-three/rapier';
@@ -11,6 +11,9 @@ import PLC from './PointerLockControls';
 
 export default function Experience() {
  
+  const directionalLight = useRef()
+  useHelper(directionalLight, THREE.DirectionalLightHelper, 1)
+
   const initialVideoStates = {
     plane1: false,
     plane2: false,
@@ -69,7 +72,7 @@ export default function Experience() {
     const cameraPos = cameraRef.current.position;
 
     // Define the range within which the video should start playing
-    const range = 14;
+    const range = 12;
     // Check the distance of the camera from each plane and toggle video playing state accordingly
     Object.entries(videoPlaying).forEach(([plane, playing]) => {
       const distance = cameraPos.distanceTo(planePositions[plane]);
@@ -87,23 +90,13 @@ export default function Experience() {
   return (
     <>
  
-      <directionalLight castShadow position={[1, 2, 3]} intensity={1.5} />
-      <color attach="background" args={['#050505']} />
-      <mesh position-z={-10} rotation={[-Math.PI / 2, 0, 0]}>
+      <directionalLight ref={directionalLight} castShadow position={[1, 6, 3]} intensity={1.5} />
+      <Environment preset='night' background blur={0.5} />
+      {/* <color attach="background" args={['#eeeeee']} /> */}
+      <mesh receiveShadow position-z={-10} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[70, 50]} />
-        <MeshReflectorMaterial
-          blur={[300, 100]}
-          resolution={2048}
-          mixBlur={1}
-          mixStrength={80}
-          depthScale={1.2}
-          minDepthThreshold={0.4}
-          maxDepthThreshold={1.4}
-          color="#050505"
-          metalness={0.5}
-        />
+        <meshStandardMaterial color="#A69177" opacity={0.5} transparent/>
       </mesh>
-      <Environment preset="night" />
 
         {/* <Html position={[0, 2, 0]}>
           <div className="top-3" style={{ textAlign: 'center', color: 'white', fontSize: '20px', opacity: 0.5 }}>
@@ -126,7 +119,7 @@ export default function Experience() {
        <PlaneWithVideo url="M09-1317.mp4" image="textures/test.jpg" position={planePositions.plane8} rotation={[0, 1.7, 0]} playing={videoPlaying['plane8']} />
 
        
-      <PerspectiveCamera ref={cameraRef} makeDefault fov={45} position-y={2} />
+      <PerspectiveCamera ref={cameraRef} makeDefault fov={40} position-y={2} />
       <PLC enabled={isWallExperienceActive} />
     </>
   );

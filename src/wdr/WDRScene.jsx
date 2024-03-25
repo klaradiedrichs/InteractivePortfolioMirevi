@@ -23,11 +23,12 @@ export default function Experience() {
 
   return (
     <>
-        <OrbitControls target={[-1,1.8,-84]}/>
+        
         <Environment preset='night' background blur={0.5} />
         {/* Earth Modell */}
         {!virtualGame && !generationSpeaks && (
         <>
+        <OrbitControls target={[-1,1.8,-84]}/>
         <group ref={group} position={[0, 1, 0]} scale={1.5}>
             <primitive object={scene} />
         </group>
@@ -45,8 +46,8 @@ export default function Experience() {
         <group position-x={7} position-z={3}>
             <Text fontSize={0.3}>Erlebe die Bedrohung der Meere</Text>
             <mesh onClick={handleGame} position={[0, -2, 0]}>
-            <Button text="Virtuelles Game starten"  color="black" onPointerOver="#ffffff" font="fonts/PlayfairDisplay-Regular.ttf" scale={0.3} />
-        </mesh>
+                <Button text="Virtuelles Game starten"  color="black" onPointerOver="#ffffff" font="fonts/PlayfairDisplay-Regular.ttf" scale={0.3} />
+            </mesh>
         </group>
         </>
         )}

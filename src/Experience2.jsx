@@ -123,8 +123,8 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
     useFrame(() => {
         if(cameraRoad && !backToStart && active == null){
 
-        const cameraPos = cameraRef.current.position;
-        const range = 17;
+        // const cameraPos = cameraRef.current.position;
+        // const range = 17;
         // Object.entries(titlePosition).forEach(([title, position]) => {
         //     const distance = cameraPos.distanceTo(position);
         //     let newOpacity;

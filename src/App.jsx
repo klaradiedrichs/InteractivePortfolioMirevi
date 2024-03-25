@@ -8,7 +8,7 @@ import {KeyboardControls, Environment, PerspectiveCamera} from "@react-three/dre
 import Overlay from './Overlay';
 import { Perf } from 'r3f-perf';
 import Experience from './Experience2';
-
+import WallExp from './Walls/WallsExp';
 function App() {
 
   const [cameraRoad, setCameraRoad] = useState(true);
@@ -38,6 +38,7 @@ function App() {
         <Canvas shadows>
               {/* <Perf position='top-right'/> */}
               <Experience setBackToStart={setBackToStart} backToStart={backToStart} cameraRoad={cameraRoad}/>
+              {/* <WallExp /> */}
         </Canvas>
         </KeyboardControls>
         <Overlay cameraRoad={cameraRoad} onToggleCameraRoad={handleToggleCameraRoad} backToStart={backToStart} handleStart={handleStart}/> 
