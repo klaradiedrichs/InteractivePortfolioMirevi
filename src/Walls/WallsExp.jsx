@@ -19,7 +19,7 @@ export default function Experience() {
     plane2: false,
     plane3: false,
     plane4: false,
-    plane5: true,
+    plane5: false,
     plane6: false,
     plane7: false,
     plane8: false,
@@ -39,10 +39,10 @@ export default function Experience() {
   const planePositions = {
     plane1: new THREE.Vector3(19, positiony, 1.5),
     plane2: new THREE.Vector3(19, positiony, -10),
-    plane3: new THREE.Vector3(15,positiony,-20),
+    plane3: new THREE.Vector3(14.5,positiony,-19.5),
     plane4: new THREE.Vector3(5.5,positiony,-25),
     plane5: new THREE.Vector3(-5.5,positiony,-25),
-    plane6: new THREE.Vector3(-15,positiony,-20),
+    plane6: new THREE.Vector3(-14.5,positiony,-19.5),
     plane7: new THREE.Vector3(-19,positiony,-10),
     plane8: new THREE.Vector3(-19,positiony,1.5),
     // Add more planes as needed
@@ -109,53 +109,67 @@ export default function Experience() {
         <MeshReflectorMaterial resolution={512} blur={[1000, 1000]} mixBlur={1} mirror={0.5} color="black" />
        </mesh> */}
        {/* Render planes with videos */}
-       <PlaneWithVideo url="M09-1317.mp4" image="textures/test.jpg" position={planePositions.plane1} rotation={[0, -1.7, 0]} playing={videoPlaying['plane1']} />
-       <PlaneWithVideo url="M09-1317.mp4" image="textures/test.jpg" position={planePositions.plane2} rotation={[0, -1.4, 0]} playing={videoPlaying['plane2']} />
-       <PlaneWithVideo url="M09-1317.mp4" image="textures/test.jpg" position={planePositions.plane3} rotation={[0, -0.85, 0]} playing={videoPlaying['plane3']} />
-       <PlaneWithVideo url="M09-1317.mp4" image="textures/test.jpg" position={planePositions.plane4} rotation={[0, -0.25, 0]} playing={videoPlaying['plane4']} />
-       <PlaneWithVideo url="M09-1317.mp4" image="textures/test.jpg" position={planePositions.plane5} rotation={[0, 0.25, 0]} playing={videoPlaying['plane5']} />
-       <PlaneWithVideo url="M09-1317.mp4" image="textures/test.jpg" position={planePositions.plane6} rotation={[0, 0.85, 0]} playing={videoPlaying['plane6']} />
-       <PlaneWithVideo url="M09-1317.mp4" image="textures/test.jpg" position={planePositions.plane7} rotation={[0, 1.4, 0]} playing={videoPlaying['plane7']} />
-       <PlaneWithVideo url="M09-1317.mp4" image="textures/test.jpg" position={planePositions.plane8} rotation={[0, 1.7, 0]} playing={videoPlaying['plane8']} />
+       <PlaneWithVideo name="Aquazoo" url="/videos/Aquazoo.mp4" image="textures/aquazoo.png" position={planePositions.plane1} rotation={[0, -1.7, 0]} playing={videoPlaying['plane1']} />
+       <PlaneWithVideo name="Icaros Flugsimulator" url="/videos/icaros.mp4" image="textures/test.jpg" position={planePositions.plane2} rotation={[0, -1.4, 0]} playing={videoPlaying['plane2']} />
+       <PlaneWithVideo name="AR Sound Sandbox" url="/videos/Sandkasten.mp4" image="textures/sandkasten.jpg" position={planePositions.plane3} rotation={[0, -0.87, 0]} playing={videoPlaying['plane3']} />
+       <PlaneWithVideo name="Escape Room" url="/videos/EscapeRoom.mp4" image="textures/escaperoom.png" position={planePositions.plane4} rotation={[0, -0.25, 0]} playing={videoPlaying['plane4']} />
+       <PlaneWithVideo name="Kriegskinder" url="/videos/Kriegskinder.mp4" image="textures/kriegskinder2.png" position={planePositions.plane5} rotation={[0, 0.25, 0]} playing={videoPlaying['plane5']} />
+       <PlaneWithVideo name="Walking On Walls" url="/videos/WalkingOnWalls.mp4" image="textures/walkingwalls.png" position={planePositions.plane6} rotation={[0, 0.87, 0]} playing={videoPlaying['plane6']} />
+       <PlaneWithVideo name="Aquazoo" url="M09-1317.mp4" image="textures/test.jpg" position={planePositions.plane7} rotation={[0, 1.4, 0]} playing={videoPlaying['plane7']} />
+       <PlaneWithVideo name="Aquazoo" url="M09-1317.mp4" image="textures/test.jpg" position={planePositions.plane8} rotation={[0, 1.7, 0]} playing={videoPlaying['plane8']} />
 
        
-      <PerspectiveCamera ref={cameraRef} makeDefault fov={40} position-y={2} />
+      <PerspectiveCamera ref={cameraRef} makeDefault fov={35} position-y={2} />
       <PLC enabled={isWallExperienceActive} />
     </>
   );
 }
  
-function PlaneWithVideo({ position, rotation, playing, url, image}) {
+function PlaneWithVideo({ name, position, rotation, playing, url, image}) {
 
   const scaleX = 7.8
   const scaleY = 4.5
 
   return (
     <group position={position} rotation={rotation}>
+      {/* Rahmen */}
       <mesh scale-x={scaleX} scale-y={scaleY}>
         <planeGeometry />
         <meshStandardMaterial color="white" opacity={0.5} transparent/>
       </mesh>
+      {playing && (
         <mesh castShadow scale-x={scaleX-0.07} scale-y={scaleY-0.07} position-z={0.01}>
           <planeGeometry />
+          
           <VideoMaterial url={url} image={image} playing={playing}/>
-          <Text fontSize={0.05} font="fonts/PlayfairDisplay-Regular.ttf" position-y={0.54} position-x={-0.31} color="grey">
-            IQAROS
-          </Text>
         </mesh>
+      )}
+      {!playing && (
+        <mesh castShadow scale-x={scaleX-0.07} scale-y={scaleY-0.07} position-z={0.01}>
+        <planeGeometry />
+        
+        <Fallback image={image}/>
+        <Text font="fonts/PlayfairDisplay-Regular.ttf" scale-x={0.6} fontSize={0.15} position-z={0.01} position-x={0}>
+          {name}
+          <meshBasicMaterial color="black" opacity={0.7} transparent/>
+        </Text>
+      </mesh>
+      )}
     </group>
   );
 }
 
-function VideoMaterial({ url,image , playing }) {
+function VideoMaterial({ url}) {
   const texture = useVideoTexture(url);
+
+    return <meshBasicMaterial map={texture} toneMapped={false} side={THREE.DoubleSide} />;
+    
+
+}
+function Fallback({ image }) {
   const img = useTexture(image);
 
-    if(playing){
-    return <meshBasicMaterial map={texture} toneMapped={false} side={THREE.DoubleSide} />;
-    }
-    else {
-      return <meshBasicMaterial map={img} toneMapped={false} side={THREE.DoubleSide} />;
-    }
+      // standbild
+      return <meshBasicMaterial map={img} toneMapped={false} side={THREE.DoubleSide} opacity={0.5} transparent />;
 
 }

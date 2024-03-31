@@ -1,4 +1,4 @@
-import { CameraControls, Environment,MeshPortalMaterial,RoundedBox,Text, Stage,useCursor,useTexture, OrbitControls, Html, useVideoTexture} from "@react-three/drei";
+import { CameraControls, Environment,MeshPortalMaterial,RoundedBox,Text, Stage,useCursor,useTexture, OrbitControls, Html, useVideoTexture, Center} from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Button } from "r3dy";
 import { easing } from "maath";
@@ -6,9 +6,13 @@ import { useEffect, useRef, useState } from "react";
 import { useStore } from './stores/useStore';
 import * as THREE from "three";
 import { useSpring, animated } from '@react-spring/three'
+import projectsData from './projectinformation.json'; // Assuming your JSON data is stored in a file named 'projects.json'
 
 
 const Frame = ({children,name,color,spherePos,...props}) => {
+
+  const project = projectsData.projects.find(project => project.title === name);
+  console.log("Projects:", project); // Log the projects data to see if it contains the expected data
 
   const setActive = useStore((state) => state.setActive);
   const setClickedFrame = useStore((state) => state.setClickedFrame);
@@ -59,47 +63,40 @@ const Frame = ({children,name,color,spherePos,...props}) => {
       {active === null && 
         <>
         {/* Infos */}
-        <group position={[0,0,0.02]}>
-          {/* <mesh scale={[2,4,0]} position-z={-0.01}>
-            <planeGeometry/>
-            <meshBasicMaterial color={"white"} opacity={0.2} transparent/>
-          </mesh> */}
-          {/*Titel  */}
-          {/* <Text font="fonts/PlayfairDisplay-Regular.ttf" fontSize={0.3} position={[-0.4,0.8,0]}>
-            {name}
-            <meshBasicMaterial color="white" toneMapped={false} />
-          </Text> */}
-          {/* Jahr */}
-          <Text fontSize={0.3} position={[-4.2, 3.55, 0]} anchorX={1}>
-            {name}
+          {/* Titel */}
+          <Text color="gray" font="fonts/static/Montserrat-Light.ttf" fontSize={0.3} position={[-5.5, 3.55, 0.02]} anchorX="left">
+            {project.title}
             <meshBasicMaterial color="white" toneMapped={false} />
           </Text>
+          {/* weitere Informationen */}
+          <group position={[-5.6, 3.1, 0.02]}>
+            <Text color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.3} anchorX="right">
+              {project.year}
+              <meshBasicMaterial color="white" toneMapped={false} />
+            </Text>    
+            <Text color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.3} position-y={-0.3} anchorX="right">
+              {project.owner}
+              <meshBasicMaterial color="white" toneMapped={false} />
+            </Text>   
+          </group>
+          
 
           {/* <Text fontSize={0.3} position={[-5.5,3,0]}>
             {name}
             <meshBasicMaterial color="white" toneMapped={false} />
           </Text>   */}
-        </group>
-        
         
         {/* Buttons */}
         <mesh onClick={handleRoundedBoxDoubleClick} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} anchorY="bottom" position={[0, -3.8, 0]}>
             <Button text="EXPLORE" color="black" onPointerOver="#ffffff" font="fonts/PlayfairDisplay-Regular.ttf" scale={0.3} />
         </mesh>
 
-        {/* Fenster für Poster: */}
-        {/* <animated.mesh>
-        <RoundedBox ref={myMesh} onClick={() => setBoxActive(!boxactive)} args={[11,6.7,0.2]} scale={scale} radius={0.2}>
-          <meshPhongMaterial color="#DDBAC7" />
-        </RoundedBox>
-        </animated.mesh> */}
-
         <animated.mesh
               onPointerOver={() => setBoxActive(true)}
               onPointerOut={() => setBoxActive(false)}
               ref={myMesh} scale={scale}>
               <planeGeometry args={[11,6.7]}/>
-              <meshPhongMaterial color="royalblue" />
+              <meshStandardMaterial color="gray" />
           </animated.mesh>
         </>
       }
@@ -112,7 +109,6 @@ const Frame = ({children,name,color,spherePos,...props}) => {
         args={[9.5, 5.5, 0.2]} position-z={0.1}>
         <MeshPortalMaterial ref={portalMaterial} side={THREE.DoubleSide}>
           <ambientLight intensity={0.5} />
-          {/* <Environment preset="dawn" background blur={0.5}></Environment> */}
           {/*Individuelle Objekte */}
           {children}
         </MeshPortalMaterial>

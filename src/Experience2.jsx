@@ -1,4 +1,4 @@
-import { Environment, useTexture, Svg,Html, Stage, Float, Text, ContactShadows, MeshReflectorMaterial, Sparkles, OrbitControls, CameraControls, PerspectiveCamera} from '@react-three/drei'
+import { Environment, useTexture, Svg,Html, Center, Stage, Float, Text3D, Text, ContactShadows, MeshReflectorMaterial, Sparkles, OrbitControls, CameraControls, PerspectiveCamera} from '@react-three/drei'
 import React, { useState, useEffect, useRef,useMemo } from "react";
 import PlayerRoad from './PlayerRoad';
 import * as THREE from "three";
@@ -188,73 +188,45 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
         {/* PROJEKTE */}
 
         {/* Erstes Projekt (Fraktale) */}
-        <Frame position={[1,2,-5]} name="persona fractalis ||" color="#38adcf" > 
+        <Frame position={[1,2,-5]} name="persona fractalis" color="#38adcf" > 
             <FraktaleSphere />
             {/* <WDRScene /> */} 
         </Frame>
-        <Text ref={textRef} position={titlePosition.title1}>
-            persona fractalis           
-            <meshBasicMaterial color="grey" opacity={cameraRoad ? opacity.title1 : 1} toneMapped={false} />
-        </Text>
-        {/* <TextComp name="fraktale" position={[0.7,textYPos,26]} rotation={[0, 0, 0]}/> */}
+        <TextComp name="persona fractalis" position={titlePosition.title1} rotation={[0, 0, 0]}/>
 
         {/* Zweites Projekt (kin) */}
-        <Text ref={textRef} position={titlePosition.title2}>
-            Kin_
-            <meshBasicMaterial color="grey" opacity={cameraRoad ? opacity.title2 : 1} toneMapped={false} />
-        </Text>
-        <Frame position={[22.5,1.8,-43]} name="Kin" color="#38adcf"  > 
+        <Frame position={[24,1.8,-43]} name="kin_" color="#38adcf"  > 
             <Kin />
         </Frame>
-        {/* <TextComp name="Kin" position={[23,textYPos,-20]} rotation={[0, -0.2, 0]}/> */}
+        <TextComp name="Kin" position={titlePosition.title2} rotation={[0, -0.2, 0]}/>
         
         {/* Drittes Projekt (Klima) */}
         <Frame position={[-2.5,1.8,-81]} name="WDR Klima" color="#38adcf" > 
             <WDRScene />
         </Frame>
-        {/* <TextComp name="WDR Klima" position={[-3,textYPos,-59]} rotation={[0, 0.1, 0]}/> */}
-        <Text ref={textRef} position={titlePosition.title3} rotation={[0, 0.1, 0]}>
-            WDR
-            <meshBasicMaterial color="grey" opacity={opacity.title3} toneMapped={false} />
-        </Text>
-
+        <TextComp name="WDR Klima" position={titlePosition.title3} rotation={[0, 0.1, 0]}/>
+        
         {/* Viertes Projekt (Wall)  */}
-        <Frame position={[31,1.8,-123]} name="WallExperience" color="#38adcf" > 
+        <Frame position={[31,1.8,-123]} name="Video Wall" color="#38adcf" > 
             <WallExperience/>
         </Frame>
-        {/* <TextComp name="Video Wall" position={titlePosition.title4}  /> */}
-        <Text ref={textRef} position={titlePosition.title4} rotation={[0, -0.2, 0]}>
-            Video Wall
-            <meshBasicMaterial color="grey" opacity={opacity.title4} toneMapped={false} />
-        </Text>
-
+        <TextComp name="Video Wall" position={titlePosition.title4} rotation={[0, -0.2, 0]} />
+        
         {/* Fünftes Projekt (leer) */}
-        <Frame position={[11,1.8,-170]} name="fünf" color="#38adcf"  > 
+        <Frame position={[11,1.8,-170]} name="Fünf" color="#38adcf"  > 
         </Frame>
-        {/* <TextComp name="Fünf" position={[9,textYPos,-146]} rotation={[0, 0.15, 0]} /> */}
-        <Text ref={textRef} position={titlePosition.title5} rotation={[0, -0.2, 0]}>
-            Fünf            
-            <meshBasicMaterial color="grey" opacity={opacity.title5} toneMapped={false} />
-        </Text>
-
+        <TextComp name="Fünf" position={titlePosition.title5} rotation={[0, -0.2, 0]} />
+        
         {/* Sechstes Projekt (leer) */}
-        <Frame position={[41,1.8,-213]} name="sechs" color="#38adcf" > 
+        <Frame position={[41,1.8,-213]} name="Sechs" color="#38adcf" > 
         </Frame>
-        {/* <TextComp name="Sechs" position={[40.5,textYPos,-191]} rotation={[0, -0.1, 0]} /> */}
-        <Text ref={textRef} position={titlePosition.title6} rotation={[0, -0.2, 0]}>
-            Sechs            
-            <meshBasicMaterial color="grey" opacity={opacity.title6} toneMapped={false} />
-        </Text>
-    
+        <TextComp name="Sechs" position={titlePosition.title6} rotation={[0, -0.2, 0]} />
+        
         {/* Siebtes Projekt (leer) */}
-        <Frame position={[30,2.0,-248]} name="sieben" color="#38adcf" > 
+        <Frame position={[30,2.0,-248]} name="Sieben" color="#38adcf" > 
         </Frame>
-        <TextComp name="Sieben" position={[29,textYPos,-222]} rotation={[0, 0.25, 0]} />
-        <Text ref={textRef} position={titlePosition.title7} rotation={[0, -0.2, 0]}>
-            Sechs            
-            <meshBasicMaterial color="grey" opacity={opacity.title7} toneMapped={false} />
-        </Text>
-
+        <TextComp name="Sieben" position={titlePosition.title7} rotation={[0, -0.2, 0]} />
+        
         {!cameraRoad && active === null && <OrbitControls />}
         {/* Camera */}
         {active === null && 

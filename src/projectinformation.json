@@ -1,0 +1,75 @@
+{
+    "projects": [
+      {
+        "title": "persona fractalis",
+        "year": 2020,
+        "owner": "hochschule düsseldorf",
+        "support": ["Jane Smith", "Mike Johnson"],
+        "features": [
+          {"feature": "Feature 1", "description": "Description of feature 1"},
+          {"feature": "Feature 2", "description": "Description of feature 2"}
+        ]
+      },
+      {
+        "title": "kin_",
+        "year": 2021,
+        "owner": "Charlotte Triebus",
+        "support": ["Bob Brown"],
+        "features": [
+          {"feature": "Feature A", "description": "Description of feature A"},
+          {"feature": "Feature B", "description": "Description of feature B"}
+        ]
+      },    
+      {
+        "title": "WDR Klima",
+        "year": 2022,
+        "owner": "Alice Smith",
+        "support": ["Bob Brown"],
+        "features": [
+          {"feature": "Feature A", "description": "Description of feature A"},
+          {"feature": "Feature B", "description": "Description of feature B"}
+        ]
+      },    
+      {
+        "title": "Video Wall",
+        "year": 2021,
+        "owner": "Alice Smith",
+        "support": ["Bob Brown"],
+        "features": [
+          {"feature": "Feature A", "description": "Description of feature A"},
+          {"feature": "Feature B", "description": "Description of feature B"}
+        ]
+      },    
+      {
+        "title": "Fünf",
+        "year": 2021,
+        "owner": "Alice Smith",
+        "support": ["Bob Brown"],
+        "features": [
+          {"feature": "Feature A", "description": "Description of feature A"},
+          {"feature": "Feature B", "description": "Description of feature B"}
+        ]
+      },    
+      {
+        "title": "Sechs",
+        "year": 2021,
+        "owner": "Alice Smith",
+        "support": ["Bob Brown"],
+        "features": [
+          {"feature": "Feature A", "description": "Description of feature A"},
+          {"feature": "Feature B", "description": "Description of feature B"}
+        ]
+      },    
+      {
+        "title": "Sieben",
+        "year": 2021,
+        "owner": "Alice Smith",
+        "support": ["Bob Brown"],
+        "features": [
+          {"feature": "Feature A", "description": "Description of feature A"},
+          {"feature": "Feature B", "description": "Description of feature B"}
+        ]
+      }    
+    ]
+  }
+  
