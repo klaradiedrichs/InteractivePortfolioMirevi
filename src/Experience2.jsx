@@ -188,42 +188,42 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
         {/* PROJEKTE */}
 
         {/* Erstes Projekt (Fraktale) */}
-        <Frame position={[1,2,-5]} name="persona fractalis" color="#38adcf" > 
+        <Frame position={[1,2,-5]} name="persona fractalis" color="#38adcf" img="/textures/testPoster.png" > 
             <FraktaleSphere />
             {/* <WDRScene /> */} 
         </Frame>
         <TextComp name="persona fractalis" position={titlePosition.title1} rotation={[0, 0, 0]}/>
 
         {/* Zweites Projekt (kin) */}
-        <Frame position={[24,1.8,-43]} name="kin_" color="#38adcf"  > 
+        <Frame position={[24,1.8,-43]} name="kin_" color="#38adcf" img="MIREVI_logo_transparent.png" > 
             <Kin />
         </Frame>
         <TextComp name="Kin" position={titlePosition.title2} rotation={[0, -0.2, 0]}/>
         
         {/* Drittes Projekt (Klima) */}
-        <Frame position={[-2.5,1.8,-81]} name="WDR Klima" color="#38adcf" > 
+        <Frame position={[-2.5,1.8,-81]} name="WDR Klima" color="#38adcf" img="/textures/escaperoom.png" > 
             <WDRScene />
         </Frame>
         <TextComp name="WDR Klima" position={titlePosition.title3} rotation={[0, 0.1, 0]}/>
         
         {/* Viertes Projekt (Wall)  */}
-        <Frame position={[31,1.8,-123]} name="Video Wall" color="#38adcf" > 
+        <Frame position={[31,1.8,-123]} name="Video Wall" color="#38adcf" img="/textures/escaperoom.png"> 
             <WallExperience/>
         </Frame>
         <TextComp name="Video Wall" position={titlePosition.title4} rotation={[0, -0.2, 0]} />
         
         {/* Fünftes Projekt (leer) */}
-        <Frame position={[11,1.8,-170]} name="Fünf" color="#38adcf"  > 
+        <Frame position={[11,1.8,-170]} name="Fünf" color="#38adcf" img="/textures/escaperoom.png" > 
         </Frame>
         <TextComp name="Fünf" position={titlePosition.title5} rotation={[0, -0.2, 0]} />
         
         {/* Sechstes Projekt (leer) */}
-        <Frame position={[41,1.8,-213]} name="Sechs" color="#38adcf" > 
+        <Frame position={[41,1.8,-213]} name="Sechs" color="#38adcf" img="/textures/escaperoom.png"> 
         </Frame>
         <TextComp name="Sechs" position={titlePosition.title6} rotation={[0, -0.2, 0]} />
         
         {/* Siebtes Projekt (leer) */}
-        <Frame position={[30,2.0,-248]} name="Sieben" color="#38adcf" > 
+        <Frame position={[30,2.0,-248]} name="Sieben" color="#38adcf" img="/textures/escaperoom.png"> 
         </Frame>
         <TextComp name="Sieben" position={titlePosition.title7} rotation={[0, -0.2, 0]} />
         
@@ -231,7 +231,7 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
         {/* Camera */}
         {active === null && 
         <>
-            <PerspectiveCamera fov={35} near={0.4} far={cameraRoad ? 37 : 600} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} />
+            <PerspectiveCamera fov={35} near={0.4} far={cameraRoad ? 35 : 600} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} />
             <group position-y={-1.8}>
                 <mesh>
                     <extrudeGeometry

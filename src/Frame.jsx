@@ -7,21 +7,40 @@ import { useStore } from './stores/useStore';
 import * as THREE from "three";
 import { useSpring, animated } from '@react-spring/three'
 import projectsData from './projectinformation.json'; // Assuming your JSON data is stored in a file named 'projects.json'
+import FraktalePoster from './Poster/Fraktale.jsx';
+import KinPoster from './Poster/Kin.jsx';
 
+const Frame = ({children,name,color,img,spherePos,...props}) => {
 
-const Frame = ({children,name,color,spherePos,...props}) => {
+  const image = useTexture(img);
+  const portalElement = useTexture("/textures/fraktaleFensterElement.png");
+  const portalMaterial = useRef();
 
   const project = projectsData.projects.find(project => project.title === name);
-  console.log("Projects:", project); // Log the projects data to see if it contains the expected data
 
+  const [hovered,setHovered] = useState(false)
   const setActive = useStore((state) => state.setActive);
   const setClickedFrame = useStore((state) => state.setClickedFrame);
   const active = useStore((state) => state.active);
   const [boxactive, setBoxActive] = useState(false);
   const {scale} = useSpring({ scale: boxactive ? 0.6 : 1})
+  const { scale: scaleWindow } = useSpring({ 
+    scale: hovered ? 1.3 : 1,
+  });
+
   const myMesh = useRef();
 
-  const [hovered,setHovered] = useState(false)
+  const positionPortalElement = {
+    'persona fractalis': [0.9, -0.8, 0.05],
+    'kin_': [2.8, -1.9, 0.05], // Example position for 'kin_'. Adjust as needed.
+    // Add more positions for other names as needed
+  };
+
+  const sizePortalElements = {
+    'persona fractalis': [6.3, 4.7],
+    'kin_': [4.8,2.8],
+    // Add more sizes for other names as needed
+  };
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -43,7 +62,6 @@ const Frame = ({children,name,color,spherePos,...props}) => {
     setActive(name);
   };
 
-  const portalMaterial = useRef();
 
   useFrame((_state, delta) => {
     const worldOpen = active === name;
@@ -79,42 +97,47 @@ const Frame = ({children,name,color,spherePos,...props}) => {
               <meshBasicMaterial color="white" toneMapped={false} />
             </Text>   
           </group>
-          
-
-          {/* <Text fontSize={0.3} position={[-5.5,3,0]}>
-            {name}
-            <meshBasicMaterial color="white" toneMapped={false} />
-          </Text>   */}
         
         {/* Buttons */}
-        <mesh onClick={handleRoundedBoxDoubleClick} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} anchorY="bottom" position={[0, -3.8, 0]}>
+        <mesh onClick={handleRoundedBoxDoubleClick} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} anchorY="bottom" position={[0, -4.3, 0]}>
             <Button text="EXPLORE" color="black" onPointerOver="#ffffff" font="fonts/PlayfairDisplay-Regular.ttf" scale={0.3} />
         </mesh>
-
-        <animated.mesh
-              onPointerOver={() => setBoxActive(true)}
-              onPointerOut={() => setBoxActive(false)}
-              ref={myMesh} scale={scale}>
-              <planeGeometry args={[11,6.7]}/>
-              <meshStandardMaterial color="gray" />
-          </animated.mesh>
         </>
       }
+        {/* Plane */}
+        <group>
+          <mesh 
+          onPointerOver={() => active === null && setBoxActive(true)}
+          onPointerOut={() => active === null && setBoxActive(false)}>
+            <planeGeometry args={[11,6.7]} />
+            <meshBasicMaterial opacity={0.1} color="black" transparent />
+            <group>
+              <animated.mesh ref={myMesh} scale={scale} position-z={0.02} position-y={0}>
+                <planeGeometry args={[11,6.7]}/>
+                <meshBasicMaterial map={image} toneMapped={false} side={THREE.DoubleSide} opacity={0.9} transparent />;
+                {/* Fenster für Portal: */}
+                {/* {name === 'persona fractalis' ? (
+                  <FraktalePoster portalMaterial={portalMaterial} boxactive={boxactive} hovered={hovered} children={children} />
+                ) : name === 'kin_' ? (
+                  <KinPoster portalMaterial={portalMaterial} boxactive={boxactive} hovered={hovered} children={children}/>
+                ) : null} */}
 
-      {/* Fenster für Portal: */}
-      {hovered  && (
-      <>
-      
-      <RoundedBox
-        args={[9.5, 5.5, 0.2]} position-z={0.1}>
-        <MeshPortalMaterial ref={portalMaterial} side={THREE.DoubleSide}>
-          <ambientLight intensity={0.5} />
-          {/*Individuelle Objekte */}
-          {children}
-        </MeshPortalMaterial>
-      </RoundedBox>
-      </>
-      )}
+                <animated.mesh scale={scaleWindow} position={positionPortalElement[name]}>
+                    <planeGeometry args={sizePortalElements[name]}/>
+                    <meshBasicMaterial map={portalElement} toneMapped={false} />;
+                    {/* Sicht in Portal */}
+                    {hovered && (
+                        <MeshPortalMaterial ref={portalMaterial} side={THREE.DoubleSide}>
+                            <ambientLight intensity={0.5} />
+                            {/*Individuelle Objekte */}
+                            {children}
+                        </MeshPortalMaterial>
+                    )}
+                </animated.mesh>
+              </animated.mesh>
+            </group>
+          </mesh>
+        </group>  
     </group>
     )
   

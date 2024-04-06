@@ -117,7 +117,7 @@ export default function Experience() {
        <PlaneWithVideo name="Walking On Walls" url="/videos/WalkingOnWalls.mp4" image="textures/walkingwalls.png" position={planePositions.plane6} rotation={[0, 0.87, 0]} playing={videoPlaying['plane6']} />
        <PlaneWithVideo name="Kinetic Stream" url="/videos/KineticStream.mp4" image="textures/kineticStream.png" position={planePositions.plane7} rotation={[0, 1.4, 0]} playing={videoPlaying['plane7']} />
        <PlaneWithVideo name="Acting Spheres" url="M09-1317.mp4" image="textures/actingSpheres_screenshot.png" position={planePositions.plane8} rotation={[0, 1.7, 0]} playing={videoPlaying['plane8']} />
-
+       
        
       <PerspectiveCamera ref={cameraRef} makeDefault fov={35} position-y={2} />
       <PLC enabled={isWallExperienceActive} />

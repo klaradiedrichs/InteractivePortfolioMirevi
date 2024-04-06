@@ -1,4 +1,4 @@
-import {Environment, OrbitControls, useAnimations, Html } from '@react-three/drei'
+import {Environment, OrbitControls, useAnimations, Html, PerspectiveCamera } from '@react-three/drei'
 import * as THREE from "three";
 import React, { useRef, useEffect } from 'react';
 import Model1 from './Model1';
@@ -12,7 +12,8 @@ export default function Kin()
 
 return (
   <>
-    <OrbitControls target={[24, -1.5, -48]} />
+    <PerspectiveCamera fov={75} makeDefault />
+    <OrbitControls target={[0, -2, -10]} />
     <Environment preset='apartment' background blur={0.5} />
     <Model1 />
     {/* <Model2 /> */}
