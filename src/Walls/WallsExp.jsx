@@ -91,11 +91,11 @@ export default function Experience() {
     <>
  
       <directionalLight ref={directionalLight} castShadow position={[1, 6, 3]} intensity={1.5} />
-      <Environment preset='night' background blur={0.5} />
+      <Environment preset='sunset' background blur={0.5} />
       {/* <color attach="background" args={['#eeeeee']} /> */}
       <mesh receiveShadow position-z={-10} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[70, 50]} />
-        <meshStandardMaterial color="#A69177" opacity={0.5} transparent/>
+        <planeGeometry args={[100, 100]} />
+        <meshStandardMaterial color="#C1CAD7" opacity={0.5} transparent/>
       </mesh>
 
         {/* <Html position={[0, 2, 0]}>
@@ -115,8 +115,8 @@ export default function Experience() {
        <PlaneWithVideo name="Escape Room" url="/videos/EscapeRoom.mp4" image="textures/escaperoom.png" position={planePositions.plane4} rotation={[0, -0.25, 0]} playing={videoPlaying['plane4']} />
        <PlaneWithVideo name="Kriegskinder" url="/videos/Kriegskinder.mp4" image="textures/kriegskinder2.png" position={planePositions.plane5} rotation={[0, 0.25, 0]} playing={videoPlaying['plane5']} />
        <PlaneWithVideo name="Walking On Walls" url="/videos/WalkingOnWalls.mp4" image="textures/walkingwalls.png" position={planePositions.plane6} rotation={[0, 0.87, 0]} playing={videoPlaying['plane6']} />
-       <PlaneWithVideo name="Aquazoo" url="M09-1317.mp4" image="textures/test.jpg" position={planePositions.plane7} rotation={[0, 1.4, 0]} playing={videoPlaying['plane7']} />
-       <PlaneWithVideo name="Aquazoo" url="M09-1317.mp4" image="textures/test.jpg" position={planePositions.plane8} rotation={[0, 1.7, 0]} playing={videoPlaying['plane8']} />
+       <PlaneWithVideo name="Kinetic Stream" url="/videos/KineticStream.mp4" image="textures/kineticStream.png" position={planePositions.plane7} rotation={[0, 1.4, 0]} playing={videoPlaying['plane7']} />
+       <PlaneWithVideo name="Acting Spheres" url="M09-1317.mp4" image="textures/actingSpheres_screenshot.png" position={planePositions.plane8} rotation={[0, 1.7, 0]} playing={videoPlaying['plane8']} />
 
        
       <PerspectiveCamera ref={cameraRef} makeDefault fov={35} position-y={2} />
@@ -151,7 +151,7 @@ function PlaneWithVideo({ name, position, rotation, playing, url, image}) {
         <Fallback image={image}/>
         <Text font="fonts/PlayfairDisplay-Regular.ttf" scale-x={0.6} fontSize={0.15} position-z={0.01} position-x={0}>
           {name}
-          <meshBasicMaterial color="black" opacity={0.7} transparent/>
+          <meshBasicMaterial color="black" opacity={0.4} transparent/>
         </Text>
       </mesh>
       )}
