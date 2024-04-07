@@ -68,6 +68,7 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
     return shape;
     }, [curve]);
     
+    const logo = useTexture("MIREVI_logo_glass.png")
     const cameraRef = useRef();
     // Camera Position -> safe in useState to be able to change depending on CameraRoad
     const [initialYPos, setinitialYPos] = useState();
@@ -91,6 +92,31 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
         title7: new THREE.Vector3(29,textYPos,-222),
     };
 
+    const framePosition = {
+        frame1: new THREE.Vector3(1, 2, -5),
+        frame2: new THREE.Vector3(24, 1.8, -43),
+        frame3: new THREE.Vector3(-2.5, 1.8, -81), 
+        frame4: new THREE.Vector3(31, 1.8, -123),
+        frame5: new THREE.Vector3(11, 1.8, -170), 
+        frame6: new THREE.Vector3(41, 1.8, -213),
+        frame7: new THREE.Vector3(30, 2.0, -248), 
+        // Add more frames as needed
+      };
+    
+      const closeToFrame = {
+        frame1: false,
+        frame2: false,
+        frame3: false,
+        frame4: false,
+        frame5: false,
+        frame6: false,
+        frame7: false,
+        // Add more planes as needed
+      };
+
+      const [showInformation, setShowInformation] = useState(closeToFrame); // State to track video playing status for each plane
+
+
     // called when user scrolls  
     const handleWheel = (e) => {
         const delta = e.deltaY;
@@ -102,7 +128,7 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
     // runs on every render or when cameraRoad changes
     useEffect(() => {
         
-        if(cameraRoad && !backToStart){
+        if(cameraRoad && !backToStart){                   
         window.addEventListener("wheel", handleWheel);
         // go back to CameraRoad Position:
         setInitalXPos(-4);
@@ -119,27 +145,29 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
         
     }, [cameraRoad, backToStart]);
 
+    const toggleShow = (frame) => {
+        setShowInformation((prevState) => ({
+          ...prevState,
+          [frame]: !prevState[frame],
+        }));
+      };
     // runs every frame
     useFrame(() => {
         if(cameraRoad && !backToStart && active == null){
 
-        // const cameraPos = cameraRef.current.position;
-        // const range = 17;
-        // Object.entries(titlePosition).forEach(([title, position]) => {
-        //     const distance = cameraPos.distanceTo(position);
-        //     let newOpacity;
-        //     // Change opacity based on distance
-        //     if (distance < range) {
-        //         newOpacity = Math.min(opacity[title] + 0.05, 0.6); // Increase opacity up to 0.6 If camera is within range of title position
-        //     } else {
-        //         newOpacity = Math.max(opacity[title] - 0.05, 0); // Decrease opacity to 0 if camera is outside the range of title position
-        //     }
-        //     // Update opacity for the current title
-        //     setOpacity((prevOpacity) => ({
-        //         ...prevOpacity,
-        //         [title]: newOpacity,
-        //     }));
-        // });
+        const cameraPos = cameraRef.current.position;
+        const range = 25;
+        Object.entries(showInformation).forEach(([frame, show]) => {
+            const distance = cameraPos.distanceTo(framePosition[frame]);
+
+            if (distance <= range && !show) {
+                toggleShow(frame)
+            } else if (distance > range && show) {
+                toggleShow(frame)
+            }
+            
+        });
+
         // console.log("Pos X" + cameraRef.current.position.x)
         // move Camera on Curve Calculation:
         // Clamp the scroll offset to ensure it stays within the valid range of curve points
@@ -187,43 +215,44 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
         
         {/* PROJEKTE */}
 
+      
         {/* Erstes Projekt (Fraktale) */}
-        <Frame position={[1,2,-5]} name="persona fractalis" color="#38adcf" img="/textures/testPoster.png" > 
+        <Frame position={framePosition.frame1} name="persona fractalis" color="#38adcf" img="/textures/testPoster.png" show={showInformation['frame1']} > 
             <FraktaleSphere />
             {/* <WDRScene /> */} 
         </Frame>
         <TextComp name="persona fractalis" position={titlePosition.title1} rotation={[0, 0, 0]}/>
 
         {/* Zweites Projekt (kin) */}
-        <Frame position={[24,1.8,-43]} name="kin_" color="#38adcf" img="MIREVI_logo_transparent.png" > 
+        <Frame position={framePosition.frame2} name="kin_" color="#38adcf" img="MIREVI_logo_transparent.png" show={showInformation['frame2']} > 
             <Kin />
         </Frame>
         <TextComp name="Kin" position={titlePosition.title2} rotation={[0, -0.2, 0]}/>
         
         {/* Drittes Projekt (Klima) */}
-        <Frame position={[-2.5,1.8,-81]} name="WDR Klima" color="#38adcf" img="/textures/escaperoom.png" > 
+        <Frame position={framePosition.frame3} name="WDR Klima" color="#38adcf" img="/textures/escaperoom.png" show={showInformation['frame3']} > 
             <WDRScene />
         </Frame>
         <TextComp name="WDR Klima" position={titlePosition.title3} rotation={[0, 0.1, 0]}/>
         
         {/* Viertes Projekt (Wall)  */}
-        <Frame position={[31,1.8,-123]} name="Video Wall" color="#38adcf" img="/textures/escaperoom.png"> 
+        <Frame position={framePosition.frame4} name="Video Wall" color="#38adcf" img="/textures/escaperoom.png" show={showInformation['frame4']}> 
             <WallExperience/>
         </Frame>
         <TextComp name="Video Wall" position={titlePosition.title4} rotation={[0, -0.2, 0]} />
         
         {/* Fünftes Projekt (leer) */}
-        <Frame position={[11,1.8,-170]} name="Fünf" color="#38adcf" img="/textures/escaperoom.png" > 
+        <Frame position={framePosition.frame5} name="Fünf" color="#38adcf" img="/textures/escaperoom.png" show={showInformation['frame5']} > 
         </Frame>
         <TextComp name="Fünf" position={titlePosition.title5} rotation={[0, -0.2, 0]} />
         
         {/* Sechstes Projekt (leer) */}
-        <Frame position={[41,1.8,-213]} name="Sechs" color="#38adcf" img="/textures/escaperoom.png"> 
+        <Frame position={framePosition.frame6} name="Sechs" color="#38adcf" img="/textures/escaperoom.png" show={showInformation['frame6']}> 
         </Frame>
         <TextComp name="Sechs" position={titlePosition.title6} rotation={[0, -0.2, 0]} />
         
         {/* Siebtes Projekt (leer) */}
-        <Frame position={[30,2.0,-248]} name="Sieben" color="#38adcf" img="/textures/escaperoom.png"> 
+        <Frame position={framePosition.frame7} name="Sieben" color="#38adcf" img="/textures/escaperoom.png" show={showInformation['frame7']}> 
         </Frame>
         <TextComp name="Sieben" position={titlePosition.title7} rotation={[0, -0.2, 0]} />
         
