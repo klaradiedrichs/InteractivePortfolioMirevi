@@ -12,10 +12,8 @@
           "Virtual Reality",
           "Immersiv"
         ],
-        "features": [
-          {"feature": "Feature 1", "description": "Description of feature 1"},
-          {"feature": "Feature 2", "description": "Description of feature 2"}
-        ]
+        "link": "https://mirevi.de/blog/persona-fractalis-ii-2/",
+        "controls": ["Click and hold to look around"]
       },
       {
         "title": "kin_",
@@ -28,10 +26,8 @@
           "Performance",
           "Art and Culture"
         ],
-        "features": [
-          {"feature": "Feature A", "description": "Description of feature A"},
-          {"feature": "Feature B", "description": "Description of feature B"}
-        ]
+        "link": "https://mirevi.de/blog/persona-fractalis-ii-2/",
+        "controls": ["Click and hold to look around"]
       },    
       {
         "title": "WDR Klima",
@@ -44,10 +40,8 @@
           "Education",
           "Immersiv"
         ],
-        "features": [
-          {"feature": "Feature A", "description": "Description of feature A"},
-          {"feature": "Feature B", "description": "Description of feature B"}
-        ]
+        "link": "https://mirevi.de/blog/persona-fractalis-ii-2/",
+        "controls": ["Click and hold to look around"]
       },    
       {
         "title": "Video Wall",
@@ -57,9 +51,10 @@
         "tags": [
           "different Projects"
         ],
-        "features": [
-          {"feature": "Feature A", "description": "Description of feature A"},
-          {"feature": "Feature B", "description": "Description of feature B"}
+        "link": "",
+        "controls": ["Control camera with WASD or Arrow Keys",
+        "Click to look around and to determine direction",
+        "Tab 'ESC' to lock direction"
         ]
       },    
       {
@@ -70,10 +65,7 @@
         "tags": [
           ""
         ],
-        "features": [
-          {"feature": "Feature A", "description": "Description of feature A"},
-          {"feature": "Feature B", "description": "Description of feature B"}
-        ]
+        "link": ""
       },    
       {
         "title": "Sechs",
@@ -83,10 +75,7 @@
         "tags": [
           ""
         ],
-        "features": [
-          {"feature": "Feature A", "description": "Description of feature A"},
-          {"feature": "Feature B", "description": "Description of feature B"}
-        ]
+        "link": ""
       },    
       {
         "title": "Sieben",
@@ -96,10 +85,7 @@
         "tags": [
           ""
         ],
-        "features": [
-          {"feature": "Feature A", "description": "Description of feature A"},
-          {"feature": "Feature B", "description": "Description of feature B"}
-        ]
+        "link": ""
       }    
     ]
   }
