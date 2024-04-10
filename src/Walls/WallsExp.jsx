@@ -116,7 +116,7 @@ export default function Experience() {
        <PlaneWithVideo name="Kriegskinder" url="/videos/Kriegskinder.mp4" image="textures/kriegskinder2.png" position={planePositions.plane5} rotation={[0, 0.25, 0]} playing={videoPlaying['plane5']} />
        <PlaneWithVideo name="Walking On Walls" url="/videos/WalkingOnWalls.mp4" image="textures/walkingwalls.png" position={planePositions.plane6} rotation={[0, 0.87, 0]} playing={videoPlaying['plane6']} />
        <PlaneWithVideo name="Kinetic Stream" url="/videos/KineticStream.mp4" image="textures/kineticStream.png" position={planePositions.plane7} rotation={[0, 1.4, 0]} playing={videoPlaying['plane7']} />
-       <PlaneWithVideo name="Acting Spheres" url="M09-1317.mp4" image="textures/actingSpheres_screenshot.png" position={planePositions.plane8} rotation={[0, 1.7, 0]} playing={videoPlaying['plane8']} />
+       <PlaneWithVideo name="Acting Spheres" url="/videos/Acting_Spheres.mp4" image="textures/actingSpheres.png" position={planePositions.plane8} rotation={[0, 1.7, 0]} playing={videoPlaying['plane8']} />
        
        
       <PerspectiveCamera ref={cameraRef} makeDefault fov={35} position-y={2} />
@@ -151,7 +151,7 @@ function PlaneWithVideo({ name, position, rotation, playing, url, image}) {
         <Fallback image={image}/>
         <Text font="fonts/PlayfairDisplay-Regular.ttf" scale-x={0.6} fontSize={0.15} position-z={0.01} position-x={0}>
           {name}
-          <meshBasicMaterial color="black" opacity={0.4} transparent/>
+          <meshBasicMaterial color="black" opacity={0.8} transparent/>
         </Text>
       </mesh>
       )}
