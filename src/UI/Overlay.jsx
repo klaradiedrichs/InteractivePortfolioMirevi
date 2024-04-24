@@ -54,6 +54,7 @@ export default function Overlay({cameraRoad, onToggleCameraRoad, backToStart, ha
         <div className="z-[2]" tabIndex={0}>
         {active === null ? (
           <>
+          <p>Learn more about</p>
             <a href="https://mirevi.de/" target="_blank" className="absolute bottom-5 left-5 text-black hover:text-white">
               mirevi.de
             </a>

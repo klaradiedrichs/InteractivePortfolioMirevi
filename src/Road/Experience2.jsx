@@ -70,19 +70,19 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
     return shape;
     }, [curve]);
     
-    const logo = useTexture("MireviLogoNew.png")
-    const mouse = useTexture("Union.png")
+    const logo = useTexture("logoNew.png")
     const cameraRef = useRef();
     // Camera Position -> safe in useState to be able to change depending on CameraRoad
     const [initialYPos, setinitialYPos] = useState();
     const [initialZPos, setInitialZPos] = useState(1)
     const [initialXPos, setInitalXPos] = useState(0)
+    const [linkHovered, setLinkHovered] = useState(false);
     // scrollPosition
     const [scrollOffset, setScrollOffset] = useState(0);
     const active = useStore((state) => state.active);
     const loaded = useStore((state) => state.loaded);
     const setLoaded = useStore((state) => state.setLoaded);
-
+    
     const textYPos = 0.3;
     const textRef = useRef();
     // const [loaded, setLoaded] = useState(false);
@@ -161,6 +161,11 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
           [frame]: !prevState[frame],
         }));
       };
+
+      const openLink = () => {
+        window.open("https://mirevi.de/", "_blank"); // Open the link in a new tab
+
+      }
     // runs every frame
     useFrame(() => {
         if(active === null ) {
@@ -264,23 +269,24 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
         </animated.group> */}
         <animated.group scale={2.15} position={[-20, 0.8, 64]} rotation={[0, -0.9, 0]}>
             <Text scale={0.6} position={[0,-0.57,0]} color="white" font="fonts/PlayfairDisplay-Regular.ttf" fontSize={0.1}>
-                ... an immersive web exhibiton to get insights about
+                ... an immersive web exhibiton to get insights about MIREVI projects
                 <animated.meshBasicMaterial color="white" opacity={textFadeIn} toneMapped={false} />
             </Text>
-            <Text scale={0.6} position={[0,-0.67,0]} color="white" font="fonts/PlayfairDisplay-Regular.ttf" fontSize={0.1}>
-                 MIREVI Projects
+            
+            <Text scale={0.45} position={[-0.1,-0.68,0]} color="white" font="fonts/static/Montserrat-Light.ttf" fontSize={0.1}>
+                Learn more about 
                 <animated.meshBasicMaterial color="white" opacity={textFadeIn} toneMapped={false} />
             </Text>
-            {/* <Text scale={0.45} position={[0,-0.68,0]} color="white" font="fonts/static/Montserrat-Light.ttf" fontSize={0.1}>
-                    Learn more about mirevi
+            <Text onPointerOver={() => setLinkHovered(true)} onPointerOut={() => setLinkHovered(false)} onClick={openLink} scale={0.45} position={[0.215,-0.68,0]} color={linkHovered? "black" : "white"} font="fonts/static/Montserrat-Light.ttf" fontSize={0.1}>
+                mirevi.de
                 <animated.meshBasicMaterial color="white" opacity={textFadeIn} toneMapped={false} />
-            </Text> */}
-            <Text scale={0.32} position={[0,-0.9,0]} color="white" font="fonts/static/Montserrat-Light.ttf" fontSize={0.1}>
+            </Text>
+            <Text scale={0.32} position={[0,-1.28,0]} color="white" font="fonts/static/Montserrat-Light.ttf" fontSize={0.1}>
                 Scroll to start exploring
                 <animated.meshBasicMaterial color="white" opacity={textFadeIn} toneMapped={false} />            
             </Text>
             {loaded && (
-            <Svg position={[0,-0.95,0]} scale={0.0015} src={svg}>
+            <Svg position={[0,-1.34,0]} scale={0.0015} src={svg}>
                 <meshStandardMaterial color="black" />
             </Svg>
             )}
@@ -300,7 +306,7 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
 
       
         {/* Erstes Projekt (Fraktale) */}
-        <Frame position={framePosition.frame1} name="persona fractalis" color="#38adcf" img="/poster/fraktalePoster.png" portalImg="/poster/fraktalePortal.png" show={showInformation['frame1']} > 
+        <Frame position={framePosition.frame1} name="persona fractalis" color="#38adcf" img="/poster/fraktalePosterNew.png" portalImg="/poster/fraktalePortal.png" show={showInformation['frame1']} > 
             {/* <FraktaleSphere /> */}
             <Fraktale />
             {/* <WDRScene /> */}
@@ -308,19 +314,19 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
         <TextComp name="persona fractalis" position={titlePosition.title1} rotation={[0, 0, 0]}/>
 
         {/* Zweites Projekt (kin) */}
-        <Frame position={framePosition.frame2} name="kin_" color="#38adcf" img="/poster/kinPoster.png" portalImg="/poster/kinPortal.png" show={showInformation['frame2']} > 
+        <Frame position={framePosition.frame2} name="kin_" color="#38adcf" img="/poster/kinPosterNew.png" portalImg="/poster/kinPortal.png" show={showInformation['frame2']} > 
             <Kin />
         </Frame>
         <TextComp name="Kin" position={titlePosition.title2} rotation={[0, -0.2, 0]}/>
         
         {/* Drittes Projekt (Klima) */}
-        <Frame position={framePosition.frame3} name="WDR Klima" color="#38adcf" img="/poster/wdrPoster.png" portalImg="/poster/wdrPortal2.png" show={showInformation['frame3']} > 
+        <Frame position={framePosition.frame3} name="WDR Klima" color="#38adcf" img="/poster/wdrPosterNew.png" portalImg="/poster/wdrPortal2.png" show={showInformation['frame3']} > 
             <WDRScene />
         </Frame>
         <TextComp name="WDR Klima" position={titlePosition.title3} rotation={[0, 0.1, 0]}/>
         
         {/* Viertes Projekt (Wall)  */}
-        <Frame position={framePosition.frame4} name="Video Wall" color="#38adcf" img="/poster/videowallPoster.png" portalImg="/poster/wdrPortal2.png" show={showInformation['frame4']}> 
+        <Frame position={framePosition.frame4} name="Video Wall" color="#38adcf" img="/poster/videowallPosterNew.png" portalImg="/poster/wdrPortal2.png" show={showInformation['frame4']}> 
             <WallExperience/>
         </Frame>
         <TextComp name="Video Wall" position={titlePosition.title4} rotation={[0, -0.2, 0]} />

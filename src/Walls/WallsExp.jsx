@@ -91,11 +91,11 @@ export default function Experience() {
     <>
  
       <directionalLight ref={directionalLight} castShadow position={[1, 6, 3]} intensity={1.5} />
-      <Environment preset='sunset' background blur={0.5} />
+      <Environment preset='night' background blur={0.5} />
       {/* <color attach="background" args={['#eeeeee']} /> */}
       <mesh receiveShadow position-z={-10} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[100, 100]} />
-        <meshStandardMaterial color="#C1CAD7" opacity={0.5} transparent/>
+        <meshStandardMaterial color="#C1CAD7" opacity={0} transparent/>
       </mesh>
 
         {/* <Html position={[0, 2, 0]}>
@@ -133,10 +133,10 @@ function PlaneWithVideo({ name, position, rotation, playing, url, image}) {
   return (
     <group position={position} rotation={rotation}>
       {/* Rahmen */}
-      <mesh scale-x={scaleX} scale-y={scaleY}>
+      {/* <mesh scale-x={scaleX} scale-y={scaleY}>
         <planeGeometry />
         <meshStandardMaterial color="white" opacity={0.5} transparent/>
-      </mesh>
+      </mesh> */}
       {playing && (
         <mesh castShadow scale-x={scaleX-0.07} scale-y={scaleY-0.07} position-z={0.01}>
           <planeGeometry />
@@ -160,7 +160,7 @@ function PlaneWithVideo({ name, position, rotation, playing, url, image}) {
 }
 
 function VideoMaterial({ url}) {
-  const texture = useVideoTexture(url);
+  const texture = useVideoTexture(url, { muted: false });
 
     return <meshBasicMaterial map={texture} toneMapped={false} side={THREE.DoubleSide} />;
     

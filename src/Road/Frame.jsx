@@ -22,6 +22,7 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
   const active = useStore((state) => state.active);
   const [boxactive, setBoxActive] = useState(false);
   const {scale} = useSpring({ scale: boxactive ? 0.6 : 1})
+  const [linkHovered, setLinkHovered] = useState(false);
 
   const sizePortalElements = {
     'persona fractalis': [5.5, 3.1, 0],
@@ -118,6 +119,9 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
     setClickedFrame(name);
     setActive(name);
   };
+  const handleText = () => {
+    window.open(project.link, "_blank"); // Open the link in a new tab
+  };
 
 
   useFrame((_state, delta) => {
@@ -141,12 +145,16 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
           {show && (
           <>
           <group position={[-5.6, 3.1, 0.02]}>
-            <Text color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.3} anchorX="right">
+            <Text  color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.3} anchorX="right">
               {project.year}
               <meshBasicMaterial color="white" toneMapped={false} />
             </Text>
-            <Text color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.3} position-y={-0.3} anchorX="right">
+            <Text color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.3} position-y={-0.4} anchorX="right">
               {project.owner}
+              <meshBasicMaterial color="white" toneMapped={false} />
+            </Text>
+            <Text onPointerOver={() => setLinkHovered(true)} onPointerOut={() => setLinkHovered(false)} onClick={handleText} color={linkHovered ? "white" : "gray"} font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.3} position-y={-0.8} anchorX="right">
+              visit full project
               <meshBasicMaterial color="white" toneMapped={false} />
             </Text>
           </group>
@@ -186,7 +194,7 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
           onPointerOver={() => active === null && show && setBoxActive(true)}
           onPointerOut={() => active === null && show && setBoxActive(false)}>
             <planeGeometry args={[11,6.7]} />
-            <meshBasicMaterial color={'#bfbcdc'} opacity={0.3} transparent/>
+            <meshBasicMaterial color={'#bfbcdc'} opacity={0} transparent/>
             <group>
               
 
