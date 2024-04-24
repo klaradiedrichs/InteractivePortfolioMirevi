@@ -93,7 +93,7 @@ export default function Overlay({cameraRoad, onToggleCameraRoad, backToStart, ha
         )}
         {/* Steuerung Fenster */}
         {active !== null && (
-        <div className='absolute top-[320px] px-2 right-[820px] w-64 h-fit bg-slate-300 opacity-100 rounded-lg text-white'>
+        <div className='absolute top-3 px-2 right-2 w-64 h-fit bg-slate-300 opacity-100 rounded-lg text-white'>
           <div className='flex items-center gap-x-2'>
             <div className="" onClick={handleControls}>
                 <svg width="16" height="8" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg">
