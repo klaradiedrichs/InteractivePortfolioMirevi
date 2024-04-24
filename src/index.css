@@ -65,7 +65,7 @@ html, body, #root {
 
 
 body{
-  background-image: linear-gradient(0deg, #efdff3 70%, #eac7ea 100%);
+  background-image: linear-gradient(0deg, #b690c0 20%, rgb(189, 159, 189) 100%);
 }
 
 /* HTML: <div class="loader"></div> */

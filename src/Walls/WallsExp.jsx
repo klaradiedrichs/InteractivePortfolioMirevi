@@ -110,7 +110,7 @@ export default function Experience() {
        </mesh> */}
        {/* Render planes with videos */}
        <PlaneWithVideo name="Aquazoo" url="/videos/Aquazoo.mp4" image="textures/aquazoo.png" position={planePositions.plane1} rotation={[0, -1.7, 0]} playing={videoPlaying['plane1']} />
-       <PlaneWithVideo name="Icaros Flugsimulator" url="/videos/icaros.mp4" image="textures/test.jpg" position={planePositions.plane2} rotation={[0, -1.4, 0]} playing={videoPlaying['plane2']} />
+       <PlaneWithVideo name="Icaros Flugsimulator" url="/videos/icaros.mp4" image="textures/icaros.png" position={planePositions.plane2} rotation={[0, -1.4, 0]} playing={videoPlaying['plane2']} />
        <PlaneWithVideo name="AR Sound Sandbox" url="/videos/Sandkasten.mp4" image="textures/sandkasten.jpg" position={planePositions.plane3} rotation={[0, -0.87, 0]} playing={videoPlaying['plane3']} />
        <PlaneWithVideo name="Escape Room" url="/videos/EscapeRoom.mp4" image="textures/escaperoom.png" position={planePositions.plane4} rotation={[0, -0.25, 0]} playing={videoPlaying['plane4']} />
        <PlaneWithVideo name="Kriegskinder" url="/videos/Kriegskinder.mp4" image="textures/kriegskinder2.png" position={planePositions.plane5} rotation={[0, 0.25, 0]} playing={videoPlaying['plane5']} />
@@ -149,9 +149,9 @@ function PlaneWithVideo({ name, position, rotation, playing, url, image}) {
         <planeGeometry />
         
         <Fallback image={image}/>
-        <Text font="fonts/PlayfairDisplay-Regular.ttf" scale-x={0.6} fontSize={0.15} position-z={0.01} position-x={0}>
+        <Text font="fonts/static/Montserrat-Regular.ttf" scale-x={0.6} fontSize={0.15} position-z={0.01} position-x={0}>
           {name}
-          <meshBasicMaterial color="black" opacity={0.8} transparent/>
+          <meshBasicMaterial color="black" opacity={0.5} transparent/>
         </Text>
       </mesh>
       )}

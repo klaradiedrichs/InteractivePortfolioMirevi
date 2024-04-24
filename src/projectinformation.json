@@ -6,7 +6,7 @@
         "owner": "hochschule düsseldorf",
         "support": ["Jane Smith", "Mike Johnson"],
         "tags": [
-          "Augmented Reality",
+          "Artificial Intelligence",
           "Interaction",
           "Sounddesign",
           "Virtual Reality",
@@ -49,44 +49,16 @@
         "owner": "Alice Smith",
         "support": ["Bob Brown"],
         "tags": [
-          "different Projects"
+          "Demo",
+          "Screen",
+          "Projects"
         ],
         "link": "",
         "controls": ["Control camera with WASD or Arrow Keys",
         "Click to look around and to determine direction",
         "Tab 'ESC' to lock direction"
         ]
-      },    
-      {
-        "title": "Fünf",
-        "year": 2021,
-        "owner": "Alice Smith",
-        "support": ["Bob Brown"],
-        "tags": [
-          ""
-        ],
-        "link": ""
-      },    
-      {
-        "title": "Sechs",
-        "year": 2021,
-        "owner": "Alice Smith",
-        "support": ["Bob Brown"],
-        "tags": [
-          ""
-        ],
-        "link": ""
-      },    
-      {
-        "title": "Sieben",
-        "year": 2021,
-        "owner": "Alice Smith",
-        "support": ["Bob Brown"],
-        "tags": [
-          ""
-        ],
-        "link": ""
-      }    
+      }  
     ]
   }
   

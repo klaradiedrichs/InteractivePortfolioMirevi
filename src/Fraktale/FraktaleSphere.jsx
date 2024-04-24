@@ -7,7 +7,7 @@ export default function Experience()
 
     return <>
         
-        <OrbitControls/> 
+        <OrbitControls target={[0,0,0]}/> 
         <mesh position={[0.5,-2,5]}>
             <sphereGeometry args={[11, 200, 200]} />
             {/* Radius nochmal verringert -> vorher 16  */}

@@ -5,10 +5,12 @@ import { useState , useEffect} from 'react'
 import './App.css'
 import {Canvas, useThree, useFrame} from "@react-three/fiber";
 import {KeyboardControls, Environment, PerspectiveCamera} from "@react-three/drei";
-import Overlay from './Overlay';
+import Overlay from './UI/Overlay';
 import { Perf } from 'r3f-perf';
-import Experience from './Experience2';
+import Experience from './Road/Experience2';
 import WallExp from './Walls/WallsExp';
+import WDRScene from './wdr/WDRScene';
+import Fraktale from './Fraktale/Fraktale';
 function App() {
 
   const [cameraRoad, setCameraRoad] = useState(true);
@@ -39,6 +41,8 @@ function App() {
               {/* <Perf position='top-right'/> */}
               <Experience setBackToStart={setBackToStart} backToStart={backToStart} cameraRoad={cameraRoad}/>
               {/* <WallExp /> */}
+              {/* <WDRScene /> */}
+              {/* <Fraktale /> */}
         </Canvas>
         </KeyboardControls>
         <Overlay cameraRoad={cameraRoad} onToggleCameraRoad={handleToggleCameraRoad} backToStart={backToStart} handleStart={handleStart}/> 

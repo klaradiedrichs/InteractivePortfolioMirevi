@@ -1,58 +1,282 @@
-import { Environment, OrbitControls, PerspectiveCamera } from "@react-three/drei"
-import React, { useRef, useState } from 'react';
+import { Clone, Environment, OrbitControls, PerspectiveCamera,useAnimations, useGLTF , useTexture} from "@react-three/drei"
+import React, { useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber'
+import { useControls } from 'leva'
+import useGameStore from "./useGameStore";
+import { useLoader } from '@react-three/fiber'
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader';
+import { useSpring, animated } from '@react-spring/three'
 
+// Animals as JSX
+import ButterflyFish from './Butterfly';
+import Clownfish from './Clownfish';
+import YellowBoxFish from './YellowBoxfish';
+
+const LASER_RANGE = 100;
+const LASER_Z_VELOCITY = 1;
+const ENEMY_SPEED = -0.02;
+const ENEMY_SPEEDX = 0.001;
+const GROUND_HEIGHT = -50;
 
 export default function VirtualGame () {
+
+    // const {scene: oceanworld} = useGLTF('/Environment.glb');
+
+    const { scene: turtle, animations: turtleAnim } = useGLTF('./Turtle.glb');
+    const { actions: turtleAction } = useAnimations(turtleAnim, turtle);
+    
+    const [groupPosition, setGroupPosition] = useState({ x: 0, y: 0, z: -1 });
+    const [groupPosition2, setGroupPosition2] = useState({ x: 0, y: 1, z: -1.8 });
+    const [turtlePosition, setTurtlePosition] = useState({ x: 9.5, y: -0.3, z: -3 });
+
+    useEffect(() => {
+      turtleAction.turtleAnim.play();
+    });
+
+    // Update group position on each frame
+    useFrame(() => {
+      setGroupPosition((prevPosition) => ({
+        ...prevPosition,
+        z: prevPosition.z + 0.003, // Increase z position by 0.1 on each frame
+      }));     
+      setGroupPosition2((prevPosition) => ({
+        ...prevPosition,
+        y: prevPosition.y - 0.0003,
+        z: prevPosition.z + 0.002, // Increase z position by 0.1 on each frame
+      }));
+      setTurtlePosition((prevPosition) => {
+        // Check if turtle's z position exceeds 10, reset it back to -5
+        const newZ = prevPosition.z >= 8 ? -7.5 : prevPosition.z + 0.005;
+        const newY = prevPosition.z >= 8 ? -0.3 : prevPosition.y + 0.002
+        return {
+          ...prevPosition,
+          y: newY,
+          z: newZ, // Increase z position by 0.005 on each frame
+        };
+      });
+    });  
 
     return(
 
         <>
-        {/* <Environment files='./UnderwaterWorld.hdr' background /> */}
-        <mesh>
-            <sphereGeometry />
-            <meshBasicMaterial />
-        </mesh>
+        <PerspectiveCamera makeDefault fov={50} position={[-1,0.3,0]} rotation={[0, -1.5, 0]} far={1000}/>
+        {/* Umgebung */}
+        <Environment files='./OceanBackground.hdr' background></Environment>
+        {/* <primitive scale={1} object={oceanworld} position={[6,-3.3,-1]} rotation={[0, -1.5, 0]} />         */}
+
+        <group position={[groupPosition.x, groupPosition.y, groupPosition.z]}>
+          <ButterflyFish position={[4,0.7,-4]}/>
+          <ButterflyFish position={[4.2,0,-4.6]}/>
+          <ButterflyFish position={[4,0.2,-4]}/>
+          <ButterflyFish position={[4,-0.3,-3.7]}/>
+          <ButterflyFish position={[4,0,-2.6]}/>
+
+          <Clownfish position={[3,0.18,-2.3]}/>
+          <Clownfish position={[4,-0.1,-2.6]}/>
+          <Clownfish position={[3.1,-0.1,-2.2]}/>
+          <Clownfish position={[3.1,-0.3,-2.3]}/>
+
+          <YellowBoxFish position={[3,-0.7,-1.8]}/>
+          <YellowBoxFish position={[3,-0.9,-2.4]}/>
+          <YellowBoxFish position={[3,-0.6,-2.7]}/>
+          {/*  */}
+
+          <ButterflyFish position={[10,2,-7]}/>
+          <ButterflyFish position={[8,0.7,-6]}/>
+          <ButterflyFish position={[8.5,0,-7.5]}/>
+
+          <Clownfish position={[10,1,-4]}/>
+          <Clownfish position={[9,0.8,-6.5]}/>
+          <Clownfish position={[9,0.3,-8]}/>
+
+        </group>
+
+        <group position={[groupPosition2.x, groupPosition2.y, groupPosition2.z]}>
+          <Clownfish position={[3,1,0]}/>
+          <Clownfish position={[3,1.1,-1]}/>
+          <Clownfish position={[3.1,0.7,-1.3]}/>
+
+          <ButterflyFish position={[3,0.2,2.5]}/>
+          <ButterflyFish position={[3.1,-0.1,3]}/>
+          <ButterflyFish position={[3.4,-0.4,3]}/>
+          <ButterflyFish position={[1,-0.4,3]}/>
+
+        </group>
+        <primitive scale={2} position={[turtlePosition.x, turtlePosition.y, turtlePosition.z]} object={turtle} />
+        
         <ArWing />
+        <Trash />
+        <CollectController />
         </>
     )
 }
 
 function ArWing() {
-    const [shipPosition, setShipPosition] = useState();
-    const cameraRef = useRef();
+  const shipPosition = useGameStore((state) => state.shipPosition);
+  const setShipPosition = useGameStore((state) => state.setShipPosition);
 
-    const ship = useRef();
-    useFrame(({ mouse }) => {
-      setShipPosition({
-        position: { x: mouse.x * 6, y: mouse.y * 2},
-        rotation: { z: -mouse.x * 0.5, x: -mouse.x * 0.5, y: -mouse.y * 0.2 },
-      });
+  const target = useRef();
+  const cameraRef = useRef();
+  const grabber = useRef();
+
+  const {scene: grabberModell} = useGLTF('./Grabber.glb');
+  const sprite = useTexture('./targetnew.png')
+
+  useFrame(({ mouse }) => {
+    setShipPosition({
+      position: { z: mouse.x * 6, y: mouse.y * 2},
+      rotation: { z: mouse.x * 0.8, x: -mouse.x * 0.5, y: -mouse.y * 0.2 },
     });
-    // Update the ships position from the updated state.
-    useFrame(() => {
-      ship.current.rotation.z = shipPosition.rotation.z;
-      ship.current.rotation.y = shipPosition.rotation.x;
-      ship.current.rotation.x = shipPosition.rotation.y;
-      ship.current.position.y = shipPosition.position.y;
-      ship.current.position.x = shipPosition.position.x;
-    });
-  
-    // const { nodes } = useLoader(GLTFLoader, "models/arwing.glb");
+
+    grabber.current.rotation.z = shipPosition.rotation.z;
+    grabber.current.rotation.y = shipPosition.rotation.x;
+    grabber.current.rotation.x = shipPosition.rotation.y;
+
+    grabber.current.position.y = shipPosition.position.y;
+    grabber.current.position.z = shipPosition.position.z;
+
+    target.current.position.y = -mouse.y * 10;
+    target.current.position.z = -mouse.x * 28;
+
+  });
+  // Update the ships position from the updated state.
+  useFrame(() => {
+    
+  });
   
     return (
         <>
-        <PerspectiveCamera ref={cameraRef} makeDefault fov={40} position-z={-3}/>
-        <group ref={ship} position-z={-5}>
-            <mesh scale={0.5}>
-                <boxGeometry />
-                <meshStandardMaterial
-                    attach="material"
-                    color="white"
-                    roughness={1}
-                    metalness={0} />
-            </mesh>
+        <group ref={grabber} position-x={3} position-y={0} >
+            <primitive scale={0.8} object={grabberModell} rotation={[0, -1.5, 0]}/>
+        </group>
+        <group>
+          <sprite position={[7, 0, 0]} scale={0.04} ref={target}>
+            <spriteMaterial attach="material" map={sprite} />
+          </sprite>
         </group>
         </>
     );
+  }
+
+  function Trash() {
+    const { trashPositions, setTrashPositions } = useGameStore();
+    const {tirePositions} = useGameStore();
+    const {cupPositions} = useGameStore();
+    const {scene: dose} = useGLTF('/Konservendose.glb');
+    const {scene: cup} = useGLTF('/Cup.glb');
+    const {scene: bottle} = useGLTF('/Bottle.glb');
+    const {scene: tire} = useGLTF('/Tire.glb');
+
+    return(
+      <>
+      <group>
+        {trashPositions.map((trash, index) => {
+            // Randomly select a model from the array
+            return (
+                <Clone position={[trash.x, trash.y, trash.z]} object={dose} />
+            );
+        })}
+        {tirePositions.map((trash, index) => {
+            // Randomly select a model from the array
+            return (
+                <Clone position={[trash.x, trash.y, trash.z]} object={tire} />
+            );
+        })}
+        {cupPositions.map((trash, index) => {
+            // Randomly select a model from the array
+            return (
+                <Clone position={[trash.x, trash.y, trash.z]} object={cup} />
+            );
+        })}
+      </group>
+      </>
+    )
+  }
+
+  function CollectController(){
+
+    const {shipPosition } = useGameStore();
+    const {trashPositions, setTrashPositions} = useGameStore();
+    const {tirePositions, setTirePositions} = useGameStore();
+    const {cupPositions, setCupPositions} = useGameStore();
+    const {collectors, setCollectors} = useGameStore();
+
+    function distance(p1, p2){
+      const a = p2.x - p1.x;
+      const b = p2.y - p1.y;
+      const c = p2.z - p1.z;
+
+      return Math.sqrt(a*a +b *b +c *c);
+    }
+
+    useFrame(({mouse}) => {
+      // Calculate Treffer
+      
+        const hitTrash = trashPositions? trashPositions.map(
+        (object) => collectors.filter(
+          () => collectors.filter((collector) => distance(collector,object) < 1). length > 0).length > 0 
+        ) : [];
+      
+        const hitTire = tirePositions.map((tire) =>
+          collectors.filter((collector) => distance(collector, tire) < 1).length > 0
+        );
+
+        const hitCup = cupPositions.map((cup) =>
+          collectors.filter((collector) => distance(collector, cup) < 1).length > 0
+        );
+
+        if(hitTrash.includes(true) && collectors.length > 0){
+          console.log("hit detected");
+        }
+
+      // Move Trash....
+      setTrashPositions(
+        trashPositions.map((trash) => ({x: trash.x + ENEMY_SPEED, y: trash.y, z: trash.z + ENEMY_SPEEDX }))
+        .filter((trash, idx) => !hitTrash[idx])
+      )
+      // Move Tire....
+      setTirePositions(
+        tirePositions.map((trash) => ({x: trash.x + ENEMY_SPEED, y: trash.y, z: trash.z + ENEMY_SPEEDX }))
+        .filter((trash, idx) => !hitTire[idx])
+      )
+      // Move Cup....
+      setCupPositions(
+        cupPositions.map((trash) => ({x: trash.x + ENEMY_SPEED, y: trash.y, z: trash.z + ENEMY_SPEEDX }))
+        .filter((trash, idx) => !hitCup[idx])
+      )
+
+      // move Collector Object
+      setCollectors(
+        collectors
+          .map((collector) => ({
+            id: collector.id,
+            x: collector.x + LASER_Z_VELOCITY,
+            y: collector.y + collector.velocity[1],
+            z: collector.z + collector.velocity[0],
+            
+            velocity: collector.velocity
+          }))
+      );
+
+  });
+
+  return (
+    <>
+      <mesh position={[10, 0, 0]} rotation={[0,-1.5,0]} onClick={() => setCollectors([...collectors, {
+        id: Math.random(),x: 1, y: 0, z: 0, velocity: [shipPosition.rotation.x * 8, shipPosition.rotation.y * 6.5]
+      }])}>
+        <planeGeometry args={[80, 80]}/>
+        <meshStandardMaterial color="orange" opacity={0.2} transparent/>
+      </mesh>
+      <group>
+        {collectors.map((collector) => (
+          <mesh position={[collector.x, collector.y, collector.z]} key={`${collector.id}`}>
+            <boxGeometry args={[0.3, 0.3, 0.3]} />
+            <meshStandardMaterial attach="material" emissive="green" />
+          </mesh>
+        ))}
+      </group>
+    </>
+  )
   }

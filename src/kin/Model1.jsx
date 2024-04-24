@@ -1,4 +1,4 @@
-import {OrbitControls, useAnimations } from '@react-three/drei'
+import {OrbitControls, useAnimations, useGLTF } from '@react-three/drei'
 import * as THREE from "three";
 import React, { useRef, useEffect } from 'react';
 import { useLoader } from '@react-three/fiber';
@@ -7,23 +7,17 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader';
 export default function Kin()
 {
     
-    const group = useRef();
-    const gltf = useLoader(GLTFLoader, '/TPosemitSitzendAnimTest.glb');
-
-    const { scene, animations } = gltf;
-    const { actions } = useAnimations(animations, group);
+    const { scene, animations } = useGLTF('./AvatarAnim003.glb');
+    const { actions } = useAnimations(animations, scene);
 
     useEffect(() => {
-        actions.animSitzend.play();
+        actions.animDreiFinal.play();
       });
 
     return <>
-       
-
-        <group ref={group} position={[-1,-2,-10]}>
-            <primitive object={scene} />
-        </group>
-
+        <spotLight position={[0,1,-5]} ></spotLight>
+        <primitive castShadow position={[0,-1.5,-5]} object={scene} />
+        
     </>
 }
 

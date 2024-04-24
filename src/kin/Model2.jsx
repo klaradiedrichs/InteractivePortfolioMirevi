@@ -1,4 +1,4 @@
-import {OrbitControls, useAnimations } from '@react-three/drei'
+import {OrbitControls, useAnimations, useGLTF } from '@react-three/drei'
 import * as THREE from "three";
 
 import React, { useRef, useEffect } from 'react';
@@ -9,22 +9,16 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader';
 export default function Kin()
 {
     
-    const group = useRef();
-    const gltf = useLoader(GLTFLoader, '/run.glb');
-
-    const { scene, animations } = gltf;
-    const { actions } = useAnimations(animations, group);
+    const { scene, animations } = useGLTF('./AvatarAnim006.glb');
+    const { actions } = useAnimations(animations, scene);
 
     useEffect(() => {
-        actions.run.play();
+        actions.animSechsFinal.play();
       });
 
     return <>
        
-        
-        <group ref={group} position={[0,-3,13]}>
-            <primitive object={scene} />
-        </group>
+        <primitive position={[-2,-1.5,-6]} object={scene} />
 
     </>
 }

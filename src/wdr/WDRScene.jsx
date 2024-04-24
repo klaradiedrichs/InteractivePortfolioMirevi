@@ -1,58 +1,147 @@
-import React, { useRef, useState } from 'react';
-import { Text, Environment, OrbitControls, useTexture } from '@react-three/drei';
+import React, { useEffect, useRef, useState } from 'react';
+import { Text, Environment, OrbitControls,RoundedBox, useTexture, Sparkles, useGLTF, Html ,PerspectiveCamera} from '@react-three/drei';
 import * as THREE from 'three';
-import { useLoader } from '@react-three/fiber';
+import { useLoader, useFrame } from '@react-three/fiber';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader';
 import { Button } from "r3dy";
-import VirtualGame from './VirtualGame';
+import { useSpring, animated } from '@react-spring/three'
+import { useStore } from '../stores/useStore';
 
+import VirtualGame from './VirtualGame';
+import useGameStore from './useGameStore'; // Import the useStore hook
 export default function Experience() {
  
-    const [virtualGame, setVirtualGame] = useState(false)
+    // const [virtualGame, setVirtualGame] = useState(false)
     const [generationSpeaks, setGenerationSpeaks] = useState(false)
-
+    const [loaded, setLoaded] = useState(false);
     const group = useRef();
-    const gltf = useLoader(GLTFLoader, '/earth.glb');
-
-    const { scene } = gltf;
+    const { scene } = useGLTF('/earthNew.glb');
+    const setWdrScene = useStore((state) => state.setWdrScene);
+    const wdrScene = useStore((state) => state.wdrScene);
+    const setVirtualGame = useStore((state) => state.setGameScene);
+    const virtualGame = useStore((state) => state.gameScene);
+    const setWdrExperienceScene = useStore((state) => state.setWdrExperienceScene); // fixed
+    const wdrExperienceScene = useStore((state) => state.wdrExperienceScene);
     
     const handleGame = () => {
         setVirtualGame(true)
-        console.log(virtualGame);
+        setWdrExperienceScene(true);
     }
+
+    const getRandomIndex = (max) => Math.floor(Math.random() * max);
+    const getRandomPosition = (min, max) => Math.random() * (max - min) + min;
+    const [earthRotation, setEarthRotation] = useState({ x: 0, y: -3.5 , z: 0 });
+    const earthProps = useSpring({
+        scale: [10, 10, 10], // Set the initial scale to 10
+        to: { scale: [0.11, 0.11, 0.11] }, // Set the target scale to 0.11
+    });
+    const { scale: earth } = useSpring({ 
+        scale: loaded ? 0.16 : 11,
+    });
+    const { opacity: buttons } = useSpring({ 
+        opacity: loaded ? 1 : 0,
+        delay: loaded ? 800 : 0
+    });
+    const { opacity: title } = useSpring({ 
+        opacity: loaded ? 1 : 0,
+        delay: loaded ? 700 : 0
+    });
+
+    useEffect(() => {
+        // Reset the store when the virtualGame state changes
+        if (!virtualGame) {
+            useGameStore.setState({
+                trashPositions: Array.from({length: 14}, () => ({
+                    x: getRandomPosition(50, -5),
+                    y: getRandomPosition(5, -1),
+                    z: getRandomPosition(8,-6),
+                    modelIndex: getRandomIndex(4)
+
+                })),
+                
+                tirePositions: Array.from({length: 17}, () => ({
+                    x: getRandomPosition(60, 7),
+                    y: getRandomPosition(4, -1),
+                    z: getRandomPosition(6,-5),
+                })),
+                cupPositions: Array.from({length: 8}, () => ({
+                    x: getRandomPosition(65, 0),
+                    y: getRandomPosition(3.5, -1),
+                    z: getRandomPosition(8,-5),
+                })),
+                collectors: [],
+                score: 0
+            });
+        }
+        // Animate the Earth model scale when the component mounts
+        setLoaded(true)
+        
+    }, [virtualGame]);
+
+    useFrame(() => {
+        setEarthRotation((prevPosition) => ({
+          ...prevPosition,
+          y: prevPosition.y + 0.0016, // Increase z position by 0.1 on each frame
+        }));     
+      });  
 
   return (
     <>
-        
-        <Environment preset='night' background blur={0.5} />
-        {/* Earth Modell */}
-        {!virtualGame && !generationSpeaks && (
+        {!wdrExperienceScene && (
         <>
-        <OrbitControls target={[-1,1.8,-84]}/>
-        <group ref={group} position={[0, 1, 0]} scale={1.5}>
-            <primitive object={scene} />
+        {/* <Environment preset='night' background blur={0.5} /> */}
+        <PerspectiveCamera makeDefault position={[0,-0.3,7]} far={1000}/>
+
+        <color attach="background" args={['#101010']} />
+        <ambientLight intensity={0.7}/>
+        <group>
+            <Sparkles size={ 10 } scale={ [ 50, 30, 40 ] } position={ [0, 0,-5] } speed={ 0.1 } count={ 120 }/>
         </group>
-        <Text color="#38adcf" position-z={5}>Die Erde ist in Gefahr</Text>
-        <Text position-z={5} position-y={-1}>Erlebe warum</Text>
-        <mesh position={[0, -2, 5]}>
-            <Button text="Los gehts" color="black" onPointerOver="#ffffff" font="fonts/PlayfairDisplay-Regular.ttf" scale={0.3} />
-        </mesh>
-        <group position-x={-7} position-z={3}>
-            <Text fontSize={0.3}> Erlebe die Generation Erden</Text>
-            <mesh position={[0, -2, 0]}>
-                <Button text="Virtuelle Begegnung starten" color="black" onPointerOver="#ffffff" font="fonts/PlayfairDisplay-Regular.ttf" scale={0.3} />
-            </mesh>
+
+        {/* Main Scene  */}
+        
+        {/* <OrbitControls target={[-1,1.8,-84]}/> */}
+        
+        <group>
+        <animated.primitive rotation={[earthRotation.x, earthRotation.y, earthRotation.z]} position={[0, 0, -3]} scale={earth} object={scene} />
         </group>
-        <group position-x={7} position-z={3}>
-            <Text fontSize={0.3}>Erlebe die Bedrohung der Meere</Text>
-            <mesh onClick={handleGame} position={[0, -2, 0]}>
-                <Button text="Virtuelles Game starten"  color="black" onPointerOver="#ffffff" font="fonts/PlayfairDisplay-Regular.ttf" scale={0.3} />
-            </mesh>
+        <Text lineHeight={1.2} textAlign="center" fontSize={0.28} position={[0,-0.5,1.1]}>
+            {`Die Erde ist in Gefahr!\nErlebe warum`}
+            <animated.meshBasicMaterial color="white" opacity={title} transparent />
+        </Text>
+        
+        {/* Virtuelle Begegnung */}
+        <group position={[-2.7,-1.7,1]}>
+            <RoundedBox position={[0,-0.5,0]} args={[3.5,0.5,0]}>
+                <animated.meshPhongMaterial opacity={buttons} transparent color="#73F4B4" />
+                <Text anchorX="center" anchorY="middle" position-z={0.01} fontSize={0.25} color="black">
+                    Virtuelle Begegnung starten
+                    <animated.meshBasicMaterial color="black" opacity={buttons} transparent />
+                </Text>
+            </RoundedBox>
+            <Text textAlign="center" fontSize={0.2}>
+                {`Erlebe, was die Generation\nKlimawandel bewegt`}
+                <animated.meshBasicMaterial color="white" opacity={buttons} transparent />
+            </Text> 
+        </group>
+        {/*  Game */}
+        <group position={[2.7,-1.7,1]}>
+            <RoundedBox onClick={handleGame} position={[0,-0.5,0]} args={[3.5,0.5,0]}>
+                <animated.meshPhongMaterial opacity={buttons} transparent color="#73F4B4" />                
+                <Text anchorX="center" anchorY="middle" position-z={0.01} fontSize={0.25} color="black">
+                    Virtuelles Game starten
+                    <animated.meshBasicMaterial color="black" opacity={buttons} transparent />
+                </Text>
+            </RoundedBox>
+            <Text textAlign="center" fontSize={0.2}>
+                {`Erlebe die Bedrohung\nunserer Meere`}
+                <animated.meshBasicMaterial color="white" opacity={buttons} transparent />
+            </Text> 
         </group>
         </>
         )}
 
-        {virtualGame && (
+        {virtualGame && wdrExperienceScene && (
         <VirtualGame />
         )}
         {/* {generationSpeaks && (
