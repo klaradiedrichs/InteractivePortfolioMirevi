@@ -9,13 +9,14 @@ export default function Experience()
 {
     const videoRef = useRef();
 
-    useFrame(() => {
-      if (videoRef.current) {
-        videoRef.current.play();
-      }
-    });
-    const texture = useVideoTexture("/videos/leoniewithaudio.mp4", { muted: false, autoplay: false, loop: false, start: true, unsuspend: 'canplaythrough' });
-
+    // useFrame(() => {
+    //   if (videoRef.current) {
+    //     videoRef.current.play();
+    //   }
+    // });
+    const texture = useVideoTexture("/videos/leoniewithaudio.mp4", { muted: false, autoplay: true });
+    const [reload, setReload] = useState(false);
+    
     return <>
         
         <PerspectiveCamera makeDefault />
@@ -45,6 +46,10 @@ export default function Experience()
                 </Html> */}
             </meshBasicMaterial>
         </mesh>
+        <mesh position={[1,-0.5,-2]}>
+            <boxGeometry />
+            <meshBasicMaterial opacity={0} transparent/>        
+        </mesh>
         {/* <mesh position={[0,-1.5,-5]}>
             <planeGeometry />
             <VideoMaterial url="/videos/Aquazoo.mp4" />
@@ -67,11 +72,8 @@ export default function Experience()
             <VideoMaterial url="/M09-1317.mp4" />        
         </mesh> */}
 
-        {/* <mesh position={[0,0,30]}>
-            <boxGeometry />
-            <meshBasicMaterial opacity={0} transparent/>        
-        </mesh>
-        <mesh position={[0,0,20]}>
+        
+        {/* <mesh position={[0,0,20]}>
             <planeGeometry />
             <VideoMaterial url="/videos/Aquazoo.mp4" />
         </mesh> */}
@@ -80,7 +82,7 @@ export default function Experience()
 }
 
 function VideoMaterial({ url }) {
-    const texture = useVideoTexture(url, { muted: false, autoplay: false, loop: false, start: true, unsuspend: 'canplaythrough' });
+    const texture = useVideoTexture(url, { muted: false, autoplay: false, loop: false, start: false, unsuspend: 'canplaythrough' });
 
     return <meshBasicMaterial map={texture} toneMapped={false} />
   }

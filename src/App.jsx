@@ -10,6 +10,7 @@ import { Perf } from 'r3f-perf';
 import Experience from './Road/Experience2';
 import WallExp from './Walls/WallsExp';
 import WDRScene from './wdr/WDRScene';
+import GenerationSpeaks from './wdr/GenerationSpeaks';
 import Fraktale from './Fraktale/Fraktale';
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
               {/* <WallExp /> */}
               {/* <WDRScene /> */}
               {/* <Fraktale /> */}
+              {/* <GenerationSpeaks/> */}
         </Canvas>
         </KeyboardControls>
         <Overlay cameraRoad={cameraRoad} onToggleCameraRoad={handleToggleCameraRoad} backToStart={backToStart} handleStart={handleStart}/> 
