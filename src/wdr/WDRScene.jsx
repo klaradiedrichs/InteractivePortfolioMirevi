@@ -9,37 +9,29 @@ import { useStore } from '../stores/useStore';
 
 import VirtualGame from './VirtualGame';
 import GenerationSpeaks from './GenerationSpeaks';
-import useGameStore from './useGameStore'; // Import the useStore hook
+import useGameStore from './useGameStore';
 export default function Experience() {
  
-    // const [virtualGame, setVirtualGame] = useState(false)
-    const [generationSpeaks, setGenerationSpeaks] = useState(false)
+    // loaded wird true, wenn Component geladen wurde (für Animation der Erde)
     const [loaded, setLoaded] = useState(false);
-    const group = useRef();
-    const { scene } = useGLTF('/earthNew.glb');
-    const setWdrScene = useStore((state) => state.setWdrScene);
-    const wdrScene = useStore((state) => state.wdrScene);
     const setVirtualGame = useStore((state) => state.setGameScene);
     const virtualGame = useStore((state) => state.gameScene);
-    const setWdrExperienceScene = useStore((state) => state.setWdrExperienceScene); // fixed
-    const wdrExperienceScene = useStore((state) => state.wdrExperienceScene);
-    
+    const setGenerationSpeaks = useStore((state) => state.setGenerationSpeaks);
+    const generationSpeaks = useStore((state) => state.generationSpeaks);
+
+    const { scene } = useGLTF('/earthNew.glb');
+
     const handleGame = () => {
         setVirtualGame(true)
-        setWdrExperienceScene(true);
     }
     const handleBegegnung = () => {
         setGenerationSpeaks(true)
-        setWdrExperienceScene(true);
     }
 
     const getRandomIndex = (max) => Math.floor(Math.random() * max);
     const getRandomPosition = (min, max) => Math.random() * (max - min) + min;
     const [earthRotation, setEarthRotation] = useState({ x: 0, y: -3.5 , z: 0 });
-    const earthProps = useSpring({
-        scale: [10, 10, 10], // Set the initial scale to 10
-        to: { scale: [0.11, 0.11, 0.11] }, // Set the target scale to 0.11
-    });
+    
     const { scale: earth } = useSpring({ 
         scale: loaded ? 0.16 : 11,
     });
@@ -92,7 +84,7 @@ export default function Experience() {
 
   return (
     <>
-        {!wdrExperienceScene && (
+        {!virtualGame && !generationSpeaks && (
         <>
         {/* <Environment preset='night' background blur={0.5} /> */}
         <PerspectiveCamera makeDefault position={[0,-0.3,7]} far={1000}/>
@@ -146,10 +138,10 @@ export default function Experience() {
         </>
         )}
 
-        {virtualGame && wdrExperienceScene && (
+        {virtualGame && (
         <VirtualGame />
         )}
-        {generationSpeaks && wdrExperienceScene &&(
+        {generationSpeaks &&(
         <GenerationSpeaks />
         )}
     </>

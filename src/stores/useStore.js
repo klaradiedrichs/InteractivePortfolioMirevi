@@ -8,10 +8,12 @@ const useStore = create((set) => ({
   setHovered: (hovered) => set({ hovered }),
   setClickedFrame: (frame) => set({ clickedFrame: frame }),
   setActive: (active) => set({ active }),
-  wdrExperienceScene: false,
-  setWdrExperienceScene: (wdrExperienceScene) => set({ wdrExperienceScene }), // fixed
+ 
   gameScene: false,
   setGameScene: (gameScene) => set({ gameScene }),
+  generationSpeaks: false,
+  setGenerationSpeaks: (generationSpeaks) => set({ generationSpeaks }),
+  
   loaded: false,
   setLoaded: (loaded) => set({ loaded }),
 }));

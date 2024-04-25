@@ -306,15 +306,15 @@ export default function Experience({ setBackToStart,backToStart, cameraRoad})
 
       
         {/* Erstes Projekt (Fraktale) */}
-        <Frame position={framePosition.frame1} name="persona fractalis" color="#38adcf" img="/poster/fraktalePosterNew.png" portalImg="/poster/fraktalePortal.png" show={showInformation['frame1']} > 
+        <Frame position={framePosition.frame1} name="persona fractalis" color="#38adcf" img="/poster/fraktalePoster3.png" portalImg="/poster/fraktalePortal.png" show={showInformation['frame1']} > 
             {/* <FraktaleSphere /> */}
-            <Fraktale />
-            {/* <WDRScene /> */}
+            {/* <Fraktale /> */}
+            <WDRScene />
         </Frame>
         <TextComp name="persona fractalis" position={titlePosition.title1} rotation={[0, 0, 0]}/>
 
         {/* Zweites Projekt (kin) */}
-        <Frame position={framePosition.frame2} name="kin_" color="#38adcf" img="/poster/kinPosterNew.png" portalImg="/poster/kinPortal.png" show={showInformation['frame2']} > 
+        <Frame position={framePosition.frame2} name="kin_" color="#38adcf" img="/poster/kinPoster3.png" portalImg="/poster/kinPortal.png" show={showInformation['frame2']} > 
             <Kin />
         </Frame>
         <TextComp name="Kin" position={titlePosition.title2} rotation={[0, -0.2, 0]}/>

@@ -52,6 +52,9 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+img, video {
+  width: 1000px
+}
 html, body, #root {
   position: fixed;
   height: 100%;

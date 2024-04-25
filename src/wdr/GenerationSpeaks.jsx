@@ -1,89 +1,41 @@
-import { Html, MeshReflectorMaterial, CameraControls, useVideoTexture,OrbitControls , PerspectiveCamera, Environment} from '@react-three/drei'
+import React, { useRef, useEffect, useState } from "react";
+import { Html, Text, PerspectiveCamera, Environment, OrbitControls , RoundedBox} from '@react-three/drei';
+import { useVideoTexture } from "@react-three/drei";
 import * as THREE from "three";
-import React, { useState, useEffect, useRef,useMemo } from "react";
-import { act, useFrame } from "@react-three/fiber";
-
-
-
-export default function Experience()
-{
+import IdleVideo from './IdleVideo';
+export default function Experience() {
     const videoRef = useRef();
+    const [idle, setIdle] = useState(true);
 
-    // useFrame(() => {
-    //   if (videoRef.current) {
-    //     videoRef.current.play();
-    //   }
-    // });
-    const texture = useVideoTexture("/videos/leoniewithaudio.mp4", { muted: false, autoplay: true });
-    const [reload, setReload] = useState(false);
-    
-    return <>
-        
-        <PerspectiveCamera makeDefault />
-        <OrbitControls enablePan={false} target={[0, -1, -6]} />
-        <Environment preset='dawn' background blur={0.4}>
-        <color args={ [ '#C39BD3 ' ] } attach="background" />
-        {/* <mesh position-z={ - 5 } scale={ 100 }>
-            <planeGeometry />
-            <meshBasicMaterial color={"#5B2C6F"} />
-        </mesh>  */}
-        </Environment>
-        {/* <color args={ [ '#C39BD3 ' ] } attach="background" /> */}
-        <color attach="background" args={['black']} />
+    const handleStart = () => {
+        setIdle(false);
+    }
 
-        {/* <mesh position={[1,-0.5,-2]} scale={1.5}>
-            <planeGeometry />
-            <VideoMaterial url="/videos/leoniewithaudio.mp4" />
-        </mesh> */}
-        <mesh position={[1,-0.5,-2]} scale={1.5}>
-            <planeGeometry />
-            <meshBasicMaterial map={texture} toneMapped={false}>
-                {/* <Html position={[1,-0.5,-2]}>
-                    <video controls ref={videoRef} autoPlay loop muted>
-                        <source src="/videos/leoniewithaudio.mp4" type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
-                </Html> */}
-            </meshBasicMaterial>
-        </mesh>
-        <mesh position={[1,-0.5,-2]}>
-            <boxGeometry />
-            <meshBasicMaterial opacity={0} transparent/>        
-        </mesh>
-        {/* <mesh position={[0,-1.5,-5]}>
-            <planeGeometry />
-            <VideoMaterial url="/videos/Aquazoo.mp4" />
-        </mesh> */}
-        
-        
-        {/* <mesh receiveShadow position-y={-1.5} rotation={[-Math.PI / 2, 0, 0]}>
-            <planeGeometry args={[100, 100]} />
-            <meshStandardMaterial color="black" opacity={1} transparent/>
-        </mesh> */}
+    return (
+        <>
+            <PerspectiveCamera makeDefault position={[0, 0, 0]}/>
+            <OrbitControls enablePan={false} target={[1, 0, 0]} />
+            <Environment preset='apartment' background blur={0.4}>
+            </Environment>
 
-        {/* <PerspectiveCamera fov={60} makeDefault /> */}
-        {/* <OrbitControls target={[0, 0, 0]} /> */}
-        {/* <color args={ [ 'black' ] } attach="background" /> */}
-        {/* <Environment preset='night' background blur={0.5} />
-        <PerspectiveCamera fov={60} makeDefault />
-        <OrbitControls target={[0, -1, 0]} />
-        <mesh position={[0,-1,0]}>
-            <sphereGeometry args={[1, 200, 200]}/>
-            <VideoMaterial url="/M09-1317.mp4" />        
-        </mesh> */}
+            {/* Orientierung */}
+            {/* <mesh position={[5,2,0]}>
+                <boxGeometry />
+                <meshBasicMaterial opacity={0.5} transparent/>  
+            </mesh> */}
 
-        
-        {/* <mesh position={[0,0,20]}>
-            <planeGeometry />
-            <VideoMaterial url="/videos/Aquazoo.mp4" />
-        </mesh> */}
-        
-    </>
+            {idle && (
+                /* Idle Videos */
+                <group> 
+                    
+                    <IdleVideo position={[4, -1.4, 1.8]} name="Leonie" beschreibung="und Klimawandel weltweit" videoSrc="/videos/test2.webm" />
+                    <IdleVideo position={[4, -1.4, 0.6]} name="Aaron" beschreibung="und der Wald" videoSrc="/videos/test2.webm" />
+                    <IdleVideo position={[4, -1.4, -0.6]} name="Anna" beschreibung="und die Landwirtschaft" videoSrc="/videos/test2.webm" />
+                    <IdleVideo position={[4, -1.4, -1.8]} name="Tina" beschreibung="und die Braunkohle" videoSrc="/videos/test2.webm" />
+             
+                    {/* <Text position={[5, 0, 0]} rotation={[0, -1.5, 0]} fontSize={0.4} color="black">Leonie und Klimawandel weltweit</Text> */}
+                </group>
+            )}
+        </>
+    );
 }
-
-function VideoMaterial({ url }) {
-    const texture = useVideoTexture(url, { muted: false, autoplay: false, loop: false, start: false, unsuspend: 'canplaythrough' });
-
-    return <meshBasicMaterial map={texture} toneMapped={false} />
-  }
-  

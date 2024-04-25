@@ -1,4 +1,4 @@
-import { CameraControls, Environment,MeshPortalMaterial,RoundedBox,Text, Stage,useCursor,useTexture, OrbitControls, Html, useVideoTexture, Center} from "@react-three/drei";
+import { CameraControls, Environment,Svg, MeshPortalMaterial,RoundedBox,Text, Stage,useCursor,useTexture, OrbitControls, Html, useVideoTexture, Center} from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Button } from "r3dy";
 import { easing } from "maath";
@@ -7,10 +7,12 @@ import { useStore } from '../stores/useStore';
 import * as THREE from "three";
 import { useSpring, animated } from '@react-spring/three'
 import projectsData from '../projectinformation.json'; // Assuming your JSON data is stored in a file named 'projects.json'
+import linksvg from '/svgs/linkicon.svg';
 
 const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => {
 
   const image = useTexture(img);
+  const button = useTexture("/svgs/Explore.png");
   const portalElement = useTexture(portalImg);
   const portalMaterial = useRef();
 
@@ -25,17 +27,17 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
   const [linkHovered, setLinkHovered] = useState(false);
 
   const sizePortalElements = {
-    'persona fractalis': [5.5, 3.1, 0],
-    'kin_': [4.4,3.75, 0],
+    'persona fractalis': [5.2, 3.05, 0],
+    'kin_': [4.4,3.32, 0],
     'WDR Klima' : [3.9,3.1, 0],
-    'Video Wall' : [4.4,3.27, 0],
+    'Video Wall' : [4.5,3.34, 0],
     // Add more sizes for other names as needed
   };
   const positionPortalElement = {
-    'persona fractalis': [-1.7, -1.8, 0.4],
-    'kin_':  [3.3, -1.47, 0.4], // Example position for 'kin_'. Adjust as needed.
-    'WDR Klima': [0.9, -1.75, 0.04], // Example position for 'kin_'. Adjust as needed.
-    'Video Wall': [-3.2, -1.28, 0.04], // Example position for 'kin_'. Adjust as needed.
+    'persona fractalis': [-1.48, -1.75, 0.4],
+    'kin_':  [3.3, -1.66, 0.4], // Example position for 'kin_'. Adjust as needed.
+    'WDR Klima': [1, -1.8, 0.04], // Example position for 'kin_'. Adjust as needed.
+    'Video Wall': [-3.25, -1.68, 0.04], // Example position for 'kin_'. Adjust as needed.
     // Add more positions for other names as needed
   };
   const { scale: scaleWindow } = useSpring({
@@ -144,7 +146,7 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
         {/* Infos */}
           {show && (
           <>
-          <group position={[-5.6, 3.1, 0.02]}>
+          <group position={[-5.8, 2.5, 0.02]}>
             <Text  color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.3} anchorX="right">
               {project.year}
               <meshBasicMaterial color="white" toneMapped={false} />
@@ -153,14 +155,28 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
               {project.owner}
               <meshBasicMaterial color="white" toneMapped={false} />
             </Text>
+         
+                       
             <Text onPointerOver={() => setLinkHovered(true)} onPointerOut={() => setLinkHovered(false)} onClick={handleText} color={linkHovered ? "white" : "gray"} font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.3} position-y={-0.8} anchorX="right">
+              <Svg position={[-2.55,0.1,0]} scale={0.01} src={linksvg}>
+                {/* <meshStandardMaterial color="white" /> */}
+              </Svg> 
               visit full project
               <meshBasicMaterial color="white" toneMapped={false} />
             </Text>
           </group>
-          <mesh onClick={handleRoundedBoxDoubleClick} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} anchorY="bottom" position={[0, -5, 0]}>
-              <Button text="EXPLORE" color="black" onPointerOver="#ffffff" font="fonts/PlayfairDisplay-Regular.ttf" scale={0.3} />
+          {/* <mesh onClick={handleRoundedBoxDoubleClick} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} anchorY="bottom" position={[-4.6, -4.5, 0]}>
+              <Button text="EXPLORE" onPointerOver="#ffffff" font="fonts/PlayfairDisplay-Regular.ttf" scale={0.3}>
+              <meshStandardMaterial color="#D9D9D985" opacity /></Button>
+          </mesh> */}
+          <mesh onClick={handleRoundedBoxDoubleClick} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} anchorY="bottom" position={[-4.4, -4, 0]}>
+            <planeGeometry args={[2.16,0.5,1]} />
+            <meshStandardMaterial color="#FFF0F5" opacity={0.3} transparent/>
           </mesh>
+          <Text position={[-4.4, -4.02, 0.1]} color="white" fontSize={0.3}>
+            EXPLORE
+            <meshStandardMaterial opacity={1} color="#FFFFFF" emissive="white"/> 
+          </Text>
           </>
         )}
         </>
@@ -223,7 +239,7 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
                         </MeshPortalMaterial>
                     
                 </animated.mesh>
-                 )} 
+                )}
               </animated.mesh>
             </group>
           </mesh>
