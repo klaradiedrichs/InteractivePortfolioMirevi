@@ -14,6 +14,8 @@ export default function Overlay({cameraRoad, onToggleCameraRoad, backToStart, ha
     const virtualGame = useStore((state) => state.gameScene);
     const setGenerationSpeaks = useStore((state) => state.setGenerationSpeaks);
     const generationSpeaks = useStore((state) => state.generationSpeaks);
+    const idleVideo = useStore((state) => state.idleVideo);
+    const setIdleVideo = useStore((state) => state.setIdleVideo);
 
     const handleControls = () => {
       setControls((prev) => !prev);
@@ -32,7 +34,8 @@ export default function Overlay({cameraRoad, onToggleCameraRoad, backToStart, ha
       const handleKeyDown = (event) => {
           if (event.key === 'Enter') {
             setActive(null); // Set the active state back to null
-            setHovered(null) 
+            setHovered(null); 
+            setIdleVideo(true);
             // only important for wdr project:
             setVirtualGame(false); 
             setGenerationSpeaks(false);
@@ -51,31 +54,35 @@ export default function Overlay({cameraRoad, onToggleCameraRoad, backToStart, ha
         setHovered(null)
         setVirtualGame(false);
         setGenerationSpeaks(false);
+        setIdleVideo(true);
+
     };
       const handleBackToWDRMenu = () => {
         setVirtualGame(false);
         setGenerationSpeaks(false);
+        setIdleVideo(true);
+
     };
 
     return (
         <>
-        <div className="z-[2]" tabIndex={0}>
+        <div className="" tabIndex={0}>
         {active === null ? (
           <>
-          <p>Learn more about</p>
-            <a href="https://mirevi.de/" target="_blank" className="absolute bottom-5 left-5 text-black hover:text-white">
+          
+            <a href="https://mirevi.de/" target="_blank" className="absolute z-10 bottom-5 left-5 text-black hover:text-white">
               mirevi.de
             </a>
-            <div className="text-base absolute top-3 left-2 cursor-pointer" onClick={onToggleCameraRoad}>
+            <div className="text-base absolute z-20 top-3 left-2 cursor-pointer" onClick={onToggleCameraRoad}>
               {cameraRoad ? 'Overview' : 'ROADVIEW'}
             </div>
-            <div className="text-base absolute top-10 left-2 cursor-pointer" onClick={handleStart}>
+            <div className="absolute z-10 text-base top-10 left-2 cursor-pointer" onClick={handleStart}>
               Back to Start
             </div>
           </>
         ) : (
           <>
-          <div className="z-20 text-base flex flex-col gap-y-1 fixed top-3 left-3 cursor-pointer">
+          <div className="z-50 text-sm flex flex-col gap-y-1 fixed top-3 left-3 cursor-pointer">
             <div onClick={handleBackToRoadClick} >
                   Tab 'Enter' to leave
             </div>
@@ -84,16 +91,17 @@ export default function Overlay({cameraRoad, onToggleCameraRoad, backToStart, ha
                 <svg width="12" height="13" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M3 15V13H10.1C11.15 13 12.0625 12.6667 12.8375 12C13.6125 11.3333 14 10.5 14 9.5C14 8.5 13.6125 7.66667 12.8375 7C12.0625 6.33333 11.15 6 10.1 6H3.8L6.4 8.6L5 10L0 5L5 0L6.4 1.4L3.8 4H10.1C11.7167 4 13.1042 4.525 14.2625 5.575C15.4208 6.625 16 7.93333 16 9.5C16 11.0667 15.4208 12.375 14.2625 13.425C13.1042 14.475 11.7167 15 10.1 15H3Z" fill="white"/>
                 </svg>
-                <p>Back to WDR Menu</p>
+                <p>WDR Menu</p>
               </div>
             )}
+            
 
           </div>
           </>
         )}
         {/* Steuerung Fenster */}
         {active !== null && (
-        <div className='absolute top-3 px-2 right-2 w-64 h-fit bg-slate-300 opacity-100 rounded-lg text-white'>
+        <div className='absolute z-20 top-3 px-2 right-2 w-64 h-fit bg-slate-300 opacity-100 rounded-lg text-white'>
           <div className='flex items-center gap-x-2'>
             <div className="" onClick={handleControls}>
                 <svg width="16" height="8" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg">

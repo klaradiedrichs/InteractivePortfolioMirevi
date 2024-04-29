@@ -38,6 +38,7 @@ function App() {
         { name: 'leftward', keys: [ 'ArrowLeft', 'KeyA' ] },
         { name: 'rightward', keys: [ 'ArrowRight', 'KeyD' ] },
     ] }>
+        <Overlay cameraRoad={cameraRoad} onToggleCameraRoad={handleToggleCameraRoad} backToStart={backToStart} handleStart={handleStart}/> 
         <Canvas shadows>
               {/* <Perf position='top-right'/> */}
               <Experience setBackToStart={setBackToStart} backToStart={backToStart} cameraRoad={cameraRoad}/>
@@ -47,7 +48,6 @@ function App() {
               {/* <GenerationSpeaks/> */}
         </Canvas>
         </KeyboardControls>
-        <Overlay cameraRoad={cameraRoad} onToggleCameraRoad={handleToggleCameraRoad} backToStart={backToStart} handleStart={handleStart}/> 
     </>
   )
 }

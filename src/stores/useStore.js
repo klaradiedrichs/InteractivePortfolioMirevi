@@ -6,6 +6,9 @@ const useStore = create((set) => ({
   clickedFrame: null,
   hovered: null,
   setHovered: (hovered) => set({ hovered }),
+  
+  idleVideo: true,
+  setIdleVideo: (idleVideo) => set({ idleVideo }),
   setClickedFrame: (frame) => set({ clickedFrame: frame }),
   setActive: (active) => set({ active }),
  
