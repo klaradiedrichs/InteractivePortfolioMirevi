@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { useState , useEffect} from 'react'
 import './App.css'
 import {Canvas, useThree, useFrame} from "@react-three/fiber";
-import {KeyboardControls, Environment, PerspectiveCamera} from "@react-three/drei";
+import {KeyboardControls, Environment, PerspectiveCamera, ScrollControls} from "@react-three/drei";
 import Overlay from './UI/Overlay';
 import { Perf } from 'r3f-perf';
 import Experience from './Road/Experience2';
@@ -16,15 +16,7 @@ function App() {
 
   const [cameraRoad, setCameraRoad] = useState(true);
   const [isScene1Visible, setScene1Visible] = useState(true);
-  const [backToStart, setBackToStart] = useState(false)
-
-  const handleToggleCameraRoad = () => {
-    setCameraRoad((prev) => !prev);
-  };
-  const handleButtonClick = () => {
-    setScene1Visible(!isScene1Visible);
-  };
-  
+  const [backToStart, setBackToStart] = useState(false);
 
   const handleStart = () => {
     setBackToStart(true);
@@ -38,10 +30,12 @@ function App() {
         { name: 'leftward', keys: [ 'ArrowLeft', 'KeyA' ] },
         { name: 'rightward', keys: [ 'ArrowRight', 'KeyD' ] },
     ] }>
-        <Overlay cameraRoad={cameraRoad} onToggleCameraRoad={handleToggleCameraRoad} backToStart={backToStart} handleStart={handleStart}/> 
+        <Overlay backToStart={backToStart} handleStart={handleStart}/> 
         <Canvas shadows>
               {/* <Perf position='top-right'/> */}
-              <Experience setBackToStart={setBackToStart} backToStart={backToStart} cameraRoad={cameraRoad}/>
+              <ScrollControls pages={7} damping={1}>
+                <Experience setBackToStart={setBackToStart} backToStart={backToStart}/>
+              </ScrollControls>
               {/* <WallExp /> */}
               {/* <WDRScene /> */}
               {/* <Fraktale /> */}

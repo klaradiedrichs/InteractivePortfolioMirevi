@@ -56,7 +56,7 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
   });
 
   const { opacity: opacityPoster } = useSpring({ 
-    opacity: boxactive ? 0.4 : 1,
+    opacity: boxactive ? 0.25 : 1,
     // immediate: boxactive
   });
   const { opacity: textFadeIn } = useSpring({ 
@@ -73,7 +73,7 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
       [
         [1.3, -2.9, 0],
         [-0.4, -0.9, 0],
-        [2, 2, 0],
+        [-2, 0.4, 0],
         [2.8, -1.79, 0],
         [-3.5, -2.3, 0],
       ],
@@ -81,14 +81,14 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
         [-3.5, -2.7, 0],
         [1, -0.7, 0],
         [2.8, -2.2, 0],
-        [-2.2, 1.6, 0],
+        [-2.2, 0.4, 0],
       ],
       "WDR Klima": 
       [
         [-2.2, -2, 0],
-        [1, 2, 0],
+        [-1, -0.5, 0],
         [2.8, -2.6, 0],
-        [3.2, 0.7, 0],
+        [2.5, 0.5, 0],
         [-3.5, -2.3, 0],
       ],
       "Video Wall" : 
@@ -129,6 +129,7 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
   useFrame((_state, delta) => {
     const worldOpen = active === name;
     if (hovered === true) {
+      console.log("TEST")
       easing.damp(portalMaterial.current, "blend", worldOpen ? 1 : 0, 0.4, delta);
       }
   });
@@ -165,10 +166,7 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
               <meshBasicMaterial color="white" toneMapped={false} />
             </Text>
           </group>
-          {/* <mesh onClick={handleRoundedBoxDoubleClick} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} anchorY="bottom" position={[-4.6, -4.5, 0]}>
-              <Button text="EXPLORE" onPointerOver="#ffffff" font="fonts/PlayfairDisplay-Regular.ttf" scale={0.3}>
-              <meshStandardMaterial color="#D9D9D985" opacity /></Button>
-          </mesh> */}
+          
           <mesh onClick={handleRoundedBoxDoubleClick} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} anchorY="bottom" position={[-4.4, -4, 0]}>
             <planeGeometry args={[2.16,0.5,1]} />
             <meshStandardMaterial color="#FFF0F5" opacity={0.3} transparent/>
@@ -197,7 +195,7 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
                 anchorX="center"
               >
                 {tag}
-                <animated.meshStandardMaterial opacity={textFadeIn} color="#FFFFFF" emissive="white"/> 
+                <animated.meshStandardMaterial opacity={textFadeIn} color="white" emissive="white" emissiveIntensity={5} /> 
               </Text>
             );
           })}

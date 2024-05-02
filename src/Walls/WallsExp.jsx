@@ -149,7 +149,7 @@ function PlaneWithVideo({ name, position, rotation, playing, url, image}) {
         <planeGeometry />
         
         <Fallback image={image}/>
-        <Text font="fonts/static/Montserrat-Regular.ttf" scale-x={0.6} fontSize={0.15} position-z={0.01} position-x={0}>
+        <Text font="fonts/PlayfairDisplay-Regular.ttf" scale-x={0.6} fontSize={0.15} position-z={0.01} position-x={0}>
           {name}
           <meshBasicMaterial color="black" opacity={0.5} transparent/>
         </Text>

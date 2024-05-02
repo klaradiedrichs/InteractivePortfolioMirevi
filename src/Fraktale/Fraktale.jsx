@@ -16,7 +16,7 @@ export default function Experience()
         </mesh>
             */}
         <PerspectiveCamera fov={60} makeDefault />
-        <OrbitControls target={[0, -1, 0]} />
+        <OrbitControls enableZoom={false} enablePan={false} target={[0, -1, 0]} />
         <mesh position={[0,-1,0]}>
             <sphereGeometry args={[1, 200, 200]}/>
             <VideoMaterial url="/M09-1317.mp4" />        

@@ -13,7 +13,7 @@ export default function Kin()
 return (
   <>
     <PerspectiveCamera makeDefault />
-    <OrbitControls enablePan={false} target={[0, -1, -6]} />
+    {/* <OrbitControls enablePan={false} target={[0, -1, -6]} /> */}
     <Environment preset='apartment' background blur={0.4}>
     {/* <color args={ [ '#C39BD3 ' ] } attach="background" />
     <mesh position-z={ - 5 } scale={ 100 }>

@@ -13,7 +13,7 @@
           "Immersiv"
         ],
         "link": "https://mirevi.de/blog/persona-fractalis-ii-2/",
-        "controls": ["Click and hold to look around"]
+        "controls": ["click and hold to look around"]
       },
       {
         "title": "kin_",
@@ -27,7 +27,7 @@
           "Art and Culture"
         ],
         "link": "https://mirevi.de/blog/kin/",
-        "controls": ["Click and hold to look around"]
+        "controls": ["click and hold to look around"]
       },    
       {
         "title": "WDR Klima",
@@ -41,7 +41,10 @@
           "Immersiv"
         ],
         "link": "https://mirevi.de/blog/persona-fractalis-ii-2/",
-        "controls": ["Click and hold to look around"]
+        "controls": ["Choose Experience"],
+        "controlsWdrGame" : ["Move mouse to aim the trash objects", 
+        "click to shoot"],
+        "controlsWdrBegegnung" : ["Choose story by hovering over a person"] 
       },    
       {
         "title": "Video Wall",
@@ -54,9 +57,9 @@
           "Projects"
         ],
         "link": "",
-        "controls": ["Control camera with WASD or Arrow Keys",
-        "Click to look around and to determine direction",
-        "Tab 'ESC' to lock direction"
+        "controls": ["Control camera with WASD or arrow keys",
+        "Click to rotate view direction",
+        "Press 'ESC' to lock view direction"
         ]
       }  
     ]
