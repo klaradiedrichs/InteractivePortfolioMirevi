@@ -7,13 +7,14 @@ import { useStore } from '../stores/useStore';
 import * as THREE from "three";
 import { useSpring, animated } from '@react-spring/three'
 import projectsData from '../projectinformation.json'; // Assuming your JSON data is stored in a file named 'projects.json'
-import linksvg from '/svgs/linkicon.svg';
+import linksvgBlack from '/svgs/linkiconBlack.svg';
+import linksvgWhite from '/svgs/linkiconWhite.svg';
 
 const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => {
 
-  const image = useTexture(img);
+  const image = img ? useTexture(img) : null ;
   const button = useTexture("/svgs/Explore.png");
-  const portalElement = useTexture(portalImg);
+  const portalElement = portalImg ? useTexture(portalImg) : null;
   const portalMaterial = useRef();
 
   const project = projectsData.projects.find(project => project.title === name);
@@ -159,9 +160,15 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
          
                        
             <Text onPointerOver={() => setLinkHovered(true)} onPointerOut={() => setLinkHovered(false)} onClick={handleText} color={linkHovered ? "white" : "gray"} font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.3} position-y={-0.8} anchorX="right">
-              <Svg position={[-2.55,0.1,0]} scale={0.01} src={linksvg}>
-                {/* <meshStandardMaterial color="white" /> */}
+              {!linkHovered ? (
+              <Svg position={[-2.55,0.1,0]} scale={0.01} src={linksvgBlack}>
+                <meshStandardMaterial color="white" />
               </Svg> 
+              ) : (
+              <Svg position={[-2.55,0.1,0]} scale={0.01} src={linksvgWhite}>
+                <meshStandardMaterial color="white" />
+              </Svg>               
+              )}
               visit full project
               <meshBasicMaterial color="white" toneMapped={false} />
             </Text>

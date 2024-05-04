@@ -12,15 +12,43 @@ import WallExp from './Walls/WallsExp';
 import WDRScene from './wdr/WDRScene';
 import GenerationSpeaks from './wdr/GenerationSpeaks';
 import Fraktale from './Fraktale/Fraktale';
+import {useStore} from './stores/useStore';
 function App() {
 
   const [cameraRoad, setCameraRoad] = useState(true);
   const [isScene1Visible, setScene1Visible] = useState(true);
   const [backToStart, setBackToStart] = useState(false);
-
+  const active = useStore((state) => state.active);
+  
   const handleStart = () => {
     setBackToStart(true);
   }
+  useEffect(() => {
+    const scrollbar = document.documentElement.style;
+
+    const toggleScrollbarHeight = (isActive) => {
+        if (isActive) {
+            scrollbar.setProperty('--scrollbar-height', '0px');
+        } else {
+            scrollbar.removeProperty('--scrollbar-height');
+        }
+    }
+
+    toggleScrollbarHeight(active);
+
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'active') {
+                toggleScrollbarHeight(mutation.target.getAttribute('active') !== null);
+            }
+        });
+    });
+
+    observer.observe(document.documentElement, { attributes: true });
+
+    return () => observer.disconnect();
+  }, [active]);
+
 
   return (
     <>
@@ -33,7 +61,7 @@ function App() {
         <Overlay backToStart={backToStart} handleStart={handleStart}/> 
         <Canvas shadows>
               {/* <Perf position='top-right'/> */}
-              <ScrollControls pages={7} damping={1}>
+              <ScrollControls pages={10} damping={0.5 } horizontal >
                 <Experience setBackToStart={setBackToStart} backToStart={backToStart}/>
               </ScrollControls>
               {/* <WallExp /> */}

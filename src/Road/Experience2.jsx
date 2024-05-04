@@ -12,50 +12,73 @@ import svg from '/mouseIcon.svg';
 import { act, useFrame } from "@react-three/fiber";
 import { useSpring, animated } from '@react-spring/three'
 
-const LINE_NB_POINTS = 20000;
+const LINE_NB_POINTS = 30000;
 
 export default function Experience({ setBackToStart,backToStart})
 {
+    // const framePosition = {
+    //     frame1: new THREE.Vector3(-3, 2, -4),
+    //     frame2: new THREE.Vector3(24, 1.8, -43),
+    //     frame3: new THREE.Vector3(-3, 1.8, -82), 
+    //     frame4: new THREE.Vector3(24, 1.8, -121),
+    //     frame5: new THREE.Vector3(-3, 1.8, -160), 
+    //     frame6: new THREE.Vector3(24, 1.8, -199),
+    //     frame7: new THREE.Vector3(-3, 2.0, -238), 
+    //     // Add more frames as needed
+    //   };
+
+    // const framePosition = {
+    //     frame00: new THREE.Vector3(-3, 2, 74),
+    //     frame0: new THREE.Vector3(24, 2, 35),
+    //     frame1: new THREE.Vector3(-3, 2, -4),
+    //     frame2: new THREE.Vector3(24, 1.8, -43),
     // Curve Poins
     const curve = useMemo(() => {
         return new THREE.CatmullRomCurve3(
         [
-            // Start
-            new THREE.Vector3(-26, 0, 68.5),
-            // // new THREE.Vector3(-20, 0, 58),
-            new THREE.Vector3(-2, 0, 50),
-            // Viewpoint1
-            new THREE.Vector3(1, 0, 5),
-            // Wendepunkt
+            //START
+            new THREE.Vector3(-15, 0, 75),
+            // DREHUNG 1
+            new THREE.Vector3(-15, 0, 63),
+            // DREHUNG 2
+            new THREE.Vector3(-3, 0, 54),
+            // Viewpoint1 (LINKS)
+            new THREE.Vector3(-2, 0, 5),
+            // Drehung nach Rechts
             new THREE.Vector3(20, 0, -10),
-            // Viewpoint 2
-            new THREE.Vector3(22, 0, -32),
-            // Drehung 2
-            new THREE.Vector3(3, 0, -42),
-            // Weg
-            // Viewpoint 3
-            new THREE.Vector3(-2, 0, -62),
-            // Drehung 3
-            new THREE.Vector3(2, 0, -76),
-            new THREE.Vector3(24, 0, -85),
-            new THREE.Vector3(30, 0, -95),
-            // VP 4
-            new THREE.Vector3(29, 0, -112),
-            new THREE.Vector3(13, 0, -131),
-            // new THREE.Vector3(21, 0, -138),
-            new THREE.Vector3(12, 0, -162),
-            // new THREE.Vector3(25, 0, -168),
-            new THREE.Vector3(35, 0, -178),
-            // VP 6
-            new THREE.Vector3(40, 0, -198),
-            // Weg 7
-            new THREE.Vector3(30, 0, -216),
-            new THREE.Vector3(32, 0, -240),
-            new THREE.Vector3(54, 0, -249),
-            new THREE.Vector3(57, 0, -269),
+            // Viewpoint2 (RECHTS)
+            new THREE.Vector3(23, 0, -34),
+            // Drehung nach Links
+            new THREE.Vector3(1,0,-49),
+            // Viewport3 (Links)
+            new THREE.Vector3(-2,0,-73),
+            // Drehung nach Rechts
+            new THREE.Vector3(20, 0, -87),
+            // Viewport 4 (RECHTS)
+            new THREE.Vector3(23, 0, -112),
+            // Drehung nach Links
+            new THREE.Vector3(1,0,-127),
+            // Viewport 5 (LINKS)
+            new THREE.Vector3(-2,0,-151),
+            // Drehung nach Rechts
+            new THREE.Vector3(20, 0, -166),
+            // Viewport 6 (RECHTS)
+            new THREE.Vector3(23, 0, -190),
+            // Dehung nach Links
+            new THREE.Vector3(1,0,-205),
+            // Viewport 7 (LINKS)
+            new THREE.Vector3(-2, 0, -229),
+            // Drehung nach Rechts
+            new THREE.Vector3(20, 0, -244),
+            // VP 8 RECHTS
+            new THREE.Vector3(23, 0, -268),
+            // Drehung nach Links
+            new THREE.Vector3(18,0,-283),
+            new THREE.Vector3(-2, 0, -307),
+
             ], false, "catmullrom", 0.5 );
     }, []);
-    
+
     const linePoints = useMemo(() => {
         return curve.getPoints(LINE_NB_POINTS);
       }, [curve]);
@@ -78,43 +101,44 @@ export default function Experience({ setBackToStart,backToStart})
     const [initialXPos, setInitalXPos] = useState(-26)
     const [linkHovered, setLinkHovered] = useState(false);
 
-    const [showInfo1, setShowInfo1] = useState(false);
-    const [showInfo2, setShowInfo2] = useState(false);
-    const [showInfo3, setShowInfo3] = useState(false);
-    const [showInfo4, setShowInfo4] = useState(false);
-
     // scrollPosition
-    const [scrollOffset, setScrollOffset] = useState(0);
     const active = useStore((state) => state.active);
 
     // für Start Screen Anzeige
     const loaded = useStore((state) => state.loaded);
     const setLoaded = useStore((state) => state.setLoaded);
     const scroll = useScroll();
+    // scroll.offset = 0.2;
+
     const cameraRoad = useStore((state) => state.cameraRoad);
     const setCameraRoad = useStore((state) => state.setCameraRoad);
-
+    const [beginning, setBeginning] = useState(true);
     const textYPos = 0.3;
-    // const [loaded, setLoaded] = useState(false);
-    
+    const [clickedSpecificPoint, setClickedSpecificPoint] = useState(false);
+
+   const handleScroll = () => {
+    scroll.offset = 0.2;
+   }
     const titlePosition = {
-        title1: new THREE.Vector3(0.9, textYPos, 20),
+        title1: new THREE.Vector3(-4, textYPos, 23),
         title2: new THREE.Vector3(24,textYPos,-21),
-        title3: new THREE.Vector3(-3,textYPos,-60),
-        title4: new THREE.Vector3(31,textYPos,-100),
-        title5: new THREE.Vector3(10,textYPos,-146),
-        title6: new THREE.Vector3(40.5,textYPos,-191),
-        title7: new THREE.Vector3(29,textYPos,-222),
+        title3: new THREE.Vector3(-3,textYPos,-51),
+        title4: new THREE.Vector3(26,textYPos,-96),
+        title5: new THREE.Vector3(-4, textYPos, -143), 
+        title6: new THREE.Vector3(26,textYPos,-186),
+        title7: new THREE.Vector3(-4,textYPos,-220),
+        title8: new THREE.Vector3(24,textYPos,-274),
     };
 
     const framePosition = {
-        frame1: new THREE.Vector3(1, 2, -5),
-        frame2: new THREE.Vector3(24, 1.8, -43),
-        frame3: new THREE.Vector3(-2.5, 1.8, -81), 
-        frame4: new THREE.Vector3(31, 1.8, -123),
-        frame5: new THREE.Vector3(11, 1.8, -170), 
-        frame6: new THREE.Vector3(41, 1.8, -213),
-        frame7: new THREE.Vector3(30, 2.0, -248), 
+        frame1: new THREE.Vector3(-3, 1.8, -4),
+        frame2: new THREE.Vector3(25, 1.8, -44),
+        frame3: new THREE.Vector3(-3, 1.8, -84), 
+        frame4: new THREE.Vector3(25, 1.8, -124),
+        frame5: new THREE.Vector3(-3, 1.8, -164), 
+        frame6: new THREE.Vector3(25, 1.8, -204),
+        frame7: new THREE.Vector3(-3, 1.8, -244), 
+        frame8: new THREE.Vector3(25, 1.8, -284), 
         // Add more frames as needed
       };
     
@@ -129,37 +153,37 @@ export default function Experience({ setBackToStart,backToStart})
         // Add more planes as needed
       };
 
-    const [showInformation, setShowInformation] = useState(true); // State to track video playing status for each plane
+    const [showInformation, setShowInformation] = useState(true);
 
-    // called when user scrolls  
+    // called when user scrolls to show / hide start screen  
     const handleWheel = (e) => {
-        // const delta = e.deltaY;
-        // const scrollSpeed = 0.5;
-        // // Update the scroll position based on the delta
-        // setScrollOffset((prevOffset) => prevOffset + delta * scrollSpeed);
-        // setLoaded(false)
+        setClickedSpecificPoint(false);
+        
+        if (e.deltaY > 0) {
+            setLoaded(false);
+        }
+        if (e.deltaY < 0) {
+            setLoaded(true);
+        }
     };
 
     // runs on every render or when cameraRoad changes
     useEffect(() => {
+        // const initialScrollOffset = 0.5; // Assuming 0.5 represents the middle of the page
+        // scroll.set(initialScrollOffset);
         setLoaded(true);
 
         if(cameraRoad && !backToStart){                   
-        // window.addEventListener("wheel", handleWheel);
-        // go back to CameraRoad Position:
-        // setinitialYPos(0);
+        window.addEventListener("wheel", handleWheel);
         setShowInformation(true);
-
         }
         else if(!cameraRoad){
-        // window.removeEventListener("wheel", handleWheel);
-        // setShowInformation(false);
-        // setinitialYPos(1);
-
+        window.removeEventListener("wheel", handleWheel);
+        setShowInformation(false);
         }
-        
+    
         return () => {
-        // window.removeEventListener("wheel", handleWheel);
+        window.removeEventListener("wheel", handleWheel);
         };
         
     }, [cameraRoad, backToStart]);
@@ -168,18 +192,19 @@ export default function Experience({ setBackToStart,backToStart})
         window.open("https://mirevi.de/", "_blank"); // Open the link in a new tab
 
       }
+      
 
       useFrame((_state, delta) => {
         if (active === null) {
             if (cameraRoad) {
-                const cameraPos = cameraRef.current.position;
+                // const cameraPos = cameraRef.current.position;
     
                 // Get an array of all frame positions
-                const allFramePositions = Object.values(framePosition);
+                // const allFramePositions = Object.values(framePosition);
                 // Calculate distances to all frame positions
-                const distances = allFramePositions.map(framePos => cameraPos.distanceTo(framePos));
+                // const distances = allFramePositions.map(framePos => cameraPos.distanceTo(framePos));
     
-                const range = 23;
+                // const range = 23;
     
                 // if (distances.some(distance => distance <= range)) {
                 //     setShowInformation(true);
@@ -191,11 +216,15 @@ export default function Experience({ setBackToStart,backToStart})
                     Math.round(scroll.offset * linePoints.length),
                     linePoints.length - 1
                 );
-    
+
+                console.log(scroll.offset);
+                // scroll.offset.set(0.14);
                 const curPoint = linePoints[curPointIndex]
+                // wenn normalScroll = true :
+                if(!clickedSpecificPoint){ 
+                
                 const pointAhead = linePoints[Math.min(curPointIndex + 1, linePoints.length - 1)];
-    
-                const xDisplacement = (pointAhead.x - curPoint.x) * 80;
+                const xDisplacement = (pointAhead.x - curPoint.x) * 50;
                 const angleRotation = (xDisplacement < 0 ? 1 : -1) * Math.min(Math.abs(xDisplacement), Math.PI / 3);
     
                 const targetCameraQuaternion = new THREE.Quaternion().setFromEuler(
@@ -205,9 +234,22 @@ export default function Experience({ setBackToStart,backToStart})
                         cameraRef.current.rotation.z
                     )
                 );
+                // am Anfang: 
+                // 
+                // dann: 
                 cameraRef.current.quaternion.slerp(targetCameraQuaternion, delta * 1);
                 cameraRef.current.position.lerp(curPoint, delta * 24);
-
+                }
+                // wenn normalScroll false (also eine Stelle geklickt wurde ): 
+               
+                if(clickedSpecificPoint){
+                    const clickedPoint = linePoints[4320]
+                    cameraRef.current.position.lerp(curPoint, delta * 24);
+                }
+                if(curPointIndex === 0){
+                    setLoaded(true);
+                }
+                
             } else if(!cameraRoad) {
                 cameraOverview.current.lookAt(0, 0, -90);
                 setInitalXPos(97);
@@ -224,7 +266,11 @@ export default function Experience({ setBackToStart,backToStart})
     })
     const { opacity: textFadeIn } = useSpring({ 
         opacity: loaded ? 1 : 0,
-        delay: loaded ? 1000 : 0
+        delay: loaded ? 500 : 0
+      });
+    const { opacity: roadFadeIn } = useSpring({ 
+        opacity: loaded ? 0.5 : 0,
+        delay: loaded ? 2500 : 0
       });
     
     return (
@@ -236,29 +282,29 @@ export default function Experience({ setBackToStart,backToStart})
 
         {/* Mirevi Start Logo */}
 
-        <animated.group scale={2.15} position={[-19.85, 0.9, 65]} rotation={[0, -1.05, 0]}>
-            <Text scale={0.6} position={[0,-0.57,0]} color="white" font="fonts/PlayfairDisplay-Regular.ttf" fontSize={0.1}>
+        <animated.group scale={2.15} position={[-15, 0.8, 67]} rotation={[0, 0, 0]}>
+            <Text scale={0.6} position={[0,-0.5,0]} color="white" font="fonts/PlayfairDisplay-Regular.ttf" fontSize={0.1}>
                 ... an immersive web exhibiton to get insights about MIREVI projects
                 <animated.meshBasicMaterial color="white" opacity={textFadeIn} toneMapped={false} />
             </Text>
-            <Text scale={0.45} position={[-0.1,-0.68,0]} color="white" font="fonts/static/Montserrat-Light.ttf" fontSize={0.1}>
+            <Text scale={0.45} position={[-0.1,-0.61,0]} color="white" font="fonts/static/Montserrat-Light.ttf" fontSize={0.1}>
                 Learn more about 
                 <animated.meshBasicMaterial color="white" opacity={textFadeIn} toneMapped={false} />
             </Text>
-            <Text onPointerOver={() => setLinkHovered(true)} onPointerOut={() => setLinkHovered(false)} onClick={openLink} scale={0.45} position={[0.215,-0.68,0]} color={linkHovered? "black" : "white"} font="fonts/static/Montserrat-Light.ttf" fontSize={0.1}>
+            <Text onPointerOver={() => setLinkHovered(true)} onPointerOut={() => setLinkHovered(false)} onClick={openLink} scale={0.45} position={[0.215,-0.61,0]} color={linkHovered? "black" : "white"} font="fonts/static/Montserrat-Light.ttf" fontSize={0.1}>
                 mirevi.de
                 <animated.meshBasicMaterial color="white" opacity={textFadeIn} toneMapped={false} />
             </Text>
-            <Text scale={0.32} position={[0,-1.28,0]} color="white" font="fonts/static/Montserrat-Light.ttf" fontSize={0.1}>
+            <Text scale={0.32} position={[0.02,-1.28,0]} color="white" font="fonts/static/Montserrat-Light.ttf" fontSize={0.105}>
                 Scroll to start exploring
                 <animated.meshBasicMaterial color="white" opacity={textFadeIn} toneMapped={false} />            
             </Text>
             {loaded && (
-            <Svg position={[0,-1.34,0]} scale={0.0015} src={svg}>
-                <meshStandardMaterial color="black" />
+            <Svg position={[0.01,-1.34,0]} scale={0.0015} src={svg}>
+                <meshStandardMaterial />
             </Svg>
             )}
-            <mesh position={[-0.07,-0.15,0]} scale={[1.2,0.7,0]}>
+            <mesh position={[-0.07,-0.06,0]} scale={[1.2,0.7,0]}>
                 <planeGeometry />
                 <animated.meshBasicMaterial map={logo} opacity={textFadeIn} transparent toneMapped={false} side={THREE.DoubleSide}/>
             </mesh>
@@ -289,27 +335,31 @@ export default function Experience({ setBackToStart,backToStart})
         <TextComp name="Video Wall" position={titlePosition.title4} rotation={[0, -0.2, 0]} />
         
         {/* Fünftes Projekt (leer) */}
-        {/* <Frame position={framePosition.frame5} name="Fünf" color="#38adcf" img="/textures/escaperoom.png" portalImg="/poster/wdrPortal2.png" show={showInformation['frame5']} > 
+        <Frame position={framePosition.frame5} name="Five" color="#38adcf" img={null} portalImg={null} show={showInformation} > 
         </Frame>
-        <TextComp name="Fünf" position={titlePosition.title5} rotation={[0, -0.2, 0]} />
-         */}
+        <TextComp name="Five" position={titlePosition.title5} rotation={[0, -0.2, 0]} />
+        
         {/* Sechstes Projekt (leer) */}
-        {/* <Frame position={framePosition.frame6} name="Sechs" color="#38adcf" img="/textures/escaperoom.png" portalImg="/poster/wdrPortal2.png" show={showInformation['frame6']}> 
+        <Frame position={framePosition.frame6} name="Six" color="#38adcf" img={null} portalImg={null} show={showInformation}> 
         </Frame>
-        <TextComp name="Sechs" position={titlePosition.title6} rotation={[0, -0.2, 0]} />
-         */}
+        <TextComp name="Six" position={titlePosition.title6} rotation={[0, -0.2, 0]} />
+        
         {/* Siebtes Projekt (leer) */}
-        {/* <Frame position={framePosition.frame7} name="Sieben" color="#38adcf" img="/textures/escaperoom.png" portalImg="/poster/wdrPortal2.png" show={showInformation['frame7']}> 
+        <Frame position={framePosition.frame7} name="Seven" color="#38adcf" img={null} portalImg={null} show={showInformation}> 
         </Frame>
-        <TextComp name="Sieben" position={titlePosition.title7} rotation={[0, -0.2, 0]} />
-         */}
+        <TextComp name="Seven" position={titlePosition.title7} rotation={[0, -0.2, 0]} />
+        
+        <Frame position={framePosition.frame8} name="Eight" color="#38adcf" img={null} portalImg={null} show={showInformation}> 
+        </Frame>
+        <TextComp name="Eight" position={titlePosition.title8} rotation={[0, -0.2, 0]} />
+        
         {/* {!cameraRoad && active === null && <OrbitControls />} */}
         {/* Camera */}
         {active === null && 
         <>
             {cameraRoad ? (
                 <>
-                <PerspectiveCamera fov={35} near={0.4} far={35} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} />
+                <PerspectiveCamera fov={35} near={1} far={38} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} />
                 </>
             ) : (
             <>
@@ -320,7 +370,7 @@ export default function Experience({ setBackToStart,backToStart})
                 <mesh>
                     <extrudeGeometry
                     args={[ shape, { steps: LINE_NB_POINTS, bevelEnabled: true, extrudePath: curve,curveSegments: 50, bevelThickness: 10 },]} />
-                    <meshStandardMaterial color={"white"} opacity={0.2} transparent />
+                    <animated.meshStandardMaterial color={"white"} opacity={0.3} transparent />
                 </mesh>
             </group>
         </>

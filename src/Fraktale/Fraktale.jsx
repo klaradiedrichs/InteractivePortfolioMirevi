@@ -1,9 +1,14 @@
 import { Html, MeshReflectorMaterial, CameraControls, useVideoTexture,OrbitControls , PerspectiveCamera, Environment} from '@react-three/drei'
 import * as THREE from "three";
+import { useStore } from '../stores/useStore';
 
 
 export default function Experience()
 {
+
+    const active = useStore((state) => state.active);
+
+    
 
     return <>
         
@@ -15,8 +20,10 @@ export default function Experience()
             <VideoMaterial url="M09-1317.mp4" />        
         </mesh>
             */}
-        <PerspectiveCamera fov={60} makeDefault />
+        <PerspectiveCamera position={[0,-1,0]} fov={60} makeDefault />
+        {active != null && (
         <OrbitControls enableZoom={false} enablePan={false} target={[0, -1, 0]} />
+        )}
         <mesh position={[0,-1,0]}>
             <sphereGeometry args={[1, 200, 200]}/>
             <VideoMaterial url="/M09-1317.mp4" />        

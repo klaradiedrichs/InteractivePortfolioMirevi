@@ -39,7 +39,7 @@ export default function Overlay({ backToStart, handleStart, goBackToRoad}) {
         console.log(activeControls)
     }
 
- // click enter to go back Möglichkeit
+ //click enter to go back Möglichkeit
     useEffect(() => {
       console.log(cameraRoad)
       const handleKeyDown = (event) => {
@@ -59,6 +59,35 @@ export default function Overlay({ backToStart, handleStart, goBackToRoad}) {
           document.removeEventListener('keydown', handleKeyDown);
       };
   }, [cameraRoad]);
+
+  // useEffect(() => {
+  //   const handleMouseOver = () => {
+  //     const scrollBarText = document.getElementById("scrollBarText");
+  //     if (scrollBarText) {
+  //       scrollBarText.classList.add("hovered-text");
+  //     }
+  //   };
+
+  //   const handleMouseOut = () => {
+  //     const scrollBarText = document.getElementById("scrollBarText");
+  //     if (scrollBarText) {
+  //       scrollBarText.classList.remove("hovered-text");
+  //     }
+  //   };
+
+  //   const thumb = document.querySelector("::-webkit-scrollbar-thumb");
+  //   if (thumb) {
+  //     thumb.addEventListener("mouseover", handleMouseOver);
+  //     thumb.addEventListener("mouseout", handleMouseOut);
+  //   }
+
+  //   return () => {
+  //     if (thumb) {
+  //       thumb.removeEventListener("mouseover", handleMouseOver);
+  //       thumb.removeEventListener("mouseout", handleMouseOut);
+  //     }
+  //   };
+  // }, []);
 
       const handleBackToRoadClick = () => {
         setActive(null)
@@ -100,9 +129,12 @@ export default function Overlay({ backToStart, handleStart, goBackToRoad}) {
         {active === null ? (
           <>
           
-            <a href="https://mirevi.de/" target="_blank" className="absolute z-10 bottom-3 left-3 hover:text-white">
+            <a href="https://mirevi.de/" target="_blank" className="absolute z-20 bottom-3 left-3 hover:text-white">
               mirevi.de
             </a>
+            <p className="absolute z-10 bottom-4 right-3">
+              End
+            </p>
             <div className='text-base absolute z-20 top-3 left-3 flex flex-col gap-y-1'>
               <div className="cursor-pointer" onClick={toggleView}>
                 {cameraRoad ? 'Overview' : 'Roadview'}
@@ -113,14 +145,28 @@ export default function Overlay({ backToStart, handleStart, goBackToRoad}) {
               </div>
               
             </div>
-            <div className="h-screen absolute z-20 right-5 flex flex-col justify-between">
-                {[1, 2, 3, 4, 5, 6, 7].map((number) => (
-                  <div key={number} className=" justify-between">
-                    {number}
+            <div className="text-sm w-3/4 z-20 absolute bottom-3 flex justify-around left-[12%]">
+                {projectsData.projects.map((project, index) => (
+                  <div className='flex flex-col items-center w-[150px] text-center'>
+                    <div key={index} className="">
+                      {project.title}
+                    </div>
+                    <svg className="" width="3" height="6">
+                      <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#4b5563" strokeWidth="1" />
+                    </svg>
+                  </div>
+                  
+                ))}
+            </div>
+            {/* <div className='text-xs absolute h-2/3 right-5 top-[14%] flex text-gray-500 ' id='scrollBarText'>
+            <div className="z-20 flex flex-col justify-around text-right">
+                {projectsData.projects.map((project, index) => (
+                  <div key={index} className="">
+                    {project.title}
                   </div>
                 ))}
               </div>
-            
+            </div> */}
           </>
 
         ) : (
