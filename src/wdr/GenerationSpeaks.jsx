@@ -38,7 +38,7 @@ export default function Experience() {
     
     return (
         <>
-            <PerspectiveCamera makeDefault position={[0, 0.02, 0]}/>
+            <PerspectiveCamera makeDefault position={[0.3, 0.01, 0]}/>
             <OrbitControls enablePan={false} target={[1, 0, 0]} />
             <Environment preset='forest' background blur={0.3} />
             <spotLight position={[4.5, -0.25, 1.8]}/>

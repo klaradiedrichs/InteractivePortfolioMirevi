@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Html, RoundedBox, Text , useVideoTexture} from '@react-three/drei';
+import { Html, RoundedBox, Text , useTexture, useVideoTexture} from '@react-three/drei';
 import { useSpring, animated } from '@react-spring/three'
 import { useStore } from '../stores/useStore';
 
@@ -9,7 +9,8 @@ export default function IdleVideo({ position, text, videoSrc, name, beschreibung
     const [hover, setHovered] = useState(false);
     const idleVideo = useStore((state) => state.idleVideo);
     const setIdleVideo = useStore((state) => state.setIdleVideo);
-    
+    const infoField = useTexture('/textures/infoField.png')
+    const startButton = useTexture('/textures/startField.png')
     const { opacity: idleVideosOpacity } = useSpring({
         opacity: idleVideo ? 1 : 0, // Opacity is 1 if idleVideo is true, otherwise 0
     });
@@ -45,30 +46,31 @@ export default function IdleVideo({ position, text, videoSrc, name, beschreibung
             <group position={[0,-1.6,0.02]}>
                 <mesh onClick={handleStart}>
                     <planeGeometry args={[0.5,0.17,1]} />
-                    <meshStandardMaterial color="#1E4738" opacity={0.5} transparent/>
+                    <meshStandardMaterial map={startButton} opacity={0.9} transparent/>
                 </mesh>
                 <Text  position={[0,0,0.01]} color="white" fontSize={0.08}>
                     START
-                    <meshStandardMaterial opacity={1} color="#FFFFFF" emissive="white"/> 
+                    <meshStandardMaterial opacity={1} color="#FFFFFF" emissive="white" emissiveIntensity={5}/> 
                 </Text>          
             </group>
 
-
+            
             {/* Name und Beschreibung*/}
-            <group position={[0,1.8,-0.1]}>
+            <group position={[0,1.8,0.15]}>
                 <mesh onClick={handleStart} >
-                    <planeGeometry args={[1,0.35,1]} />
-                    <meshStandardMaterial color="black" opacity={0.4} transparent/>
-                    <Text position={[-0.1,0.01,0.01]} anchorX="right" color="white" fontSize={0.12}>
-                        {name}
-                        <meshStandardMaterial opacity={1} color="#FFFFFF" emissive="white"/> 
-                    </Text>          
-                    <Text position={[0,-0.1,0.01]} color="white" fontSize={0.08}>
-                        {beschreibung}
-                        <meshStandardMaterial opacity={1} color="#FFFFFF" emissive="white"/> 
-                    </Text>  
+                    <planeGeometry args={[1.1,0.4,1]} />
+                    <meshStandardMaterial map={infoField} opacity={0.5} transparent/>
                 </mesh>
-                        
+                <group position={[-0.44,0,0]}>
+                <Text position={[0,0,0.1]} anchorX="left" color="white" fontSize={0.12}>
+                    {name}
+                    <meshStandardMaterial opacity={1} color="#FFFFFF" emissive="white" intensity={2}/> 
+                </Text>          
+                <Text position={[0,-0.1,0.01]} anchorX="left" color="white" fontSize={0.08}>
+                    {beschreibung}
+                    <meshStandardMaterial opacity={1} color="#FFFFFF" emissive="white"/> 
+                </Text> 
+                </group> 
             </group>
             </group>
             )}

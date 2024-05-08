@@ -15,22 +15,34 @@ import Fraktale from './Fraktale/Fraktale';
 import {useStore} from './stores/useStore';
 function App() {
 
-  const [cameraRoad, setCameraRoad] = useState(true);
   const [isScene1Visible, setScene1Visible] = useState(true);
   const [backToStart, setBackToStart] = useState(false);
   const active = useStore((state) => state.active);
-  
+  const scrollBarColor = useStore((state) => state.scrollBarColor);
+  const cameraRoad = useStore((state) => state.cameraRoad);
+
   const handleStart = () => {
     setBackToStart(true);
   }
+
   useEffect(() => {
     const scrollbar = document.documentElement.style;
 
     const toggleScrollbarHeight = (isActive) => {
         if (isActive) {
-            scrollbar.setProperty('--scrollbar-height', '0px');
-        } else {
-            scrollbar.removeProperty('--scrollbar-height');
+          // scrollbar.setProperty('--scrollbar-width', '0px');
+        
+        }
+        else if (cameraRoad == false) {
+          scrollbar.setProperty('--scrollbar-width', '0px');
+          
+        } 
+        else if(scrollBarColor === true){
+          scrollbar.setProperty('--thumbColor','#950abc')
+        }
+        else {
+          scrollbar.removeProperty('--scrollbar-width');
+          scrollbar.removeProperty('--thumbColor');
         }
     }
 
@@ -47,7 +59,7 @@ function App() {
     observer.observe(document.documentElement, { attributes: true });
 
     return () => observer.disconnect();
-  }, [active]);
+  }, [active,scrollBarColor]);
 
 
   return (
@@ -58,10 +70,10 @@ function App() {
         { name: 'leftward', keys: [ 'ArrowLeft', 'KeyA' ] },
         { name: 'rightward', keys: [ 'ArrowRight', 'KeyD' ] },
     ] }>
-        <Overlay backToStart={backToStart} handleStart={handleStart}/> 
+        <Overlay backToStart={backToStart} /> 
         <Canvas shadows>
               {/* <Perf position='top-right'/> */}
-              <ScrollControls pages={10} damping={0.5 } horizontal >
+              <ScrollControls pages={10} damping={0.5 } >
                 <Experience setBackToStart={setBackToStart} backToStart={backToStart}/>
               </ScrollControls>
               {/* <WallExp /> */}

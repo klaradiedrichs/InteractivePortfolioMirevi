@@ -21,6 +21,8 @@ const useStore = create((set) => ({
   
   loaded: false,
   setLoaded: (loaded) => set({ loaded }),
+  scrollBarColor: false,
+  setScrollBarColor: (scrollBarColor) => set({scrollBarColor})
 }));
 
 export { useStore };

@@ -1,9 +1,9 @@
 import { useStore } from '../stores/useStore';
 import { useState , useEffect} from 'react'
 import projectsData from '../projectinformation.json';
+import useGameStore from "../wdr/useGameStore";
 
-
-export default function Overlay({ backToStart, handleStart, goBackToRoad}) {
+export default function Overlay({ backToStart, goBackToRoad}) {
 
     const setActive = useStore((state) => state.setActive);
     const setHovered = useStore((state) => state.setHovered);
@@ -14,10 +14,23 @@ export default function Overlay({ backToStart, handleStart, goBackToRoad}) {
     const virtualGame = useStore((state) => state.gameScene);
     const setGenerationSpeaks = useStore((state) => state.setGenerationSpeaks);
     const generationSpeaks = useStore((state) => state.generationSpeaks);
-    const idleVideo = useStore((state) => state.idleVideo);
     const setIdleVideo = useStore((state) => state.setIdleVideo);
     const cameraRoad = useStore((state) => state.cameraRoad);
     const setCameraRoad = useStore((state) => state.setCameraRoad);
+    const score = useGameStore((state) => state.score);
+    const start = useGameStore((state) => state.start);
+    const setStart = useGameStore((state) => state.setStart);
+    // const scrollBarColor = useStore((state) => state.scrollBarColor);
+    const setScrollBarColor = useStore((state) => state.setScrollBarColor);
+    const [isTextHovered, setIsTextHovered] = useState(false);
+
+    const handleTextHover = () => {
+      setIsTextHovered(true); // Set the state to indicate text hover
+    };
+  
+    const handleTextLeave = () => {
+      setIsTextHovered(false); // Reset the state when leaving text hover
+    };
 
     const handleControls = () => {
       setControls((prev) => !prev);
@@ -104,6 +117,11 @@ export default function Overlay({ backToStart, handleStart, goBackToRoad}) {
 
     };
 
+    const handleStart = () => {
+      console.log("START")
+      setStart(true);
+    }
+
     const toggleView = () => {
 
       // setCameraRoad(false);
@@ -130,10 +148,10 @@ export default function Overlay({ backToStart, handleStart, goBackToRoad}) {
           <>
           
             <a href="https://mirevi.de/" target="_blank" className="absolute z-20 bottom-3 left-3 hover:text-white">
-              mirevi.de
+              {/* mirevi.de */}
             </a>
             <p className="absolute z-10 bottom-4 right-3">
-              End
+              {/* End */}
             </p>
             <div className='text-base absolute z-20 top-3 left-3 flex flex-col gap-y-1'>
               <div className="cursor-pointer" onClick={toggleView}>
@@ -141,11 +159,11 @@ export default function Overlay({ backToStart, handleStart, goBackToRoad}) {
                 
               </div>
               <div className="cursor-pointer" >
-                Back to start
+                About Mirevi
               </div>
               
             </div>
-            <div className="text-sm w-3/4 z-20 absolute bottom-3 flex justify-around left-[12%]">
+            {/* <div className="text-base text-white/50 w-3/4 z-20 absolute bottom-3 flex justify-around left-[12%]">
                 {projectsData.projects.map((project, index) => (
                   <div className='flex flex-col items-center w-[150px] text-center'>
                     <div key={index} className="">
@@ -157,16 +175,23 @@ export default function Overlay({ backToStart, handleStart, goBackToRoad}) {
                   </div>
                   
                 ))}
-            </div>
-            {/* <div className='text-xs absolute h-2/3 right-5 top-[14%] flex text-gray-500 ' id='scrollBarText'>
-            <div className="z-20 flex flex-col justify-around text-right">
+            </div> */}
+            {cameraRoad && (
+            <div className='text-sm absolute h-3/4 right-5 top-[14%] flex text-gray-500 ' >
+            <div className="z-20 flex flex-col justify-between text-right">
                 {projectsData.projects.map((project, index) => (
-                  <div key={index} className="">
+                   <div key={index}
+                   id="scrollBarText"
+                   className={isTextHovered ? 'hovered-text' : ''}
+                   onPointerOver={() => setScrollBarColor(true)}
+                   onMouseLeave={() => setScrollBarColor(false)}
+                 >
                     {project.title}
                   </div>
                 ))}
               </div>
-            </div> */}
+            </div>
+            )}
           </>
 
         ) : (
@@ -183,7 +208,40 @@ export default function Overlay({ backToStart, handleStart, goBackToRoad}) {
                     <p>WDR Menu</p>
                   </div>
                 )}
+                
           </div>
+          {virtualGame && (
+          <div className='z-20'>
+          {!start && (
+          <div className='absolute z-20 flex flex-col h-screen w-screen items-center justify-center'>
+            <div className='text-center text-lg border border-slate-500/25 rounded-xl w-96 h-64 bg-slate-400/25 flex flex-col gap-y-8 items-center justify-center'>
+              
+              <p className='px-3'>
+              Collect as many trash objects as possible in 30 seconds
+              </p>
+              <div>
+                
+              </div>
+              <div onClick={handleStart} className='text-2xl bg-slate-500/50 rounded-lg px-3'>
+                START
+              </div>
+            </div>
+            
+          </div>
+          )}
+          {start && (
+          <div className='absolute text-4xl z-20 bottom-3 left-3'>
+            <div>
+              
+            </div>
+            <Timer onFinish={() => console.log('Time is up!')} />
+            <div className='border-2 rounded-xl px-4 '>
+              SCORE: {score}
+            </div>
+          </div>
+          )}
+          </div>
+          )}
           <div className='absolute z-20 top-3 px-2 right-3 w-fit max-w-64 h-fit bg-gray-400/25 rounded-lg text-gray-600'>
             <div onClick={handleControls} className='flex items-center gap-x-1 cursor-pointer'>
               <div className="" >
@@ -206,4 +264,28 @@ export default function Overlay({ backToStart, handleStart, goBackToRoad}) {
       </div>
       </>
     )
+  }
+
+  function Timer({ onFinish }) {
+    const [timeLeft, setTimeLeft] = useState(30);
+  
+    useEffect(() => {
+      // Start the countdown when the component mounts
+      const timer = setInterval(() => {
+        // Decrease the time left every second
+        setTimeLeft((prevTime) => prevTime - 1);
+      }, 1000);
+  
+      // Clear the interval when the component unmounts or time runs out
+      return () => clearInterval(timer);
+    }, []);
+  
+    useEffect(() => {
+      // Trigger onFinish callback when time runs out
+      if (timeLeft === 0) {
+        onFinish();
+      }
+    }, [timeLeft, onFinish]);
+  
+    return <div>{timeLeft} s</div>;
   }

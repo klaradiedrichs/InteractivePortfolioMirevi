@@ -5,7 +5,7 @@
 @layer base {
   @font-face {
     font-family: montserrat;
-    src: url("/fonts/static/Montserrat-LightItalic.ttf") format("ttf"),
+    src: url("../public/fonts/Inter_Bold.json") format("json"),
       
   }
 }
@@ -24,11 +24,10 @@
   
 }
 ::-webkit-scrollbar {
-  width: 10px;
-  height: var(--scrollbar-height, 10px); /* Use the --scrollbar-height variable */
+  width: var(--scrollbar-width,10px);
+  height: 15px; /* Use the --scrollbar-height variable */
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 5px rgb(179, 179, 179); 
   border-radius: 5px;
@@ -36,23 +35,18 @@
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgb(169, 98, 201); 
+  background: var(--thumbColor, #f9f9f9);
   border-radius: 5px;
+
 }
 
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #8033af; 
+::-webkit-scrollbar-thumb:hover
+ {
+  background: #950abc; /* Change color when hovering over the scrollbar thumb or text */
+  cursor: pointer;
 }
 
-/* Add this CSS to change text color to black when hovering over scrollbar thumb */
-::-webkit-scrollbar-thumb:hover + .scrollBarText {
-  color: black;
-}
-/* CSS */
-#scrollBarText.hovered-text .z-20 > div {
-  color: black;
-}
 a {
   text-decoration: inherit;
 }
@@ -90,8 +84,8 @@ img, video {
 }
 html, body, #root {
   
-  font-family: montserrat;  
-
+  /* font-family: montserrat; */
+  font-family: montserrat;
   position: fixed;
   height: 100%;
   width: 100%;

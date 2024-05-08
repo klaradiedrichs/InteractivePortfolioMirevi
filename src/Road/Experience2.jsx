@@ -37,11 +37,11 @@ export default function Experience({ setBackToStart,backToStart})
         return new THREE.CatmullRomCurve3(
         [
             //START
-            new THREE.Vector3(-15, 0, 75),
+            new THREE.Vector3(-15, 0, 71),
             // DREHUNG 1
-            new THREE.Vector3(-15, 0, 63),
+            new THREE.Vector3(-15, 0, 59),
             // DREHUNG 2
-            new THREE.Vector3(-3, 0, 54),
+            new THREE.Vector3(-3, 0, 50),
             // Viewpoint1 (LINKS)
             new THREE.Vector3(-2, 0, 5),
             // Drehung nach Rechts
@@ -122,7 +122,7 @@ export default function Experience({ setBackToStart,backToStart})
     const titlePosition = {
         title1: new THREE.Vector3(-4, textYPos, 23),
         title2: new THREE.Vector3(24,textYPos,-21),
-        title3: new THREE.Vector3(-3,textYPos,-51),
+        title3: new THREE.Vector3(-3,textYPos,-58),
         title4: new THREE.Vector3(26,textYPos,-96),
         title5: new THREE.Vector3(-4, textYPos, -143), 
         title6: new THREE.Vector3(26,textYPos,-186),
@@ -173,7 +173,7 @@ export default function Experience({ setBackToStart,backToStart})
         // scroll.set(initialScrollOffset);
         setLoaded(true);
 
-        if(cameraRoad && !backToStart){                   
+        if(cameraRoad){                   
         window.addEventListener("wheel", handleWheel);
         setShowInformation(true);
         }
@@ -181,12 +181,16 @@ export default function Experience({ setBackToStart,backToStart})
         window.removeEventListener("wheel", handleWheel);
         setShowInformation(false);
         }
+        else if (clickedSpecificPoint){
+        setShowInformation(true);
+        }
+        
     
         return () => {
         window.removeEventListener("wheel", handleWheel);
         };
         
-    }, [cameraRoad, backToStart]);
+    }, [cameraRoad, backToStart, clickedSpecificPoint]);
 
       const openLink = () => {
         window.open("https://mirevi.de/", "_blank"); // Open the link in a new tab
@@ -243,8 +247,8 @@ export default function Experience({ setBackToStart,backToStart})
                 // wenn normalScroll false (also eine Stelle geklickt wurde ): 
                
                 if(clickedSpecificPoint){
-                    const clickedPoint = linePoints[4320]
-                    cameraRef.current.position.lerp(curPoint, delta * 24);
+                    // const clickedPoint = linePoints[4320]
+                    // cameraRef.current.position.lerp(curPoint, delta * 24);
                 }
                 if(curPointIndex === 0){
                     setLoaded(true);
@@ -252,15 +256,28 @@ export default function Experience({ setBackToStart,backToStart})
                 
             } else if(!cameraRoad) {
                 cameraOverview.current.lookAt(0, 0, -90);
-                setInitalXPos(97);
-                setInitialZPos(44);
-                setinitialYPos(1);
+                // setInitalXPos(97);
+                // setInitialZPos(44);
+                // setinitialYPos(1);
+                if(clickedSpecificPoint){
+                    cameraOverview.current.position.set(-4, 1, 11);
+
+                    console.log("HI");
+                    
+                }
             }
         }
     });
     
     
-
+    const goToFrame = () => {
+        if(!cameraRoad){
+            console.log("Frame clicked")
+            setInitalXPos(-3),
+            setinitialYPos(1.8),
+            setInitialZPos(-4)
+        }
+    }
     const {scale} = useSpring({ 
         scale: loaded ? 0.0015 : 0,
     })
@@ -282,7 +299,7 @@ export default function Experience({ setBackToStart,backToStart})
 
         {/* Mirevi Start Logo */}
 
-        <animated.group scale={2.15} position={[-15, 0.8, 67]} rotation={[0, 0, 0]}>
+        <animated.group scale={2.15} position={[-15, 0.8, 63]} rotation={[0, 0, 0]}>
             <Text scale={0.6} position={[0,-0.5,0]} color="white" font="fonts/PlayfairDisplay-Regular.ttf" fontSize={0.1}>
                 ... an immersive web exhibiton to get insights about MIREVI projects
                 <animated.meshBasicMaterial color="white" opacity={textFadeIn} toneMapped={false} />
@@ -311,7 +328,7 @@ export default function Experience({ setBackToStart,backToStart})
         </animated.group>
         {/* PROJEKTE */}
         {/* Erstes Projekt (Fraktale) */}
-        <Frame position={framePosition.frame1} name="persona fractalis" color="#38adcf" img="/poster/fraktalePoster3.png" portalImg="/poster/fraktalePortal.png" show={showInformation} > 
+        <Frame onClick={()=> setClickedSpecificPoint(true)} position={framePosition.frame1} name="persona fractalis" color="#38adcf" img="/poster/fraktalePoster3.png" portalImg="/poster/fraktalePortal.png" show={showInformation} > 
             <Fraktale />
         </Frame>
         <TextComp name="persona fractalis" position={titlePosition.title1} rotation={[0, 0, 0]}/>
@@ -364,8 +381,9 @@ export default function Experience({ setBackToStart,backToStart})
             ) : (
             <>
             <OrbitControls />
-            <PerspectiveCamera fov={35} near={0.4} far={600} makeDefault ref={cameraOverview} position={[5, 17, 50]} /></>
+            <PerspectiveCamera fov={40} near={0.4} far={clickedSpecificPoint ? 30 : 600} makeDefault ref={cameraOverview} position={[5, 17, 50]} /></>
             )}
+            {clickedSpecificPoint === false && (
             <group position-y={-2.5}>
                 <mesh>
                     <extrudeGeometry
@@ -373,6 +391,7 @@ export default function Experience({ setBackToStart,backToStart})
                     <animated.meshStandardMaterial color={"white"} opacity={0.3} transparent />
                 </mesh>
             </group>
+            )}
         </>
         }
         {/* Player muss immer aktiv sein, um nach Portal wieder an selbe Stelle zu gelangen */}

@@ -1,4 +1,4 @@
-import { Clone, Environment, OrbitControls, PerspectiveCamera,useAnimations, useGLTF , useTexture} from "@react-three/drei"
+import { Clone, Environment, OrbitControls, PerspectiveCamera,useAnimations, useGLTF , Html, useTexture} from "@react-three/drei"
 import React, { useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber'
 import { useControls } from 'leva'
@@ -22,40 +22,12 @@ const GROUND_HEIGHT = -50;
 export default function VirtualGame () {
 
     // const {scene: oceanworld} = useGLTF('/Environment.glb');
-
-    const { scene: turtle, animations: turtleAnim } = useGLTF('./Turtle.glb');
-    const { actions: turtleAction } = useAnimations(turtleAnim, turtle);
     
-    const [groupPosition, setGroupPosition] = useState({ x: 0, y: 0, z: -1 });
-    const [groupPosition2, setGroupPosition2] = useState({ x: 0, y: 1, z: -1.8 });
-    const [turtlePosition, setTurtlePosition] = useState({ x: 9.5, y: -0.3, z: -3 });
+    const score = useGameStore((state) => state.score);
+    const setScore = useGameStore((state) => state.setScore);
+    const start = useGameStore((state) => state.start);
 
-    useEffect(() => {
-      turtleAction.turtleAnim.play();
-    });
-
-    // Update group position on each frame
-    useFrame(() => {
-      setGroupPosition((prevPosition) => ({
-        ...prevPosition,
-        z: prevPosition.z + 0.003, // Increase z position by 0.1 on each frame
-      }));     
-      setGroupPosition2((prevPosition) => ({
-        ...prevPosition,
-        y: prevPosition.y - 0.0003,
-        z: prevPosition.z + 0.002, // Increase z position by 0.1 on each frame
-      }));
-      setTurtlePosition((prevPosition) => {
-        // Check if turtle's z position exceeds 10, reset it back to -5
-        const newZ = prevPosition.z >= 8 ? -7.5 : prevPosition.z + 0.005;
-        const newY = prevPosition.z >= 8 ? -0.3 : prevPosition.y + 0.002
-        return {
-          ...prevPosition,
-          y: newY,
-          z: newZ, // Increase z position by 0.005 on each frame
-        };
-      });
-    });  
+    
 
     return(
 
@@ -65,53 +37,110 @@ export default function VirtualGame () {
         <Environment files='./OceanBackground.hdr' background></Environment>
         {/* <primitive scale={1} object={oceanworld} position={[6,-3.3,-1]} rotation={[0, -1.5, 0]} />         */}
 
-        <group position={[groupPosition.x, groupPosition.y, groupPosition.z]}>
-          <ButterflyFish position={[4,0.7,-4]}/>
-          <ButterflyFish position={[4.2,0,-4.6]}/>
-          <ButterflyFish position={[4,0.2,-4]}/>
-          <ButterflyFish position={[4,-0.3,-3.7]}/>
-          <ButterflyFish position={[4,0,-2.6]}/>
-
-          <Clownfish position={[3,0.18,-2.3]}/>
-          <Clownfish position={[4,-0.1,-2.6]}/>
-          <Clownfish position={[3.1,-0.1,-2.2]}/>
-          <Clownfish position={[3.1,-0.3,-2.3]}/>
-
-          <YellowBoxFish position={[3,-0.7,-1.8]}/>
-          <YellowBoxFish position={[3,-0.9,-2.4]}/>
-          <YellowBoxFish position={[3,-0.6,-2.7]}/>
-          {/*  */}
-
-          <ButterflyFish position={[10,2,-7]}/>
-          <ButterflyFish position={[8,0.7,-6]}/>
-          <ButterflyFish position={[8.5,0,-7.5]}/>
-
-          <Clownfish position={[10,1,-4]}/>
-          <Clownfish position={[9,0.8,-6.5]}/>
-          <Clownfish position={[9,0.3,-8]}/>
-
-        </group>
-
-        <group position={[groupPosition2.x, groupPosition2.y, groupPosition2.z]}>
-          <Clownfish position={[3,1,0]}/>
-          <Clownfish position={[3,1.1,-1]}/>
-          <Clownfish position={[3.1,0.7,-1.3]}/>
-
-          <ButterflyFish position={[3,0.2,2.5]}/>
-          <ButterflyFish position={[3.1,-0.1,3]}/>
-          <ButterflyFish position={[3.4,-0.4,3]}/>
-          <ButterflyFish position={[1,-0.4,3]}/>
-
-        </group>
-        <primitive scale={2} position={[turtlePosition.x, turtlePosition.y, turtlePosition.z]} object={turtle} />
+       
         
-        <ArWing />
+        {/* Score */}
+        <group>
+          <Html position={[2,0,0]}>
+            <div>
+              TEST
+            </div>
+          </Html>
+        </group>
+        {start && (
+        <>
         <Trash />
+        <Animals />
+        
+        </>
+        )}
+        <ArWing />
+
         <CollectController />
         </>
     )
 }
 
+function Animals() {
+
+  const [groupPosition, setGroupPosition] = useState({ x: 0, y: 0, z: -1 });
+  const [groupPosition2, setGroupPosition2] = useState({ x: 0, y: 1, z: -1.8 });
+  const [turtlePosition, setTurtlePosition] = useState({ x: 9.5, y: -0.3, z: -3 });
+  const { scene: turtle, animations: turtleAnim } = useGLTF('./Turtle.glb');
+  const { actions: turtleAction } = useAnimations(turtleAnim, turtle);
+
+  useEffect(() => {
+    turtleAction.turtleAnim.play();
+  });
+
+  // Update group position on each frame
+  useFrame(() => {
+    setGroupPosition((prevPosition) => ({
+      ...prevPosition,
+      z: prevPosition.z + 0.003, // Increase z position by 0.1 on each frame
+    }));     
+    setGroupPosition2((prevPosition) => ({
+      ...prevPosition,
+      y: prevPosition.y - 0.0003,
+      z: prevPosition.z + 0.002, // Increase z position by 0.1 on each frame
+    }));
+    setTurtlePosition((prevPosition) => {
+      // Check if turtle's z position exceeds 10, reset it back to -5
+      const newZ = prevPosition.z >= 8 ? -7.5 : prevPosition.z + 0.005;
+      const newY = prevPosition.z >= 8 ? -0.3 : prevPosition.y + 0.002
+      return {
+        ...prevPosition,
+        y: newY,
+        z: newZ, // Increase z position by 0.005 on each frame
+      };
+    });
+  });  
+
+   {/* Animals */}
+   return (
+   <>
+   <group position={[groupPosition.x, groupPosition.y, groupPosition.z]}>
+       <ButterflyFish position={[4, 0.7, -4]} />
+       <ButterflyFish position={[4.2, 0, -4.6]} />
+       <ButterflyFish position={[4, 0.2, -4]} />
+       <ButterflyFish position={[4, -0.3, -3.7]} />
+       <ButterflyFish position={[4, 0, -2.6]} />
+
+       <Clownfish position={[3, 0.18, -2.3]} />
+       <Clownfish position={[4, -0.1, -2.6]} />
+       <Clownfish position={[3.1, -0.1, -2.2]} />
+       <Clownfish position={[3.1, -0.3, -2.3]} />
+
+       <YellowBoxFish position={[3, -0.7, -1.8]} />
+       <YellowBoxFish position={[3, -0.9, -2.4]} />
+       <YellowBoxFish position={[3, -0.6, -2.7]} />
+       {/*  */}
+
+       <ButterflyFish position={[10, 2, -7]} />
+       <ButterflyFish position={[8, 0.7, -6]} />
+       <ButterflyFish position={[8.5, 0, -7.5]} />
+
+       <Clownfish position={[10, 1, -4]} />
+       <Clownfish position={[9, 0.8, -6.5]} />
+       <Clownfish position={[9, 0.3, -8]} />
+
+        </group>
+        <group position={[groupPosition2.x, groupPosition2.y, groupPosition2.z]}>
+         <Clownfish position={[3, 1, 0]} />
+         <Clownfish position={[3, 1.1, -1]} />
+         <Clownfish position={[3.1, 0.7, -1.3]} />
+
+         <ButterflyFish position={[3, 0.2, 2.5]} />
+         <ButterflyFish position={[3.1, -0.1, 3]} />
+         <ButterflyFish position={[3.4, -0.4, 3]} />
+         <ButterflyFish position={[1, -0.4, 3]} />
+
+       </group>
+       <primitive scale={2} position={[turtlePosition.x, turtlePosition.y, turtlePosition.z]} object={turtle} />
+       </>
+
+   )
+}
 function ArWing() {
   const shipPosition = useGameStore((state) => state.shipPosition);
   const setShipPosition = useGameStore((state) => state.setShipPosition);
@@ -149,6 +178,11 @@ function ArWing() {
         <>
         <group ref={grabber} position-x={3} position-y={0} >
             <primitive scale={0.8} object={grabberModell} rotation={[0, -1.5, 0]}/>
+            <Html>
+              <div>
+                TEST
+              </div>
+            </Html>
         </group>
         <group>
           <sprite position={[7, 0, 0]} scale={0.04} ref={target}>
@@ -260,6 +294,8 @@ function ArWing() {
       );
 
   });
+
+  
 
   return (
     <>

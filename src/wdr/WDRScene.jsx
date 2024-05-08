@@ -18,7 +18,9 @@ export default function Experience() {
     const virtualGame = useStore((state) => state.gameScene);
     const setGenerationSpeaks = useStore((state) => state.setGenerationSpeaks);
     const generationSpeaks = useStore((state) => state.generationSpeaks);
-
+    const start = useGameStore((state) => state.start);
+    const setStart = useGameStore((state) => state.setStart);
+    
     const { scene } = useGLTF('/earthNew.glb');
 
     const handleGame = () => {
@@ -69,6 +71,7 @@ export default function Experience() {
                 collectors: [],
                 score: 0
             });
+            setStart(false)
         }
         // Animate the Earth model scale when the component mounts
         setLoaded(true)

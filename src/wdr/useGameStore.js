@@ -11,7 +11,9 @@ const useGameStore = create((set) => ({
   // Position eines Objektes zum Einfangen
   collectors: [],
   score: 0,
+  start: true,
 
+  setStart: (start) => set({start}),
   setShipPosition: (newPosition) => set({ shipPosition: newPosition }),
   setTrashPositions: (newPositions) => set({ trashPositions: newPositions }),
   setTirePositions: (newPositions) => set({ tirePositions: newPositions }),
