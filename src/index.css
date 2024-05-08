@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -85,7 +87,7 @@ img, video {
 html, body, #root {
   
   /* font-family: montserrat; */
-  font-family: montserrat;
+  font-family: Montserrat;
   position: fixed;
   height: 100%;
   width: 100%;

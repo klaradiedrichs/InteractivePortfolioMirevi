@@ -114,11 +114,10 @@ export default function Experience({ setBackToStart,backToStart})
     const setCameraRoad = useStore((state) => state.setCameraRoad);
     const [beginning, setBeginning] = useState(true);
     const textYPos = 0.3;
-    const [clickedSpecificPoint, setClickedSpecificPoint] = useState(false);
-
-   const handleScroll = () => {
-    scroll.offset = 0.2;
-   }
+    const clickedSpecificPoint = useStore((state) => state.clickedSpecificPoint);
+    const setClickedSpecificPoint = useStore((state) => state.setClickedSpecificPoint);
+    const [viewPoint,setViewpoint] = useState();
+  
     const titlePosition = {
         title1: new THREE.Vector3(-4, textYPos, 23),
         title2: new THREE.Vector3(24,textYPos,-21),
@@ -179,11 +178,9 @@ export default function Experience({ setBackToStart,backToStart})
         }
         else if(!cameraRoad){
         window.removeEventListener("wheel", handleWheel);
-        setShowInformation(false);
+        setShowInformation(clickedSpecificPoint ? true : false);
         }
-        else if (clickedSpecificPoint){
-        setShowInformation(true);
-        }
+        
         
     
         return () => {
@@ -225,7 +222,6 @@ export default function Experience({ setBackToStart,backToStart})
                 // scroll.offset.set(0.14);
                 const curPoint = linePoints[curPointIndex]
                 // wenn normalScroll = true :
-                if(!clickedSpecificPoint){ 
                 
                 const pointAhead = linePoints[Math.min(curPointIndex + 1, linePoints.length - 1)];
                 const xDisplacement = (pointAhead.x - curPoint.x) * 50;
@@ -243,41 +239,33 @@ export default function Experience({ setBackToStart,backToStart})
                 // dann: 
                 cameraRef.current.quaternion.slerp(targetCameraQuaternion, delta * 1);
                 cameraRef.current.position.lerp(curPoint, delta * 24);
-                }
+                
                 // wenn normalScroll false (also eine Stelle geklickt wurde ): 
                
-                if(clickedSpecificPoint){
-                    // const clickedPoint = linePoints[4320]
-                    // cameraRef.current.position.lerp(curPoint, delta * 24);
-                }
                 if(curPointIndex === 0){
                     setLoaded(true);
                 }
                 
             } else if(!cameraRoad) {
                 cameraOverview.current.lookAt(0, 0, -90);
-                // setInitalXPos(97);
-                // setInitialZPos(44);
-                // setinitialYPos(1);
                 if(clickedSpecificPoint){
                     cameraOverview.current.position.set(-4, 1, 11);
-
                     console.log("HI");
+                }
+                else{
+                    cameraOverview.current.position.set(5, 17, 50);
                     
                 }
             }
         }
     });
-    
-    
-    const goToFrame = () => {
-        if(!cameraRoad){
-            console.log("Frame clicked")
-            setInitalXPos(-3),
-            setinitialYPos(1.8),
-            setInitialZPos(-4)
-        }
+
+    const goToProject = () => {
+        setClickedSpecificPoint(true);
+        setViewpoint(-4, 1, 11)
+
     }
+
     const {scale} = useSpring({ 
         scale: loaded ? 0.0015 : 0,
     })
@@ -383,15 +371,15 @@ export default function Experience({ setBackToStart,backToStart})
             <OrbitControls />
             <PerspectiveCamera fov={40} near={0.4} far={clickedSpecificPoint ? 30 : 600} makeDefault ref={cameraOverview} position={[5, 17, 50]} /></>
             )}
-            {clickedSpecificPoint === false && (
+            
             <group position-y={-2.5}>
                 <mesh>
                     <extrudeGeometry
                     args={[ shape, { steps: LINE_NB_POINTS, bevelEnabled: true, extrudePath: curve,curveSegments: 50, bevelThickness: 10 },]} />
-                    <animated.meshStandardMaterial color={"white"} opacity={0.3} transparent />
+                    <animated.meshStandardMaterial color={"white"} opacity={clickedSpecificPoint ? 0 : 0.3} transparent />
                 </mesh>
             </group>
-            )}
+            
         </>
         }
         {/* Player muss immer aktiv sein, um nach Portal wieder an selbe Stelle zu gelangen */}

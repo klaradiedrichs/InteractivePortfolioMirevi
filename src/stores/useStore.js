@@ -4,6 +4,8 @@ import create from 'zustand';
 const useStore = create((set) => ({
   cameraRoad: true,
   setCameraRoad: (cameraRoad) => set({cameraRoad}),
+  clickedSpecificPoint: false,
+  setClickedSpecificPoint: (clickedSpecificPoint) => set({clickedSpecificPoint}),
   active: null,
   clickedFrame: null,
   hovered: null,

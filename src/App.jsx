@@ -30,10 +30,10 @@ function App() {
 
     const toggleScrollbarHeight = (isActive) => {
         if (isActive) {
-          // scrollbar.setProperty('--scrollbar-width', '0px');
+          scrollbar.setProperty('--scrollbar-width', '0px');
         
         }
-        else if (cameraRoad == false) {
+        else if (cameraRoad === false) {
           scrollbar.setProperty('--scrollbar-width', '0px');
           
         } 
@@ -59,7 +59,7 @@ function App() {
     observer.observe(document.documentElement, { attributes: true });
 
     return () => observer.disconnect();
-  }, [active,scrollBarColor]);
+  }, [active,scrollBarColor,cameraRoad]);
 
 
   return (

@@ -20,9 +20,12 @@ export default function Overlay({ backToStart, goBackToRoad}) {
     const score = useGameStore((state) => state.score);
     const start = useGameStore((state) => state.start);
     const setStart = useGameStore((state) => state.setStart);
+    const clickedSpecificPoint = useStore((state) => state.clickedSpecificPoint);
+    const setClickedSpecificPoint = useStore((state) => state.setClickedSpecificPoint);
     // const scrollBarColor = useStore((state) => state.scrollBarColor);
     const setScrollBarColor = useStore((state) => state.setScrollBarColor);
     const [isTextHovered, setIsTextHovered] = useState(false);
+    const [clickedPoint, setClickedPoint] = useState(true)
 
     const handleTextHover = () => {
       setIsTextHovered(true); // Set the state to indicate text hover
@@ -124,10 +127,16 @@ export default function Overlay({ backToStart, goBackToRoad}) {
 
     const toggleView = () => {
 
-      // setCameraRoad(false);
+      // wenn aktuelle View Overview
       if(!cameraRoad){
+        if(clickedSpecificPoint){
+          // setBachToOverview
+          // neuer State
+          setClickedSpecificPoint(false)
+        }
+        else {
         setCameraRoad(true)
-
+        }
       }
       else if(cameraRoad) {
         setCameraRoad(false)
@@ -154,10 +163,17 @@ export default function Overlay({ backToStart, goBackToRoad}) {
               {/* End */}
             </p>
             <div className='text-base absolute z-20 top-3 left-3 flex flex-col gap-y-1'>
+              
+              {cameraRoad && (
               <div className="cursor-pointer" onClick={toggleView}>
-                {cameraRoad ? 'Overview' : 'Roadview'}
-                
+                Overview
               </div>
+              )}
+              {!cameraRoad && (
+              <div className="cursor-pointer" onClick={toggleView}>
+                {clickedSpecificPoint ? 'Back' : 'Roadview'}
+              </div>
+              )}
               <div className="cursor-pointer" >
                 About Mirevi
               </div>
@@ -177,8 +193,8 @@ export default function Overlay({ backToStart, goBackToRoad}) {
                 ))}
             </div> */}
             {cameraRoad && (
-            <div className='text-sm absolute h-3/4 right-5 top-[14%] flex text-gray-500 ' >
-            <div className="z-20 flex flex-col justify-between text-right">
+            <div className='absolute h-3/4 right-5 top-[14%] flex text-gray-500 ' >
+            <div className="z-20 flex flex-col justify-around text-right">
                 {projectsData.projects.map((project, index) => (
                    <div key={index}
                    id="scrollBarText"
