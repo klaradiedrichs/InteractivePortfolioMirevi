@@ -28,37 +28,22 @@ function App() {
   useEffect(() => {
     const scrollbar = document.documentElement.style;
 
-    const toggleScrollbarHeight = (isActive) => {
-        if (isActive) {
-          scrollbar.setProperty('--scrollbar-width', '0px');
+    
+      if (active !== null) {
+        scrollbar.setProperty('--scrollbar-width', '0px');
+      }
+      else if (cameraRoad === false || active !== null) {
+        scrollbar.setProperty('--scrollbar-width', '0px');
         
-        }
-        else if (cameraRoad === false) {
-          scrollbar.setProperty('--scrollbar-width', '0px');
-          
-        } 
-        else if(scrollBarColor === true){
-          scrollbar.setProperty('--thumbColor','#950abc')
-        }
-        else {
-          scrollbar.removeProperty('--scrollbar-width');
-          scrollbar.removeProperty('--thumbColor');
-        }
-    }
-
-    toggleScrollbarHeight(active);
-
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            if (mutation.type === 'attributes' && mutation.attributeName === 'active') {
-                toggleScrollbarHeight(mutation.target.getAttribute('active') !== null);
-            }
-        });
-    });
-
-    observer.observe(document.documentElement, { attributes: true });
-
-    return () => observer.disconnect();
+      } 
+      else if(scrollBarColor === true){
+        scrollbar.setProperty('--thumbColor','#950abc')
+      }
+      else {
+        scrollbar.removeProperty('--scrollbar-width');
+        scrollbar.removeProperty('--thumbColor');
+      }
+    
   }, [active,scrollBarColor,cameraRoad]);
 
 
@@ -70,10 +55,9 @@ function App() {
         { name: 'leftward', keys: [ 'ArrowLeft', 'KeyA' ] },
         { name: 'rightward', keys: [ 'ArrowRight', 'KeyD' ] },
     ] }>
-        <Overlay backToStart={backToStart} /> 
         <Canvas shadows>
               {/* <Perf position='top-right'/> */}
-              <ScrollControls pages={10} damping={0.5 } >
+              <ScrollControls enabled={active === null ? true : false} pages={10} damping={0.5 } >
                 <Experience setBackToStart={setBackToStart} backToStart={backToStart}/>
               </ScrollControls>
               {/* <WallExp /> */}
@@ -81,50 +65,11 @@ function App() {
               {/* <Fraktale /> */}
               {/* <GenerationSpeaks/> */}
         </Canvas>
+        <Overlay /> 
+
         </KeyboardControls>
     </>
   )
 }
 
 export default App
-
-
-
-// function Scene() {
-//   const cameraRef = useRef();
- 
-
-//   return (
-//     <>
-//       <ambientLight intensity={0.6} />
-//       <hemisphereLight args={[0xffffbb, 0x080820, 0.7]} />
-
-//       <spotLight position={[4, 7, 23]} intensity={0.5} />
-//       <spotLight position={[4, 7, -23]} intensity={0.5} />
-
-//       <mesh>
-//         <boxGeometry args={[1, 1, 1]} />
-//         <meshLambertMaterial color={0x00ff00} />
-//       </mesh>
-//       <Run />
-//         <Runback />
-
-//       <OrbitControls ref={cameraRef} />
-//       <PerspectiveCamera ref={cameraRef} fov={45} near={0.1} far={10000} />
-//     </>
-
-//   );
-// }
-
-// function App() {
-//   return (
-//     <Canvas
-//       style={{ background: 'transparent' }}
-//       camera={{ position: [-1.57, -1.95, 1.64], fov: 45 }}
-//     >
-//       <Scene />
-//     </Canvas>
-//   );
-// }
-
-// export default App;

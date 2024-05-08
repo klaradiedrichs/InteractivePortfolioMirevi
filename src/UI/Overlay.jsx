@@ -2,8 +2,10 @@ import { useStore } from '../stores/useStore';
 import { useState , useEffect} from 'react'
 import projectsData from '../projectinformation.json';
 import useGameStore from "../wdr/useGameStore";
+import '../index.css'
+import linksvgWhite from '/svgs/linkiconWhite.svg';
 
-export default function Overlay({ backToStart, goBackToRoad}) {
+export default function Overlay() {
 
     const setActive = useStore((state) => state.setActive);
     const setHovered = useStore((state) => state.setHovered);
@@ -22,22 +24,16 @@ export default function Overlay({ backToStart, goBackToRoad}) {
     const setStart = useGameStore((state) => state.setStart);
     const clickedSpecificPoint = useStore((state) => state.clickedSpecificPoint);
     const setClickedSpecificPoint = useStore((state) => state.setClickedSpecificPoint);
-    // const scrollBarColor = useStore((state) => state.scrollBarColor);
     const setScrollBarColor = useStore((state) => state.setScrollBarColor);
-    const [isTextHovered, setIsTextHovered] = useState(false);
-    const [clickedPoint, setClickedPoint] = useState(true)
-
-    const handleTextHover = () => {
-      setIsTextHovered(true); // Set the state to indicate text hover
-    };
-  
-    const handleTextLeave = () => {
-      setIsTextHovered(false); // Reset the state when leaving text hover
-    };
+    const [menu, setMenu] = useState(false)
 
     const handleControls = () => {
       setControls((prev) => !prev);
     };
+
+    const handleMenu = () => {
+      setMenu((prev) => !prev);
+    }
 
     let activeControls = null;
     if (active !== null) {
@@ -75,36 +71,7 @@ export default function Overlay({ backToStart, goBackToRoad}) {
           document.removeEventListener('keydown', handleKeyDown);
       };
   }, [cameraRoad]);
-
-  // useEffect(() => {
-  //   const handleMouseOver = () => {
-  //     const scrollBarText = document.getElementById("scrollBarText");
-  //     if (scrollBarText) {
-  //       scrollBarText.classList.add("hovered-text");
-  //     }
-  //   };
-
-  //   const handleMouseOut = () => {
-  //     const scrollBarText = document.getElementById("scrollBarText");
-  //     if (scrollBarText) {
-  //       scrollBarText.classList.remove("hovered-text");
-  //     }
-  //   };
-
-  //   const thumb = document.querySelector("::-webkit-scrollbar-thumb");
-  //   if (thumb) {
-  //     thumb.addEventListener("mouseover", handleMouseOver);
-  //     thumb.addEventListener("mouseout", handleMouseOut);
-  //   }
-
-  //   return () => {
-  //     if (thumb) {
-  //       thumb.removeEventListener("mouseover", handleMouseOver);
-  //       thumb.removeEventListener("mouseout", handleMouseOut);
-  //     }
-  //   };
-  // }, []);
-
+ 
       const handleBackToRoadClick = () => {
         setActive(null)
         setHovered(null)
@@ -144,11 +111,6 @@ export default function Overlay({ backToStart, goBackToRoad}) {
       }
 
     }
-    // const toggleeView = () => {
-    //   setCameraRoad(true);
-
-    //   console.log(cameraRoad)
-    // }
 
     return (
         <>
@@ -156,13 +118,13 @@ export default function Overlay({ backToStart, goBackToRoad}) {
         {active === null ? (
           <>
           
-            <a href="https://mirevi.de/" target="_blank" className="absolute z-20 bottom-3 left-3 hover:text-white">
-              {/* mirevi.de */}
+            <a href="https://mirevi.de/" target="_blank" className="absolute z-0 bottom-3 left-3 hover:text-black">
+              mirevi.de
             </a>
             <p className="absolute z-10 bottom-4 right-3">
               {/* End */}
             </p>
-            <div className='text-base absolute z-20 top-3 left-3 flex flex-col gap-y-1'>
+            <div className='text-base absolute z-0 top-3 left-3 flex flex-col gap-y-1'>
               
               {cameraRoad && (
               <div className="cursor-pointer" onClick={toggleView}>
@@ -174,11 +136,35 @@ export default function Overlay({ backToStart, goBackToRoad}) {
                 {clickedSpecificPoint ? 'Back' : 'Roadview'}
               </div>
               )}
-              <div className="cursor-pointer" >
+              <div onClick={handleMenu} className="cursor-pointer" >
                 About Mirevi
               </div>
               
             </div>
+            <div id="menu-overlay" className={menu ? 'active' : ''}>
+            {/* Hauptmenü */}
+                <div className='h-screen flex flex-col gap-y-6 ml-12 justify-center items-start font-light text-2xl'>
+                <p className='text-4xl pb-4'>References</p>
+                {projectsData.projects.map((project, index) => (
+                  <div className='flex pb-3 border-b'>
+                    <div key={index} className='w-80'>{project.title}</div>
+                    <a href={project.link} target="_blank" className='flex items-center'>
+                      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M16.2897 9.88606C15.8755 9.88791 15.5412 10.2252 15.543 10.6394C15.5449 11.0536 15.8821 11.3879 16.2964 11.3861L18.7785 11.375C19.7859 11.3705 20.478 11.3685 21.0052 11.4261C21.1766 11.4448 21.3198 11.4689 21.4414 11.4981L10.8129 22.1265C10.52 22.4194 10.52 22.8943 10.8129 23.1872C11.1058 23.4801 11.5807 23.4801 11.8736 23.1872L22.5021 12.5587C22.5312 12.6803 22.5553 12.8235 22.574 12.9949C22.6316 13.5221 22.6297 14.2143 22.6252 15.2216L22.6141 17.7038C22.6122 18.118 22.9465 18.4553 23.3607 18.4571C23.7749 18.459 24.1122 18.1247 24.1141 17.7105L24.1253 15.1836C24.1296 14.2319 24.1331 13.4541 24.0652 12.832C23.9945 12.1852 23.839 11.6126 23.4576 11.1198C23.374 11.0117 23.2837 10.9092 23.1873 10.8128C23.0909 10.7164 22.9884 10.6261 22.8804 10.5425C22.3876 10.1612 21.8149 10.0056 21.1681 9.93497C20.5461 9.86704 19.7682 9.87053 18.8165 9.87479L16.2897 9.88606Z" fill="white"/>
+                      </svg>
+                      </a>
+                  </div>
+                ))}
+                    
+                  <div onClick={() => setMenu(false)}className='cursor-pointer absolute top-3 left-3'>
+                    X
+                  </div>
+                </div>
+                {/* Cross */}
+                
+                
+            </div>
+            
             {/* <div className="text-base text-white/50 w-3/4 z-20 absolute bottom-3 flex justify-around left-[12%]">
                 {projectsData.projects.map((project, index) => (
                   <div className='flex flex-col items-center w-[150px] text-center'>
@@ -193,12 +179,12 @@ export default function Overlay({ backToStart, goBackToRoad}) {
                 ))}
             </div> */}
             {cameraRoad && (
-            <div className='absolute h-3/4 right-5 top-[14%] flex text-gray-500 ' >
+            <div className='absolute h-3/4 right-5 z-0 top-[14%] flex text-gray-500 ' >
             <div className="z-20 flex flex-col justify-around text-right">
                 {projectsData.projects.map((project, index) => (
                    <div key={index}
                    id="scrollBarText"
-                   className={isTextHovered ? 'hovered-text' : ''}
+                   
                    onPointerOver={() => setScrollBarColor(true)}
                    onMouseLeave={() => setScrollBarColor(false)}
                  >

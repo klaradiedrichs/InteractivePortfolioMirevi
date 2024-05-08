@@ -220,16 +220,9 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
               
 
               {/* Plane mit Grafikposter (wird kleiner) */}
-              <animated.mesh ref={myMesh} scale={scale} position-z={0.02} position-y={0}>
+              <animated.mesh ref={myMesh} scale={scale} position-z={0.03} position-y={0}>
                 <planeGeometry args={[11,6.7]}/>
-                <animated.meshBasicMaterial map={image} toneMapped={false} side={THREE.DoubleSide} opacity={opacityPoster} transparent />
-                {/* Fenster für Portal: */}
-                {/* {name === 'persona fractalis' ? ( 
-                  <FraktalePoster portalMaterial={portalMaterial} boxactive={boxactive} hovered={hovered} children={children} />
-                ) : name === 'kin_' ? (
-                  <KinPoster portalMaterial={portalMaterial} boxactive={boxactive} hovered={hovered} children={children}/>
-                ) : null} */}
-
+                <animated.meshBasicMaterial map={image} color={image === null ? '#ab03fa' : 'white'} toneMapped={false} side={THREE.DoubleSide} opacity={image === null ? 0.3 : opacityPoster} transparent />
                 {/* Portalwindow (wird größer onHover auf Button) */}
                 {hovered && (
                 <animated.mesh scale={scaleWindow} position={positionWindow}>

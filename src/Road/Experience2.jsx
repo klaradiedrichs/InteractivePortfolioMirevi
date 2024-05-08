@@ -117,6 +117,7 @@ export default function Experience({ setBackToStart,backToStart})
     const clickedSpecificPoint = useStore((state) => state.clickedSpecificPoint);
     const setClickedSpecificPoint = useStore((state) => state.setClickedSpecificPoint);
     const [viewPoint,setViewpoint] = useState();
+    const [lookAt,setLookAt] = useState();
   
     const titlePosition = {
         title1: new THREE.Vector3(-4, textYPos, 23),
@@ -140,6 +141,8 @@ export default function Experience({ setBackToStart,backToStart})
         frame8: new THREE.Vector3(25, 1.8, -284), 
         // Add more frames as needed
       };
+
+      -4, 1, 11
     
     const closeToFrame = {
         frame1: false,
@@ -247,23 +250,28 @@ export default function Experience({ setBackToStart,backToStart})
                 }
                 
             } else if(!cameraRoad) {
-                cameraOverview.current.lookAt(0, 0, -90);
+                // Blickrichtung für normale Overview
+
                 if(clickedSpecificPoint){
-                    cameraOverview.current.position.set(-4, 1, 11);
-                    console.log("HI");
+                    
+                    // Blickrichtung für ausgewählten Frame (selbe Position aber auf z Achse 5 nach vorne / - )
+                    // cameraOverview.current.lookAt(lookAt);
+                    cameraOverview.current.lookAt(0, 0, -1000);
+                    cameraOverview.current.position.copy(viewPoint);
                 }
-                else{
-                    cameraOverview.current.position.set(5, 17, 50);
+                else if(!clickedSpecificPoint){
+                    cameraOverview.current.lookAt(0, 0, -150);
                     
                 }
             }
         }
     });
 
-    const goToProject = () => {
-        setClickedSpecificPoint(true);
-        setViewpoint(-4, 1, 11)
-
+    const goToProject = (position, lookAt) => {
+        if(!cameraRoad) {
+            setClickedSpecificPoint(true);
+            setViewpoint(position); // Set the viewpoint to the clicked frame's position
+        }
     }
 
     const {scale} = useSpring({ 
@@ -285,8 +293,7 @@ export default function Experience({ setBackToStart,backToStart})
             <Sparkles size={ 15 } scale={ [ 250, 25, 60 ] } position={ [50, 5,-100] } rotation={[0, -Math.PI / -3.2, 0]} speed={ 0.9 } count={ 300 }/>
         </group>
 
-        {/* Mirevi Start Logo */}
-
+        {/* Mirevi Start & End Screen*/}
         <animated.group scale={2.15} position={[-15, 0.8, 63]} rotation={[0, 0, 0]}>
             <Text scale={0.6} position={[0,-0.5,0]} color="white" font="fonts/PlayfairDisplay-Regular.ttf" fontSize={0.1}>
                 ... an immersive web exhibiton to get insights about MIREVI projects
@@ -311,65 +318,79 @@ export default function Experience({ setBackToStart,backToStart})
             )}
             <mesh position={[-0.07,-0.06,0]} scale={[1.2,0.7,0]}>
                 <planeGeometry />
-                <animated.meshBasicMaterial map={logo} opacity={textFadeIn} transparent toneMapped={false} side={THREE.DoubleSide}/>
+                <animated.meshBasicMaterial map={logo} opacity={1} transparent toneMapped={false} side={THREE.DoubleSide}/>
             </mesh>
         </animated.group>
+        <group scale={3} position={[-0.5, 0.5, -305]} rotation={[0, 0.7, 0]}>
+            <Text scale={1} position={[0,0.5,0]} color="white" font="fonts/static/Montserrat-Light.ttf" fontSize={0.15}>
+                Thanks for visiting
+                <meshBasicMaterial color="white" opacity={1} toneMapped={false} />
+            </Text>
+            <Text scale={0.45} position={[0,-0.6,0]} color="white" font="fonts/static/Montserrat-Light.ttf" fontSize={0.12}>
+                ... more projects coming soon
+                <meshBasicMaterial color="white" opacity={1} toneMapped={false} />
+            </Text>
+            <mesh position={[-0.07,-0.06,0]} scale={[1.2,0.7,0]}>
+                <planeGeometry />
+                <meshBasicMaterial map={logo} opacity={1} transparent toneMapped={false} side={THREE.DoubleSide}/>
+            </mesh>
+        </group>
+
         {/* PROJEKTE */}
         {/* Erstes Projekt (Fraktale) */}
-        <Frame onClick={()=> setClickedSpecificPoint(true)} position={framePosition.frame1} name="persona fractalis" color="#38adcf" img="/poster/fraktalePoster3.png" portalImg="/poster/fraktalePortal.png" show={showInformation} > 
+        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame1.x  -0.5, framePosition.frame1.y -0.8, framePosition.frame1.z + 15))} position={framePosition.frame1} name="persona fractalis" color="#38adcf" img="/poster/fraktalePoster3.png" portalImg="/poster/fraktalePortal.png" show={showInformation} > 
             <Fraktale />
         </Frame>
         <TextComp name="persona fractalis" position={titlePosition.title1} rotation={[0, 0, 0]}/>
 
         {/* Zweites Projekt (kin) */}
-        <Frame position={framePosition.frame2} name="kin_" color="#38adcf" img="/poster/kinPoster3.png" portalImg="/poster/kinPortal.png" show={showInformation} > 
+        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame2.x, framePosition.frame2.y -0.8, framePosition.frame2.z + 15))} position={framePosition.frame2} name="kin_" color="#38adcf" img="/poster/kinPoster3.png" portalImg="/poster/kinPortal.png" show={showInformation} > 
             <Kin />
         </Frame>
         <TextComp name="kin_" position={titlePosition.title2} rotation={[0, 0, 0]}/>
         
         {/* Drittes Projekt (Klima) */}
-        <Frame position={framePosition.frame3} name="WDR Klima" color="#38adcf" img="/poster/wdrPosterNew.png" portalImg="/poster/wdrPortal2.png" show={showInformation} > 
+        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame3.x, framePosition.frame3.y -0.8, framePosition.frame3.z + 15))} position={framePosition.frame3} name="WDR Klima" color="#38adcf" img="/poster/wdrPosterNew.png" portalImg="/poster/wdrPortal2.png" show={showInformation} > 
             <WDRScene />
         </Frame>
         <TextComp name="WDR Klima" position={titlePosition.title3} rotation={[0, 0.1, 0]}/>
         
         {/* Viertes Projekt (Wall)  */}
-        <Frame position={framePosition.frame4} name="Video Wall" color="#38adcf" img="/poster/videowallPosterNew.png" portalImg="/poster/wdrPortal2.png" show={showInformation}> 
+        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame4.x, framePosition.frame4.y -0.8, framePosition.frame4.z + 15))} position={framePosition.frame4} name="Video Wall" color="#38adcf" img="/poster/videowallPosterNew.png" portalImg="/poster/wdrPortal2.png" show={showInformation}> 
             <WallExperience/>
         </Frame>
         <TextComp name="Video Wall" position={titlePosition.title4} rotation={[0, -0.2, 0]} />
         
         {/* Fünftes Projekt (leer) */}
-        <Frame position={framePosition.frame5} name="Five" color="#38adcf" img={null} portalImg={null} show={showInformation} > 
+        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame5.x, framePosition.frame5.y -0.8, framePosition.frame5.z + 15))} position={framePosition.frame5} name="Five" color="#38adcf" img={null} portalImg={null} show={showInformation} > 
         </Frame>
         <TextComp name="Five" position={titlePosition.title5} rotation={[0, -0.2, 0]} />
         
         {/* Sechstes Projekt (leer) */}
-        <Frame position={framePosition.frame6} name="Six" color="#38adcf" img={null} portalImg={null} show={showInformation}> 
+        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame6.x, framePosition.frame6.y -0.8, framePosition.frame6.z + 15))} position={framePosition.frame6} name="Six" color="#38adcf" img={null} portalImg={null} show={showInformation}> 
         </Frame>
         <TextComp name="Six" position={titlePosition.title6} rotation={[0, -0.2, 0]} />
         
         {/* Siebtes Projekt (leer) */}
-        <Frame position={framePosition.frame7} name="Seven" color="#38adcf" img={null} portalImg={null} show={showInformation}> 
+        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame7.x, framePosition.frame7.y -0.8, framePosition.frame7.z + 15))} position={framePosition.frame7} name="Seven" color="#38adcf" img={null} portalImg={null} show={showInformation}> 
         </Frame>
         <TextComp name="Seven" position={titlePosition.title7} rotation={[0, -0.2, 0]} />
         
-        <Frame position={framePosition.frame8} name="Eight" color="#38adcf" img={null} portalImg={null} show={showInformation}> 
+        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame8.x, framePosition.frame8.y -0.8, framePosition.frame8.z + 15))} position={framePosition.frame8} name="Eight" color="#38adcf" img={null} portalImg={null} show={showInformation}> 
         </Frame>
         <TextComp name="Eight" position={titlePosition.title8} rotation={[0, -0.2, 0]} />
         
         {/* {!cameraRoad && active === null && <OrbitControls />} */}
         {/* Camera */}
-        {active === null && 
         <>
-            {cameraRoad ? (
+            {cameraRoad && active === null ? (
                 <>
                 <PerspectiveCamera fov={35} near={1} far={38} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} />
                 </>
             ) : (
             <>
-            <OrbitControls />
-            <PerspectiveCamera fov={40} near={0.4} far={clickedSpecificPoint ? 30 : 600} makeDefault ref={cameraOverview} position={[5, 17, 50]} /></>
+            <OrbitControls enableZoom={true} target={[0,0,-118]}/>
+            <PerspectiveCamera fov={35} near={0.4} far={clickedSpecificPoint ? 30 : 600} makeDefault ref={cameraOverview} position={!clickedSpecificPoint && [10, 30, 70]} /></>
             )}
             
             <group position-y={-2.5}>
@@ -381,7 +402,7 @@ export default function Experience({ setBackToStart,backToStart})
             </group>
             
         </>
-        }
+        
         {/* Player muss immer aktiv sein, um nach Portal wieder an selbe Stelle zu gelangen */}
         {/* <PlayerRoad active={active} setBackToStart={setBackToStart} backToStart={backToStart} cameraRoad={cameraRoad} /> */}
     </>
