@@ -21,3 +21,34 @@ Start Screen
                 <meshStandardMaterial  color="#7e7e7e" opacity={0.2} transparent />
             </RoundedBox>
         </group>
+
+
+
+         {/* {!start && (
+          <div className='absolute z-20 flex flex-col h-screen w-screen items-center justify-center'>
+            <div className='text-center text-lg border border-slate-500/25 rounded-xl w-96 h-64 bg-slate-400/25 flex flex-col gap-y-8 items-center justify-center'>
+              
+              <p className='px-3'>
+              Collect as many trash objects as possible in 30 seconds
+              </p>
+              <div>
+                
+              </div>
+              <div onClick={handleStart} className='text-2xl bg-slate-500/50 rounded-lg px-3'>
+                START
+              </div>
+            </div>
+            
+          </div>
+          )} */}
+          {/* {start && (
+          <div className='absolute text-4xl z-20 bottom-3 left-3'>
+            <div>
+              
+            </div>
+            <Timer onFinish={() => console.log('Time is up!')} />
+            <div className='border-2 rounded-xl px-4 '>
+              SCORE: {score}
+            </div>
+          </div>
+          )} */}

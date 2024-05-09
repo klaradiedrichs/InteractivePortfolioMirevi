@@ -130,7 +130,6 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
   useFrame((_state, delta) => {
     const worldOpen = active === name;
     if (hovered === true) {
-      console.log("TEST")
       easing.damp(portalMaterial.current, "blend", worldOpen ? 1 : 0, 0.4, delta);
       }
   });

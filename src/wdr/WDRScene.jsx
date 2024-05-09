@@ -48,17 +48,24 @@ export default function Experience() {
 
     useEffect(() => {
         // Reset the store when the virtualGame state changes
-        if (!virtualGame) {
+        if(!virtualGame) {
             useGameStore.setState({
-                trashPositions: Array.from({length: 14}, () => ({
+                start: false,
+                score: 0,
+
+            })
+        }
+
+            useGameStore.setState({
+                
+                trashPositions: Array.from({length: 8}, () => ({
                     x: getRandomPosition(50, -5),
                     y: getRandomPosition(5, -1),
                     z: getRandomPosition(8,-6),
-                    modelIndex: getRandomIndex(4)
 
                 })),
                 
-                tirePositions: Array.from({length: 17}, () => ({
+                tirePositions: Array.from({length: 10}, () => ({
                     x: getRandomPosition(60, 7),
                     y: getRandomPosition(4, -1),
                     z: getRandomPosition(6,-5),
@@ -69,14 +76,16 @@ export default function Experience() {
                     z: getRandomPosition(8,-5),
                 })),
                 collectors: [],
-                score: 0
+                // timeLeft: 30,
+                
             });
-            setStart(false)
-        }
+        
+
+        
         // Animate the Earth model scale when the component mounts
         setLoaded(true)
         
-    }, [virtualGame]);
+    }, [virtualGame, start]);
 
     useFrame(() => {
         setEarthRotation((prevPosition) => ({

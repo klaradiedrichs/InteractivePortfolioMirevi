@@ -23,8 +23,7 @@ export default function VirtualGame () {
 
     // const {scene: oceanworld} = useGLTF('/Environment.glb');
     
-    const score = useGameStore((state) => state.score);
-    const setScore = useGameStore((state) => state.setScore);
+    
     const start = useGameStore((state) => state.start);
 
     
@@ -36,17 +35,6 @@ export default function VirtualGame () {
         {/* Umgebung */}
         <Environment files='./OceanBackground.hdr' background></Environment>
         {/* <primitive scale={1} object={oceanworld} position={[6,-3.3,-1]} rotation={[0, -1.5, 0]} />         */}
-
-       
-        
-        {/* Score */}
-        <group>
-          <Html position={[2,0,0]}>
-            <div>
-              TEST
-            </div>
-          </Html>
-        </group>
         {start && (
         <>
         <Trash />
@@ -103,25 +91,25 @@ function Animals() {
        <ButterflyFish position={[4, 0.7, -4]} />
        <ButterflyFish position={[4.2, 0, -4.6]} />
        <ButterflyFish position={[4, 0.2, -4]} />
-       <ButterflyFish position={[4, -0.3, -3.7]} />
+       {/* <ButterflyFish position={[4, -0.3, -3.7]} /> */}
        <ButterflyFish position={[4, 0, -2.6]} />
 
        <Clownfish position={[3, 0.18, -2.3]} />
        <Clownfish position={[4, -0.1, -2.6]} />
-       <Clownfish position={[3.1, -0.1, -2.2]} />
+       {/* <Clownfish position={[3.1, -0.1, -2.2]} /> */}
        <Clownfish position={[3.1, -0.3, -2.3]} />
 
        <YellowBoxFish position={[3, -0.7, -1.8]} />
-       <YellowBoxFish position={[3, -0.9, -2.4]} />
+       {/* <YellowBoxFish position={[3, -0.9, -2.4]} /> */}
        <YellowBoxFish position={[3, -0.6, -2.7]} />
        {/*  */}
 
        <ButterflyFish position={[10, 2, -7]} />
-       <ButterflyFish position={[8, 0.7, -6]} />
+       {/* <ButterflyFish position={[8, 0.7, -6]} /> */}
        <ButterflyFish position={[8.5, 0, -7.5]} />
 
        <Clownfish position={[10, 1, -4]} />
-       <Clownfish position={[9, 0.8, -6.5]} />
+       {/* <Clownfish position={[9, 0.8, -6.5]} /> */}
        <Clownfish position={[9, 0.3, -8]} />
 
         </group>
@@ -131,8 +119,8 @@ function Animals() {
          <Clownfish position={[3.1, 0.7, -1.3]} />
 
          <ButterflyFish position={[3, 0.2, 2.5]} />
-         <ButterflyFish position={[3.1, -0.1, 3]} />
-         <ButterflyFish position={[3.4, -0.4, 3]} />
+         {/* <ButterflyFish position={[3.1, -0.1, 3]} /> */}
+         {/* <ButterflyFish position={[3.4, -0.4, 3]} /> */}
          <ButterflyFish position={[1, -0.4, 3]} />
 
        </group>
@@ -206,19 +194,16 @@ function ArWing() {
       <>
       <group>
         {trashPositions.map((trash, index) => {
-            // Randomly select a model from the array
             return (
                 <Clone position={[trash.x, trash.y, trash.z]} object={dose} />
             );
         })}
         {tirePositions.map((trash, index) => {
-            // Randomly select a model from the array
             return (
                 <Clone position={[trash.x, trash.y, trash.z]} object={tire} />
             );
         })}
         {cupPositions.map((trash, index) => {
-            // Randomly select a model from the array
             return (
                 <Clone position={[trash.x, trash.y, trash.z]} object={cup} />
             );
@@ -235,6 +220,8 @@ function ArWing() {
     const {tirePositions, setTirePositions} = useGameStore();
     const {cupPositions, setCupPositions} = useGameStore();
     const {collectors, setCollectors} = useGameStore();
+    const score = useGameStore((state) => state.score);
+    const setScore = useGameStore((state) => state.setScore);
 
     function distance(p1, p2){
       const a = p2.x - p1.x;
@@ -247,34 +234,46 @@ function ArWing() {
     useFrame(({mouse}) => {
       // Calculate Treffer
       
+      // Abfrage ob Trash getroffen wurde
         const hitTrash = trashPositions? trashPositions.map(
         (object) => collectors.filter(
           () => collectors.filter((collector) => distance(collector,object) < 1). length > 0).length > 0 
         ) : [];
-      
+        
+        // Abfrage ob Reifen getroffen wurde
         const hitTire = tirePositions.map((tire) =>
           collectors.filter((collector) => distance(collector, tire) < 1).length > 0
         );
 
+        // Abfrage ob Cup getroffen wurde
         const hitCup = cupPositions.map((cup) =>
           collectors.filter((collector) => distance(collector, cup) < 1).length > 0
         );
 
         if(hitTrash.includes(true) && collectors.length > 0){
           console.log("hit detected");
+          setScore(score + hitTrash.filter((hit) => hit).length);
+        }
+        if(hitTire.includes(true) && collectors.length > 0){
+          console.log("hit detected");
+          setScore(score + hitTire.filter((hit) => hit).length);
+        }
+        if(hitCup.includes(true) && collectors.length > 0){
+          console.log("hit detected");
+          setScore(score + hitCup.filter((hit) => hit).length);
         }
 
-      // Move Trash....
+      // Move Trash / delete if hitted....
       setTrashPositions(
         trashPositions.map((trash) => ({x: trash.x + ENEMY_SPEED, y: trash.y, z: trash.z + ENEMY_SPEEDX }))
         .filter((trash, idx) => !hitTrash[idx])
       )
-      // Move Tire....
+      // Move Tire / delete if hitted....
       setTirePositions(
         tirePositions.map((trash) => ({x: trash.x + ENEMY_SPEED, y: trash.y, z: trash.z + ENEMY_SPEEDX }))
         .filter((trash, idx) => !hitTire[idx])
       )
-      // Move Cup....
+      // Move Cup / delete if hitted....
       setCupPositions(
         cupPositions.map((trash) => ({x: trash.x + ENEMY_SPEED, y: trash.y, z: trash.z + ENEMY_SPEEDX }))
         .filter((trash, idx) => !hitCup[idx])
@@ -295,13 +294,22 @@ function ArWing() {
 
   });
 
-  
+  const handleShoot = () => {
+    // setScore(score + 1)
+    console.log("Shoot")
+    // neues Collector Objekt hinzufügen
+    setCollectors([...collectors, {
+      id: Math.random(),x: 1, y: 0, z: 0, velocity: [shipPosition.rotation.x * 8, shipPosition.rotation.y * 6.5]
+    }])
+    
+    // Abfrage 
+    console.log(collectors.length);
+  }
 
   return (
     <>
-      <mesh position={[10, 0, 0]} rotation={[0,-1.5,0]} onClick={() => setCollectors([...collectors, {
-        id: Math.random(),x: 1, y: 0, z: 0, velocity: [shipPosition.rotation.x * 8, shipPosition.rotation.y * 6.5]
-      }])}>
+    {/* plane for shoot event */}
+      <mesh position={[10, 0, 0]} rotation={[0,-1.5,0]} onClick={handleShoot}>
         <planeGeometry args={[80, 80]}/>
         <meshStandardMaterial color="orange" opacity={0.2} transparent/>
       </mesh>

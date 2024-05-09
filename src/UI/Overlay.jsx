@@ -22,10 +22,13 @@ export default function Overlay() {
     const score = useGameStore((state) => state.score);
     const start = useGameStore((state) => state.start);
     const setStart = useGameStore((state) => state.setStart);
+    const setScore = useGameStore((state) => state.setScore);
     const clickedSpecificPoint = useStore((state) => state.clickedSpecificPoint);
     const setClickedSpecificPoint = useStore((state) => state.setClickedSpecificPoint);
     const setScrollBarColor = useStore((state) => state.setScrollBarColor);
     const [menu, setMenu] = useState(false)
+    const [timeLeft, setTimeLeft] = useState(30);
+    const [linkHovered, setLinkHovered] = useState(false);
 
     const handleControls = () => {
       setControls((prev) => !prev);
@@ -48,7 +51,6 @@ export default function Overlay() {
         else {
         activeControls = activeProject?.controls;
         }
-        console.log(activeControls)
     }
 
  //click enter to go back Möglichkeit
@@ -88,8 +90,10 @@ export default function Overlay() {
     };
 
     const handleStart = () => {
-      console.log("START")
+      setTimeLeft(30);
       setStart(true);
+      console.log("START")
+      setScore(0);
     }
 
     const toggleView = () => {
@@ -125,7 +129,9 @@ export default function Overlay() {
               {/* End */}
             </p>
             <div className='text-base absolute z-0 top-3 left-3 flex flex-col gap-y-1'>
-              
+            <div onClick={handleMenu} className="cursor-pointer" >
+              References              
+              </div>
               {cameraRoad && (
               <div className="cursor-pointer" onClick={toggleView}>
                 Overview
@@ -136,18 +142,17 @@ export default function Overlay() {
                 {clickedSpecificPoint ? 'Back' : 'Roadview'}
               </div>
               )}
-              <div onClick={handleMenu} className="cursor-pointer" >
-                About Mirevi
-              </div>
+              
               
             </div>
             <div id="menu-overlay" className={menu ? 'active' : ''}>
             {/* Hauptmenü */}
-                <div className='h-screen flex flex-col gap-y-6 ml-12 justify-center items-start font-light text-2xl'>
-                <p className='text-4xl pb-4'>References</p>
+                <div className='text-white h-screen flex flex-col gap-y-6 ml-12 justify-center items-start font-light text-2xl'>
+                <p className='font-interbold text-4xl pb-4 uppercase'>References</p>
+                <p className='text-lg pb-4'> Learn more about each project</p>
                 {projectsData.projects.map((project, index) => (
                   <div className='flex pb-3 border-b'>
-                    <div key={index} className='w-80'>{project.title}</div>
+                    <a href={project.link} target="_blank" className='w-[16rem] '>{project.title}</a>
                     <a href={project.link} target="_blank" className='flex items-center'>
                       <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M16.2897 9.88606C15.8755 9.88791 15.5412 10.2252 15.543 10.6394C15.5449 11.0536 15.8821 11.3879 16.2964 11.3861L18.7785 11.375C19.7859 11.3705 20.478 11.3685 21.0052 11.4261C21.1766 11.4448 21.3198 11.4689 21.4414 11.4981L10.8129 22.1265C10.52 22.4194 10.52 22.8943 10.8129 23.1872C11.1058 23.4801 11.5807 23.4801 11.8736 23.1872L22.5021 12.5587C22.5312 12.6803 22.5553 12.8235 22.574 12.9949C22.6316 13.5221 22.6297 14.2143 22.6252 15.2216L22.6141 17.7038C22.6122 18.118 22.9465 18.4553 23.3607 18.4571C23.7749 18.459 24.1122 18.1247 24.1141 17.7105L24.1253 15.1836C24.1296 14.2319 24.1331 13.4541 24.0652 12.832C23.9945 12.1852 23.839 11.6126 23.4576 11.1198C23.374 11.0117 23.2837 10.9092 23.1873 10.8128C23.0909 10.7164 22.9884 10.6261 22.8804 10.5425C22.3876 10.1612 21.8149 10.0056 21.1681 9.93497C20.5461 9.86704 19.7682 9.87053 18.8165 9.87479L16.2897 9.88606Z" fill="white"/>
@@ -179,7 +184,7 @@ export default function Overlay() {
                 ))}
             </div> */}
             {cameraRoad && (
-            <div className='absolute h-3/4 right-5 z-0 top-[14%] flex text-gray-500 ' >
+            <div className='absolute h-3/4 right-5 z-0 top-[14%] flex text-white ' >
             <div className="z-20 flex flex-col justify-around text-right">
                 {projectsData.projects.map((project, index) => (
                    <div key={index}
@@ -213,30 +218,36 @@ export default function Overlay() {
                 
           </div>
           {virtualGame && (
-          <div className='z-20'>
+          <div className=''>
           {!start && (
-          <div className='absolute z-20 flex flex-col h-screen w-screen items-center justify-center'>
-            <div className='text-center text-lg border border-slate-500/25 rounded-xl w-96 h-64 bg-slate-400/25 flex flex-col gap-y-8 items-center justify-center'>
-              
-              <p className='px-3'>
-              Collect as many trash objects as possible in 30 seconds
-              </p>
-              <div>
-                
+          <div className='absolute h-screen w-screen top-0 flex flex-col text-gray-900 items-center justify-center ' >
+          <div className=" text-center text-lg border border-slate-500/25 rounded-xl w-96 h-64 bg-slate-400/75 flex flex-col gap-y-8 items-center justify-center">
+              {timeLeft === 0 ? (
+              <>
+              <p> Your SCORE: {score} </p>
+              <div onClick={handleStart} className='text-2xl bg-slate-500/50 rounded-lg px-3'>
+                Restart
               </div>
+              </>
+              ) : (
+              <>
+              <p className='px-3'>
+                Collect as many trash objects as possible in 30 seconds
+              </p>
               <div onClick={handleStart} className='text-2xl bg-slate-500/50 rounded-lg px-3'>
                 START
               </div>
+              </>
+              )}
+              
             </div>
-            
           </div>
           )}
           {start && (
-          <div className='absolute text-4xl z-20 bottom-3 left-3'>
+            <div className='absolute text-4xl z-20 bottom-3 left-3'>
             <div>
-              
             </div>
-            <Timer onFinish={() => console.log('Time is up!')} />
+            <Timer timeLeft={timeLeft} setTimeLeft={setTimeLeft} onFinish={() => setStart(false)} />
             <div className='border-2 rounded-xl px-4 '>
               SCORE: {score}
             </div>
@@ -268,8 +279,8 @@ export default function Overlay() {
     )
   }
 
-  function Timer({ onFinish }) {
-    const [timeLeft, setTimeLeft] = useState(30);
+  function Timer({ timeLeft, setTimeLeft, onFinish }) {
+    // const [timeLeft, setTimeLeft] = useState(30);
   
     useEffect(() => {
       // Start the countdown when the component mounts
