@@ -21,7 +21,7 @@ const GROUND_HEIGHT = -50;
 
 export default function VirtualGame () {
 
-    // const {scene: oceanworld} = useGLTF('/Environment.glb');
+    // const {scene: oceanworld} = useGLTF('/OceanWorld2.glb');
     
     
     const start = useGameStore((state) => state.start);

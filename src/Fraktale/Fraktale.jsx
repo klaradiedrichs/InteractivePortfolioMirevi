@@ -20,17 +20,14 @@ export default function Experience()
             <VideoMaterial url="M09-1317.mp4" />        
         </mesh>
             */}
-        <PerspectiveCamera position={[0,-1,0]} fov={60} makeDefault />
+        <PerspectiveCamera position={[0,-1,0]} fov={90} makeDefault />
         {active != null && (
         <OrbitControls enableZoom={false} enablePan={false} target={[0, -1, 0]} />
         )}
         <mesh position={[0,-1,0]}>
-            <sphereGeometry args={[1, 200, 200]}/>
-            <VideoMaterial url="/M09-1317.mp4" />        
+            <sphereGeometry args={[10, 100, 100]}/>
+            <VideoMaterial url="/videos/Fraktale02_Original.mp4" />        
         </mesh>
-        <Html>
-            <p>Test</p>
-        </Html>
 
     </>
 }
