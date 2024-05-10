@@ -32,11 +32,11 @@ return (
         <meshStandardMaterial color="black" opacity={1} transparent/>
       </mesh> */}
     {/* Avatar Sitzend */}
-    {/* <Model1 /> */}
+    <Model1 />
     {/* Avatar Liegend */}
-    {/* <Model2 /> */}
+    <Model2 />
     {/* Avatar Stehend */}
-    {/* <Model3 /> */}
+    <Model3 />
     
   </>
 );
