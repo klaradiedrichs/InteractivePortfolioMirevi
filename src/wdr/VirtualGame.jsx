@@ -21,7 +21,7 @@ const GROUND_HEIGHT = -50;
 
 export default function VirtualGame () {
 
-    // const {scene: oceanworld} = useGLTF('/OceanWorld2.glb');
+    const {scene: oceanworld} = useGLTF('/Environment.glb');
     
     
     const start = useGameStore((state) => state.start);
@@ -34,7 +34,7 @@ export default function VirtualGame () {
         <PerspectiveCamera makeDefault fov={50} position={[-1,0.3,0]} rotation={[0, -1.5, 0]} far={1000}/>
         {/* Umgebung */}
         <Environment files='./OceanBackground.hdr' background></Environment>
-        {/* <primitive scale={1} object={oceanworld} position={[6,-3.3,-1]} rotation={[0, -1.5, 0]} />         */}
+        <primitive scale={1} object={oceanworld} position={[6,-3.3,-1]} rotation={[0, -1.5, 0]} />        
         {start && (
         <>
         <Trash />
