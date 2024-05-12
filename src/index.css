@@ -125,21 +125,37 @@ body{
 
 /* HTML: <div class="loader"></div> */
 .loader {
-  position: fixed; /* Keep loader's position static */
-  width: 15px;
-  top: 50%;
-  left: 50%;
-  z-index: 0;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  animation: l5 1s infinite linear alternate;
+  position: fixed;
+  top: 48%;
+  left: 48%;
+  width: 120px;
+  height: 20px;
+  border-radius: 20px;
+  background: 
+    linear-gradient(90deg, #92929200 ,rgba(77, 27, 68, 0.548)) left -50px top 0/50px 20px no-repeat 
+    rgb(170, 134, 170);
+  animation: l2 1s infinite linear;
 }
-@keyframes l5 {
-    0%  {box-shadow: 20px 0 #000, -20px 0 #0002;background: #000 }
-    33% {box-shadow: 20px 0 #000, -20px 0 #0002;background: #0002}
-    66% {box-shadow: 20px 0 #0002,-20px 0 #000; background: #0002}
-    100%{box-shadow: 20px 0 #0002,-20px 0 #000; background: #000 }
-} 
+
+@keyframes l2 {
+  100% {background-position: right -50px top 0}
+}
+.loadingScene {
+  position: fixed;
+  top: 48%;
+  left: 48%;
+  width: 120px;
+  height: 20px;
+  border-radius: 20px;
+  background: 
+    linear-gradient(90deg, #92929200 ,rgba(0, 0, 0, 0.658)) left -50px top 0/50px 20px no-repeat 
+    rgb(170, 134, 170);
+  animation: l2 1s infinite linear;
+}
+
+@keyframes l2 {
+  100% {background-position: right -50px top 0}
+}
 
 @media (prefers-color-scheme: light) {
   :root {

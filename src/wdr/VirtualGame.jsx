@@ -1,5 +1,5 @@
 import { Clone, Environment, OrbitControls, PerspectiveCamera,useAnimations, useGLTF , Html, useTexture} from "@react-three/drei"
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, Suspense } from 'react';
 import { useFrame } from '@react-three/fiber'
 import { useControls } from 'leva'
 import useGameStore from "./useGameStore";
@@ -24,14 +24,17 @@ export default function VirtualGame () {
     const {scene: oceanworld} = useGLTF('/Environment.glb');
     
     const start = useGameStore((state) => state.start);
-
+    const suspense = useTexture('./textures/actingSpheres.png')
     return(
 
         <>
         <PerspectiveCamera makeDefault fov={50} position={[-1,0.3,0]} rotation={[0, -1.5, 0]} far={1000}/>
         {/* Umgebung */}
+        <Suspense fallback={<FallbackMaterial url="/textures/ActingSpheres.png" />}>
         <Environment files='./OceanBackground.hdr' background></Environment>
-        <primitive scale={1} object={oceanworld} position={[6,-3.3,-1]} rotation={[0, -1.5, 0]} />        
+        
+          <primitive scale={1} object={oceanworld} position={[6,-3.3,-1]} rotation={[0, -1.5, 0]} />        
+        </Suspense>
         {start && (
         <>
         <Trash />
@@ -347,3 +350,10 @@ function ArWing() {
     </>
   )
   }
+
+  function FallbackMaterial({ url }) {
+    const texture = useTexture(url)
+    return <meshBasicMaterial map={texture} toneMapped={false} />
+  }
+
+  

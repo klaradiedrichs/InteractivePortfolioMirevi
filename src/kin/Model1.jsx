@@ -15,8 +15,7 @@ export default function Kin()
       });
 
     return <>
-        <spotLight position={[0,1,-5]} ></spotLight>
-        <primitive castShadow position={[0,-1.5,-5]} object={scene} />
+        <primitive castShadow position={[0,-1.5,-3]} object={scene} />
         
     </>
 }

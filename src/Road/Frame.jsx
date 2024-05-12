@@ -148,27 +148,39 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
           {show && (
           <>
           <group position={[-5.8, 2.5, 0.02]}>
-            <Text  color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.3} anchorX="right">
+            <Text  color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.28} anchorX="right">
               {project.year}
               <meshBasicMaterial color="white" toneMapped={false} />
             </Text>
-            <Text color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.3} position-y={-0.4} anchorX="right">
+            <Text color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.28} position-y={-0.4} anchorX="right">
               {project.owner}
               <meshBasicMaterial color="white" toneMapped={false} />
             </Text>
+            {/* {Array.isArray(project.support) && project.support.length > 0 && ( */}
+            <group position-y={-1.6}>
+              <Text position-y={0} maxWidth={2.5} color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.23} textAlign="right" anchorY="top-baseline" anchorX="right">
+                {project.support[0]}
+                <meshBasicMaterial color="white" toneMapped={false} />
+              </Text>
+              <Text position-y={-1.2} maxWidth={2.5} color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.23} textAlign="right" anchorY="top-baseline" anchorX="right">
+                {project.support[1]}
+                <meshBasicMaterial color="white" toneMapped={false} />
+              </Text>
+            </group>
+            {/* )} */}
          
                        
-            <Text onPointerOver={() => setLinkHovered(true)} onPointerOut={() => setLinkHovered(false)} onClick={handleText} color={linkHovered ? "white" : "gray"} font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.3} position-y={-0.8} anchorX="right">
-              {!linkHovered ? (
-              <Svg position={[-2.55,0.1,0]} scale={0.01} src={linksvgBlack}>
-                <meshStandardMaterial color="white" />
-              </Svg> 
-              ) : (
-              <Svg position={[-2.55,0.1,0]} scale={0.01} src={linksvgWhite}>
-                <meshStandardMaterial color="white" />
-              </Svg>               
-              )}
-              visit full project
+            <Text onPointerOver={() => setLinkHovered(true)} onPointerOut={() => setLinkHovered(false)} onClick={handleText} color={linkHovered ? "white" : "gray"} font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.28} position-y={-0.8} anchorX="right">
+                {!linkHovered ? (
+                <Svg position={[-1.8,0.15,0]} scale={0.01} src={linksvgBlack}>
+                  <meshStandardMaterial color="white" />
+                </Svg> 
+                ) : (
+                <Svg position={[-1.8,0.15,0]} scale={0.01} src={linksvgWhite}>
+                  <meshStandardMaterial color="white" />
+                </Svg>               
+                )}
+              full project
               <meshBasicMaterial color="white" toneMapped={false} />
             </Text>
           </group>

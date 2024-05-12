@@ -118,11 +118,11 @@ export default function Overlay() {
 
     return (
         <>
-        <div className="cursor-default" tabIndex={0}>
+        <div className="cursor-default text-black/75" tabIndex={0}>
         {active === null ? (
           <>
           
-            <a href="https://mirevi.de/" target="_blank" className="absolute z-0 bottom-3 left-3 hover:text-black">
+            <a href="https://mirevi.de/" target="_blank" className="absolute z-0 bottom-3 left-3">
               mirevi.de
             </a>
             <p className="absolute z-10 bottom-4 right-3">
@@ -203,7 +203,7 @@ export default function Overlay() {
 
         ) : (
         <>
-        <div className="z-50 text-sm flex flex-col gap-y-1 fixed top-3 left-3 cursor-pointer text-gray-600 ">
+        <div className="max-w-64 h-fit bg-gray-400/75 px-2 rounded-lg z-50 text-sm flex flex-col gap-y-1 fixed top-3 left-3 cursor-pointer text-black/75 ">
                 <div onClick={handleBackToRoadClick}>
                   Press 'Enter' to leave
                 </div>
@@ -215,7 +215,7 @@ export default function Overlay() {
                     <p>WDR Menu</p>
                   </div>
                 )}
-                
+                 
           </div>
           {virtualGame && (
           <div className=''>
@@ -244,22 +244,23 @@ export default function Overlay() {
           </div>
           )}
           {start && (
-            <div className='absolute text-4xl z-20 bottom-3 left-3'>
+            <div className='absolute text-center text-xl z-20 top-3 left-[48%]'>
             <div>
             </div>
-            <Timer timeLeft={timeLeft} setTimeLeft={setTimeLeft} onFinish={() => setStart(false)} />
-            <div className='border-2 rounded-xl px-4 '>
+            <div className='bg-slate-300/25 border-2 rounded-xl px-4 '>
               SCORE: {score}
             </div>
+            <Timer timeLeft={timeLeft} setTimeLeft={setTimeLeft} onFinish={() => setStart(false)} />
+            
           </div>
           )}
           </div>
           )}
-          <div className='absolute z-20 top-3 px-2 right-3 w-fit max-w-64 h-fit bg-gray-400/25 rounded-lg text-gray-600'>
+          <div className='absolute z-20 top-3 px-2 right-3 w-fit max-w-64 h-fit bg-gray-400/75 rounded-lg text-black/75'>
             <div onClick={handleControls} className='flex items-center gap-x-1 cursor-pointer'>
               <div className="" >
                 <svg width="14" height="7" viewBox="0 0 18 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M16.5564 0.77832L8.77818 8.55649L1 0.77832" stroke="#475577" stroke-width="2" />
+                  <path d="M16.5564 0.77832L8.77818 8.55649L1 0.77832" stroke="black" stroke-width="1" />
                 </svg>
               </div>
               <h2 className='text-right'>Controls</h2>
@@ -300,5 +301,5 @@ export default function Overlay() {
       }
     }, [timeLeft, onFinish]);
   
-    return <div>{timeLeft} s</div>;
+    return <div className='text-base'>time: {timeLeft} s</div>;
   }

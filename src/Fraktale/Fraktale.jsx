@@ -1,6 +1,7 @@
 import { Html, MeshReflectorMaterial, CameraControls, useVideoTexture,OrbitControls , PerspectiveCamera, Environment} from '@react-three/drei'
 import * as THREE from "three";
 import { useStore } from '../stores/useStore';
+import React, { useRef, useEffect, Suspense } from 'react';
 
 
 export default function Experience()
@@ -24,10 +25,12 @@ export default function Experience()
         {active != null && (
         <OrbitControls enableZoom={false} enablePan={false} target={[0, -1, 0]} />
         )}
+        <Suspense fallback={null}>
         <mesh position={[0,-1,0]}>
             <sphereGeometry args={[10, 100, 100]}/>
             <VideoMaterial url="/videos/Fraktale02_Original.mp4" />        
         </mesh>
+        </Suspense>
 
     </>
 }
