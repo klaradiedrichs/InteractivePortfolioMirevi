@@ -5,8 +5,8 @@
 
 @layer base {
   @font-face {
-    font-family: "InterBold";
-    src: url("../public/fonts/Inter_Bold.json") format("json"),
+    font-family: "PlayfairDisplay";
+    src: url("../public/fonts/PlayfairDisplay-Regular.ttf") format("ttf"),
       
   }
 }

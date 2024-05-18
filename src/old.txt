@@ -52,3 +52,62 @@ Start Screen
             </div>
           </div>
           )} */}
+
+
+
+          import * as THREE from "three";
+
+// Erstellt eine Szene
+const scene = new THREE.Scene();
+
+// Erstellt eine perspektivische Kamera
+const camera = new THREE.PerspectiveCamera(
+  70,
+  window.innerWidth / window.innerHeight,
+  0.01,
+  10
+);
+
+// Bewegt die Kamera nach oben und hinten
+camera.position.set(0, 5, 5);
+
+// Rotiert die Kamera, so dass sie etwas nach unten zeigt,
+// damit wir mehrere Flächen vom Würfel sehen können
+camera.rotation.x = -45 * THREE.MathUtils.DEG2RAD;
+
+// Erstellt die Würfelgeometrie
+const geometry = new THREE.BoxGeometry(1, 1, 1);
+
+// Erstellt ein einfaches Material für den Würfel
+const material = new THREE.MeshPhongMaterial({ color: "rgb(10,180,180)" });
+
+// Erstellt das eigentliche Mesh-Objekt, mit der Geometrie und dem Material
+const mesh = new THREE.Mesh(geometry, material);
+
+// Rotiert den Würfel, so dass eine Ecke in die Kamera schaut
+mesh.rotation.y = 45 * THREE.MathUtils.DEG2RAD;
+
+// Fügt den Würfel in die Szene ein
+scene.add(mesh);
+
+// Erstellt ein weißes Punktlicht
+const light = new THREE.PointLight("white", 1, 100);
+
+// Verschiebt das Licht, damit die Flächen des Würfels unterschiedlich
+// beleuchtet sind
+light.position.set(5, 10, 10);
+
+// Fügt das Licht in die Szene ein
+scene.add(light);
+
+// Erstellt einen WebGL-Renderer
+const renderer = new THREE.WebGLRenderer();
+
+// Setzt die Größe auf die des Fensters
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+// Fügt das canvas-Element in das Dokument ein
+document.body.appendChild(renderer.domElement);
+
+// Rendert die Scene mit der Kamera ein einziges Mal
+renderer.render(scene, camera);

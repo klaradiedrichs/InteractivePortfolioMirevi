@@ -24,7 +24,7 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
   const setClickedFrame = useStore((state) => state.setClickedFrame);
   const active = useStore((state) => state.active);
   const [boxactive, setBoxActive] = useState(false);
-  const {scale} = useSpring({ scale: boxactive && !hovered ? 0.6 : 1})
+  const {scale} = useSpring({ scale: boxactive ? 0.6 : 1})
   const [linkHovered, setLinkHovered] = useState(false);
 
   const sizePortalElements = {
@@ -42,7 +42,7 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
     // Add more positions for other names as needed
   };
   const { scale: scaleWindow } = useSpring({
-    scale: hovered ? [8, 5, 1] : sizePortalElements[name],
+    scale: hovered ? [11, 6.7, 1] : sizePortalElements[name],
     delay: hovered ? 200 : 0
   });
 
@@ -57,12 +57,12 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
   });
 
   const { opacity: opacityPoster } = useSpring({ 
-    opacity: boxactive || hovered ? 0.3 : 1,
+    opacity: boxactive ? 0.25 : 1,
     // immediate: boxactive
   });
   const { opacity: textFadeIn } = useSpring({ 
-    opacity: boxactive && !hovered ? 1 : 0,
-    delay: boxactive && !hovered ? 300 : 0
+    opacity: boxactive ? 1 : 0,
+    delay: boxactive ? 300 : 0
     // immediate: boxactive
   });
 
@@ -130,7 +130,7 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
   useFrame((_state, delta) => {
     const worldOpen = active === name;
     if (hovered === true) {
-      easing.damp(portalMaterial.current, "blend", worldOpen ? 1 : 0, 0.1, delta);
+      easing.damp(portalMaterial.current, "blend", worldOpen ? 1 : 0, 0.4, delta);
       }
   });
   return( 
@@ -148,36 +148,48 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
           {show && (
           <>
           <group position={[-5.8, 2.5, 0.02]}>
-            <Text  color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.3} anchorX="right">
+            <Text  color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.28} anchorX="right">
               {project.year}
               <meshBasicMaterial color="white" toneMapped={false} />
             </Text>
-            <Text color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.3} position-y={-0.4} anchorX="right">
+            <Text color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.28} position-y={-0.4} anchorX="right">
               {project.owner}
               <meshBasicMaterial color="white" toneMapped={false} />
             </Text>
+            {/* {Array.isArray(project.support) && project.support.length > 0 && ( */}
+            <group position-y={-1.6}>
+              <Text position-y={0} maxWidth={2.5} color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.23} textAlign="right" anchorY="top-baseline" anchorX="right">
+                {project.support[0]}
+                <meshBasicMaterial color="white" toneMapped={false} />
+              </Text>
+              <Text position-y={-1.2} maxWidth={2.5} color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.23} textAlign="right" anchorY="top-baseline" anchorX="right">
+                {project.support[1]}
+                <meshBasicMaterial color="white" toneMapped={false} />
+              </Text>
+            </group>
+            {/* )} */}
          
                        
-            <Text onPointerOver={() => setLinkHovered(true)} onPointerOut={() => setLinkHovered(false)} onClick={handleText} color={linkHovered ? "white" : "gray"} font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.3} position-y={-0.8} anchorX="right">
-              {!linkHovered ? (
-              <Svg position={[-2.55,0.1,0]} scale={0.01} src={linksvgBlack}>
-                <meshStandardMaterial color="white" />
-              </Svg> 
-              ) : (
-              <Svg position={[-2.55,0.1,0]} scale={0.01} src={linksvgWhite}>
-                <meshStandardMaterial color="white" />
-              </Svg>               
-              )}
-              visit full project
+            <Text onPointerOver={() => setLinkHovered(true)} onPointerOut={() => setLinkHovered(false)} onClick={handleText} color={linkHovered ? "white" : "gray"} font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.28} position-y={-0.8} anchorX="right">
+                {!linkHovered ? (
+                <Svg position={[-1.8,0.15,0]} scale={0.01} src={linksvgBlack}>
+                  <meshStandardMaterial color="white" />
+                </Svg> 
+                ) : (
+                <Svg position={[-1.8,0.15,0]} scale={0.01} src={linksvgWhite}>
+                  <meshStandardMaterial color="white" />
+                </Svg>               
+                )}
+              full project
               <meshBasicMaterial color="white" toneMapped={false} />
             </Text>
           </group>
           
-          <mesh onClick={handleRoundedBoxDoubleClick} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} anchorY="bottom" position={[-4.4, -4.25, 0.12]}>
-            <planeGeometry args={[2.16,0.55,1]} />
+          <mesh onClick={handleRoundedBoxDoubleClick} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} anchorY="bottom" position={[-4.4, -4, 0]}>
+            <planeGeometry args={[2.16,0.5,1]} />
             <meshStandardMaterial color="#FFF0F5" opacity={0.3} transparent/>
           </mesh>
-          <Text position={[-4.4, -4.25, 0.122]} color="white" fontSize={0.3}>
+          <Text position={[-4.4, -4.02, 0.1]} color="white" fontSize={0.3}>
             EXPLORE
             <meshStandardMaterial opacity={1} color="#FFFFFF" emissive="white"/> 
           </Text>
@@ -224,11 +236,12 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
                 <animated.meshBasicMaterial map={image} color={image === null ? '#ab03fa' : 'white'} toneMapped={false} side={THREE.DoubleSide} opacity={image === null ? 0.3 : opacityPoster} transparent />
                 {/* Portalwindow (wird größer onHover auf Button) */}
                 {hovered && (
-                <animated.mesh scale={scaleWindow} position-z={0.05}>
-                    <circleGeometry />
+                <animated.mesh scale={scaleWindow} position={positionWindow}>
+                    <planeGeometry />
+                    <animated.meshBasicMaterial opacity={0} transparent toneMapped={false} />
                     {/* Sicht in Portal OnHover übr Button */}
                     
-                        <MeshPortalMaterial ref={portalMaterial} transparent blur={0.3}>
+                        <MeshPortalMaterial ref={portalMaterial} side={THREE.DoubleSide}>
                             <ambientLight intensity={0.5} />
                             {/*Individuelle Objekte */}
                             {children}

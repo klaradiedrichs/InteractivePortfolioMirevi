@@ -381,9 +381,9 @@ export default function Experience({ setBackToStart,backToStart})
         <TextComp name="Eight" position={titlePosition.title8} rotation={[0, -0.2, 0]} />
         
         {/* {!cameraRoad && active === null && <OrbitControls />} */}
-        {/* Camera */}
+        {/* Camera  */}
         <>
-            {cameraRoad && active === null ? (
+            {cameraRoad  ? (
                 <>
                 <PerspectiveCamera fov={35} near={1} far={38} makeDefault ref={cameraRef} position={[initialXPos, initialYPos, initialZPos]} />
                 </>

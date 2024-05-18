@@ -148,7 +148,7 @@ export default function Overlay() {
             <div id="menu-overlay" className={menu ? 'active' : ''}>
             {/* Hauptmenü */}
                 <div className='text-white h-screen flex flex-col gap-y-6 ml-12 justify-center items-start font-light text-2xl'>
-                <p className='font-interbold text-4xl pb-4 uppercase'>References</p>
+                <p className='font-playfairdisplay text-4xl pb-4 uppercase'>References</p>
                 <p className='text-lg pb-4'> Learn more about each project</p>
                 {projectsData.projects.map((project, index) => (
                   <div className='flex pb-3 border-b'>

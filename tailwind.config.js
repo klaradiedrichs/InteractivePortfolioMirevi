@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        interbold: ["InterBold"] 
+        playfairdisplay: ["PlayfairDisplay"] 
       }
     },
   },
