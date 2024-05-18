@@ -39,8 +39,8 @@ export default function Experience() {
     return (
         <>
             <PerspectiveCamera makeDefault position={[0.3, 0.01, 0]}/>
-            <OrbitControls enablePan={false} target={[1, 0, 0]} />
-            <Environment preset='forest' background blur={0.3} />
+            <OrbitControls enablePan={false} enableRotate={false} enableZoom={false} target={[1, 0, 0]} />
+            <Environment preset='forest' background blur={0.15} />
             <spotLight position={[4.5, -0.25, 1.8]}/>
             {/* Orientierung */}
             
@@ -55,22 +55,24 @@ export default function Experience() {
             
             ) : (
 
+            <>
             <group position={meshPosition} rotation={[0, -1.57, 0]}>
                 <mesh>
                     <planeGeometry args={[2.7, 5, 1]} />
                     <VideoMaterial videoSrc={activeVideoSrc} opacity={video} />
                 </mesh>
-                <group position={[0,-1.65,0.01]}>
-                    <mesh onClick={handleBack}>
-                        <planeGeometry args={[0.3, 0.12, 1]} />
-                        <meshBasicMaterial color="#1E4738" opacity={0.5} transparent />
-                    </mesh>
-                    <Text position={[0, 0, 0.01]} color="white" fontSize={0.06}>
-                        GO BACK
-                        <meshStandardMaterial opacity={1} color="#FFFFFF" emissive="white" />
-                    </Text>
-                </group>
             </group>
+            <group position={[4, -1.6, -0.6]} rotation={[0, -1.57, 0]}>
+                <mesh onClick={handleBack}>
+                    <planeGeometry args={[0.3, 0.12, 1]} />
+                    <meshBasicMaterial color="#1E4738" opacity={0.5} transparent />
+                </mesh>
+                <Text position={[0, 0, 0.01]} color="white" fontSize={0.06}>
+                    BACK
+                    <meshStandardMaterial opacity={1} color="#FFFFFF" emissive="white" />
+                </Text>
+            </group>
+            </>
             )}
         </>
     );

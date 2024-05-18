@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { useState , useEffect} from 'react'
 import './App.css'
 import {Canvas, useThree, useFrame} from "@react-three/fiber";
-import {KeyboardControls, Environment, PerspectiveCamera, ScrollControls} from "@react-three/drei";
+import {KeyboardControls, Environment, PerspectiveCamera, ScrollControls, Preload, useGLTF} from "@react-three/drei";
 import Overlay from './UI/Overlay';
 import { Perf } from 'r3f-perf';
 import Experience from './Road/Experience2';
@@ -64,6 +64,8 @@ function App() {
               {/* <WDRScene /> */}
               {/* <Fraktale /> */}
               {/* <GenerationSpeaks/> */}
+              <Preload all />
+
         </Canvas>
         <Overlay /> 
 
@@ -73,3 +75,5 @@ function App() {
 }
 
 export default App
+
+

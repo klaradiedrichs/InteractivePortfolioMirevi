@@ -1,5 +1,5 @@
 import { Clone, Environment, OrbitControls, PerspectiveCamera,useAnimations, useGLTF , Html, useTexture} from "@react-three/drei"
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, Suspense } from 'react';
 import { useFrame } from '@react-three/fiber'
 import { useControls } from 'leva'
 import useGameStore from "./useGameStore";
@@ -13,28 +13,28 @@ import ButterflyFish from './Butterfly';
 import Clownfish from './Clownfish';
 import YellowBoxFish from './YellowBoxfish';
 
-const LASER_RANGE = 100;
+const LASER_RANGE = 70;
 const LASER_Z_VELOCITY = 1;
 const ENEMY_SPEED = -0.02;
 const ENEMY_SPEEDX = 0.001;
-const GROUND_HEIGHT = -50;
+const GROUND_HEIGHT = 0;
 
 export default function VirtualGame () {
 
-    // const {scene: oceanworld} = useGLTF('/Environment.glb');
-    
+    const {scene: oceanworld} = useGLTF('/Environment.glb');
     
     const start = useGameStore((state) => state.start);
-
-    
-
+    const suspense = useTexture('./textures/actingSpheres.png')
     return(
 
         <>
         <PerspectiveCamera makeDefault fov={50} position={[-1,0.3,0]} rotation={[0, -1.5, 0]} far={1000}/>
         {/* Umgebung */}
+        <Suspense fallback={<FallbackMaterial url="/textures/ActingSpheres.png" />}>
         <Environment files='./OceanBackground.hdr' background></Environment>
-        {/* <primitive scale={1} object={oceanworld} position={[6,-3.3,-1]} rotation={[0, -1.5, 0]} />         */}
+        
+          <primitive scale={1} object={oceanworld} position={[6,-3.3,-1]} rotation={[0, -1.5, 0]} />        
+        </Suspense>
         {start && (
         <>
         <Trash />
@@ -237,17 +237,23 @@ function ArWing() {
       // Abfrage ob Trash getroffen wurde
         const hitTrash = trashPositions? trashPositions.map(
         (object) => collectors.filter(
-          () => collectors.filter((collector) => distance(collector,object) < 1). length > 0).length > 0 
+          () => collectors.filter((collector) => distance(collector,object) < 0.8). length > 0).length > 0 
         ) : [];
         
+        
+        // Remove collectors that hit trash
+        const updatedCollectors = collectors.filter((collector, index) => !hitTrash[index]);
+
+        setCollectors(updatedCollectors);
+
         // Abfrage ob Reifen getroffen wurde
         const hitTire = tirePositions.map((tire) =>
-          collectors.filter((collector) => distance(collector, tire) < 1).length > 0
+          collectors.filter((collector) => distance(collector, tire) < 0.8).length > 0
         );
 
         // Abfrage ob Cup getroffen wurde
         const hitCup = cupPositions.map((cup) =>
-          collectors.filter((collector) => distance(collector, cup) < 1).length > 0
+          collectors.filter((collector) => distance(collector, cup) < 0.8).length > 0
         );
 
         if(hitTrash.includes(true) && collectors.length > 0){
@@ -280,17 +286,37 @@ function ArWing() {
       )
 
       // move Collector Object
+      // move Collector Object and handle collision with trash
       setCollectors(
         collectors
-          .map((collector) => ({
-            id: collector.id,
-            x: collector.x + LASER_Z_VELOCITY,
-            y: collector.y + collector.velocity[1],
-            z: collector.z + collector.velocity[0],
-            
-            velocity: collector.velocity
-          }))
+          .map((collector) => {
+            const newX = collector.x + LASER_Z_VELOCITY;
+            const newY = collector.y + collector.velocity[1];
+            const newZ = collector.z + collector.velocity[0];
+
+            // Check collision with trashPositions
+            const hitTrash = trashPositions ? trashPositions.some((trash) => distance(collector, trash) < 0.8) : false;
+            const hitCup = cupPositions ? cupPositions.some((cup) => distance(collector, cup) < 0.8) : false;
+            const hitTire = tirePositions ? tirePositions.some((tire) => distance(collector, tire) < 0.8) : false;
+
+            // If collector hits trash, don't update its position
+            if (hitTrash) return null;
+            if (hitCup) return null;
+            if (hitTire) return null;
+
+            // Otherwise, update collector's position
+            return {
+              id: collector.id,
+              x: newX,
+              y: newY,
+              z: newZ,
+              velocity: collector.velocity
+            };
+          })
+          // Filter out null collectors (those that hit trash)
+          .filter((collector) => collector !== null)
       );
+
 
   });
 
@@ -324,3 +350,10 @@ function ArWing() {
     </>
   )
   }
+
+  function FallbackMaterial({ url }) {
+    const texture = useTexture(url)
+    return <meshBasicMaterial map={texture} toneMapped={false} />
+  }
+
+  

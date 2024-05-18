@@ -99,7 +99,7 @@ export default function Experience() {
         {!virtualGame && !generationSpeaks && (
         <>
         {/* <Environment preset='night' background blur={0.5} /> */}
-        <PerspectiveCamera makeDefault position={[0,-0.3,7]} far={1000}/>
+        <PerspectiveCamera makeDefault fov={48} position={[0,-0.3,7]} far={1000}/>
 
         <color attach="background" args={['#101010']} />
         <ambientLight intensity={0.7}/>
@@ -120,7 +120,7 @@ export default function Experience() {
         </Text>
         
         {/* Virtuelle Begegnung */}
-        <group position={[-2.7,-1.7,1]}>
+        <group position={[-2.7,-1.9,1]}>
             <RoundedBox onClick={handleBegegnung} position={[0,-0.5,0]} args={[3.5,0.5,0]}>
                 <animated.meshPhongMaterial opacity={buttons} transparent color="#73F4B4" />
                 <Text anchorX="center" anchorY="middle" position-z={0.01} fontSize={0.25} color="black">
@@ -128,13 +128,13 @@ export default function Experience() {
                     <animated.meshBasicMaterial color="black" opacity={buttons} transparent />
                 </Text>
             </RoundedBox>
-            <Text textAlign="center" fontSize={0.2}>
+            <Text textAlign="center" fontSize={0.15}>
                 {`Erlebe, was die Generation\nKlimawandel bewegt`}
                 <animated.meshBasicMaterial color="white" opacity={buttons} transparent />
             </Text> 
         </group>
         {/*  Game */}
-        <group position={[2.7,-1.7,1]}>
+        <group position={[2.7,-1.9,1]}>
             <RoundedBox onClick={handleGame} position={[0,-0.5,0]} args={[3.5,0.5,0]}>
                 <animated.meshPhongMaterial opacity={buttons} transparent color="#73F4B4" />                
                 <Text anchorX="center" anchorY="middle" position-z={0.01} fontSize={0.25} color="black">

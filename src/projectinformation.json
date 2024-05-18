@@ -3,8 +3,8 @@
       {
         "title": "persona fractalis",
         "year": 2020,
-        "owner": "hochschule düsseldorf",
-        "support": ["Jane Smith", "Mike Johnson"],
+        "owner": "Hochschule Düsseldorf",
+        "support": ["Developed by Mirevi, University of Applied Sciences Düsseldorf"],
         "tags": [
           "Artificial Intelligence",
           "Interaction",
@@ -19,7 +19,7 @@
         "title": "kin_",
         "year": 2021,
         "owner": "Charlotte Triebus",
-        "support": ["Bob Brown"],
+        "support": ["Developed by Mirevi, University of Applied Sciences Düsseldorf", "with music by Brigitta Muntendorf and virtual costumes by Ines Alpha"],
         "tags": [
           "Avatare",
           "Augmented Reality",
@@ -32,15 +32,15 @@
       {
         "title": "WDR Klima",
         "year": 2022,
-        "owner": "Alice Smith",
-        "support": ["Bob Brown"],
+        "owner": "Westdeutscher Rundfunk",
+        "support": ["Developed by Mirevi, University of Applied Sciences Düsseldorf"],
         "tags": [
           "Climate change",
           "Augmented Reality",
           "Education",
           "Immersiv"
         ],
-        "link": "https://mirevi.de/blog/persona-fractalis-ii-2/",
+        "link": "https://mirevi.de/blog/wdr-klima-app/",
         "controls": ["Choose Experience"],
         "controlsWdrGame" : ["Move mouse to aim the trash objects", 
         "click to shoot"],
@@ -49,8 +49,8 @@
       {
         "title": "Video Wall",
         "year": 2021,
-        "owner": "Alice Smith",
-        "support": ["Bob Brown"],
+        "owner": "Hochschule Düsseldorf",
+        "support": ["Developed by Mirevi, University of Applied Sciences Düsseldorf"],
         "tags": [
           "Demo",
           "Screen",
@@ -66,7 +66,7 @@
         "title": "Five",
         "year": null,
         "owner": "",
-        "support": [""],
+        "support": [],
         "tags": [],
         "link": "",
         "controls": [""]
@@ -76,7 +76,7 @@
         "title": "Six",
         "year": null,
         "owner": "",
-        "support": [""],
+        "support": [],
         "tags": [""],
         "link": "",
         "controls": [""]
@@ -85,7 +85,7 @@
         "title": "Seven",
         "year": null,
         "owner": "",
-        "support": [""],
+        "support": [],
         "tags": [""],
         "link": "",
         "controls": [""]
@@ -94,7 +94,7 @@
         "title": "Eight",
         "year": null,
         "owner": "",
-        "support": [""],
+        "support": [],
         "tags": [""],
         "link": "",
         "controls": [""]
