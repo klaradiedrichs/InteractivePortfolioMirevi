@@ -23,14 +23,15 @@ export default function VirtualGame () {
 
     const {scene: oceanworld} = useGLTF('/Environment.glb');
     
+
     const start = useGameStore((state) => state.start);
-    const suspense = useTexture('./textures/actingSpheres.png')
+    
     return(
 
         <>
         <PerspectiveCamera makeDefault fov={50} position={[-1,0.3,0]} rotation={[0, -1.5, 0]} far={1000}/>
         {/* Umgebung */}
-        <Suspense fallback={<FallbackMaterial url="/textures/ActingSpheres.png" />}>
+        <Suspense fallback={null}>
         <Environment files='./OceanBackground.hdr' background></Environment>
         
           <primitive scale={1} object={oceanworld} position={[6,-3.3,-1]} rotation={[0, -1.5, 0]} />        
@@ -125,6 +126,7 @@ function Animals() {
 
        </group>
        <primitive scale={2} position={[turtlePosition.x, turtlePosition.y, turtlePosition.z]} object={turtle} />
+
        </>
 
    )

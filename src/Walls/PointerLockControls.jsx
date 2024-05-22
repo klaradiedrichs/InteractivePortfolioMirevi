@@ -15,5 +15,5 @@ export default function PointerLockerComponent({ enabled }) {
     }
   }, [enabled, active]);
 
-  return <PointerLockControls ref={controlsRef} />;
+  return <PointerLockControls maxPolarAngle={Math.PI - 0.0001} minPolarAngle={0.0001} ref={controlsRef} />;
 }
