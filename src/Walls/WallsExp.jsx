@@ -93,9 +93,8 @@ export default function Experience() {
   return (
     <>
       
-      <Environment preset='night' blur={0.5} />
+      <Environment preset='night' blur={0} />
       <directionalLight intensity={0.5}/>
-      <directionalLight position={[4,0,20]} intensity={0.5}/>
       <color attach="background" args={["#343434"]} />
       {/* <color attach="background" args={['black']} /> */}
       <Reflector position-x={-25} resolution={512} args={[100, 50]} mirror={0.5} mixBlur={10} mixStrength={0.8} rotation={[-Math.PI / 2, 0, Math.PI / 2]} blur={[400, 100]}>

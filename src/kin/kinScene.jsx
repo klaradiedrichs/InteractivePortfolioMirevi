@@ -22,6 +22,7 @@ return (
 
     {active !== null && <OrbitControls enablePan={false} target={[0, -0.5, -5]} /> }
     <Environment preset='sunset' background blur={0.35} >
+      
     {/* <color args={ [ '#C39BD3 ' ] } attach="background" />
     <mesh position-z={ - 5 } scale={ 100 }>
         <planeGeometry />
@@ -36,7 +37,7 @@ return (
       </mesh> */}
     {/* Avatar Sitzend */}
    {/* <Test /> */}
-   <Suspense fallback={<ChipLoader theme="dark" scale={0.3} position={[0,0,-3]}/>}>
+   <Suspense fallback={<ChipLoader theme="dark" scale={0.3} position={[0,-0.5,-3]}/>}>
    <Model1 />
    <Model2 />
    <Model3 />

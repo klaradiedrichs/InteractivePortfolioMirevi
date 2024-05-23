@@ -42,7 +42,7 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
     // Add more positions for other names as needed
   };
   const { scale: scaleWindow } = useSpring({
-    scale: hovered ? [8, 5, 1] : sizePortalElements[name],
+    scale: hovered ? [8, 4.4, 1] : sizePortalElements[name],
     delay: hovered ? 200 : 0
   });
 
