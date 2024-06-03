@@ -307,7 +307,7 @@ export default function Experience({ setBackToStart,backToStart})
                 mirevi.de
                 <animated.meshBasicMaterial color="white" opacity={textFadeIn} toneMapped={false} />
             </Text>
-            <Text scale={0.32} position={[0.02,-1.28,0]} color="white" font="fonts/static/Montserrat-Light.ttf" fontSize={0.105}>
+            <Text scale={0.32} position={[0.02,-1.28,0]} color="white" font="fonts/static/Montserrat-Light.ttf" fontSize={0.12}>
                 Scroll to start exploring
                 <animated.meshBasicMaterial color="white" opacity={textFadeIn} toneMapped={false} />            
             </Text>
