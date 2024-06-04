@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Reflector, useHelper, useTexture, Text, Html, MeshReflectorMaterial, PointerLockControls, useVideoTexture, Environment } from '@react-three/drei';
+import { Reflector, useHelper, useTexture, Text, Html, OrbitControls, MeshReflectorMaterial, PointerLockControls, useVideoTexture, Environment } from '@react-three/drei';
 import { Perf } from 'r3f-perf';
 import { useControls } from 'leva';
 import { Physics } from '@react-three/rapier';
@@ -27,6 +27,7 @@ export default function Experience() {
   };
   // if cameraRef in range around plane -> play video 
   const [videoPlaying, setVideoPlaying] = useState(initialVideoStates); // State to track video playing status for each plane
+  const [orbitControls, setOrbitControls] = useState(false); // State to track video playing status for each plane
 
   const active = useStore((state) => state.active);
   const [floor, normal] = useTexture(['/SurfaceImperfections003_1K_var1.jpg', '/SurfaceImperfections003_1K_Normal.jpg'])
@@ -59,6 +60,23 @@ export default function Experience() {
     }));
   };
 
+  useEffect(() => {
+    // const initialScrollOffset = 0.5; // Assuming 0.5 represents the middle of the page
+    // scroll.set(initialScrollOffset);
+
+    window.addEventListener("wheel", handleWheel);
+    
+    return () => {
+    window.removeEventListener("wheel", handleWheel);
+    };
+    
+}, []);
+const handleWheel = (e) => {
+  console.log("scrolled")
+  
+};
+
+
    // Check if camera is near any of the planes and toggle video playing accordingly
    useFrame((state, delta) => {
 
@@ -70,12 +88,12 @@ export default function Experience() {
     if (leftward) cameraRef.current.translateX(-moveSpeed * delta);
     if (rightward) cameraRef.current.translateX(moveSpeed * delta);
     // Lock the y position
-    cameraRef.current.position.y = 0.9;
+    cameraRef.current.position.y = 1;
 
     const cameraPos = cameraRef.current.position;
 
     // Define the range within which the video should start playing
-    const range = 14;
+    const range = 12;
     // Check the distance of the camera from each plane and toggle video playing state accordingly
     Object.entries(videoPlaying).forEach(([plane, playing]) => {
       const distance = cameraPos.distanceTo(planePositions[plane]);
@@ -118,8 +136,9 @@ export default function Experience() {
        <PlaneWithVideo name="Kinetic Stream" url="/videos/KineticStream.mp4" image="textures/kineticStream.png" position={planePositions.plane7} rotation={[0, 1.4, 0]} playing={videoPlaying['plane7']} />
        <PlaneWithVideo name="Acting Spheres" url="/videos/Acting_Spheres.mp4" image="textures/actingSpheres.png" position={planePositions.plane8} rotation={[0, 1.7, 0]} playing={videoPlaying['plane8']} />
        
-      <PerspectiveCamera ref={cameraRef} makeDefault fov={30} position-y={0.5} />
+      <PerspectiveCamera zoom={true} ref={cameraRef} makeDefault fov={30} position-y={0.5} />
       <PLC enabled={isWallExperienceActive} />
+
     </>
   );
 }

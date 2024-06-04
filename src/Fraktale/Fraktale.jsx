@@ -13,17 +13,10 @@ export default function Experience()
 
     return <>
         
-        {/* <PerspectiveCamera fov={60} makeDefault /> */}
-        {/* <OrbitControls target={[0, 0, 0]} />
-        <Environment preset='night' background blur={0.5} />
-        <mesh position={[0,-1,0]}>
-            <sphereGeometry args={[11, 200, 200]}/>
-            <VideoMaterial url="M09-1317.mp4" />        
-        </mesh>
-            */}
+       
         <PerspectiveCamera position={[0,-1,0]} fov={90} makeDefault />
         {active != null && (
-        <OrbitControls enableZoom={false} enablePan={false} target={[0, -1, 0]} />
+        <OrbitControls enableZoom={true} enablePan={false} target={[0, -1, 0]} />
         )}
         <Suspense fallback={null}>
         <mesh position={[0,-1,0]}>

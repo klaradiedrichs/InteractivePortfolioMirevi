@@ -16,22 +16,7 @@ const LINE_NB_POINTS = 30000;
 
 export default function Experience({ setBackToStart,backToStart})
 {
-    // const framePosition = {
-    //     frame1: new THREE.Vector3(-3, 2, -4),
-    //     frame2: new THREE.Vector3(24, 1.8, -43),
-    //     frame3: new THREE.Vector3(-3, 1.8, -82), 
-    //     frame4: new THREE.Vector3(24, 1.8, -121),
-    //     frame5: new THREE.Vector3(-3, 1.8, -160), 
-    //     frame6: new THREE.Vector3(24, 1.8, -199),
-    //     frame7: new THREE.Vector3(-3, 2.0, -238), 
-    //     // Add more frames as needed
-    //   };
-
-    // const framePosition = {
-    //     frame00: new THREE.Vector3(-3, 2, 74),
-    //     frame0: new THREE.Vector3(24, 2, 35),
-    //     frame1: new THREE.Vector3(-3, 2, -4),
-    //     frame2: new THREE.Vector3(24, 1.8, -43),
+    
     // Curve Poins
     const curve = useMemo(() => {
         return new THREE.CatmullRomCurve3(
@@ -221,7 +206,7 @@ export default function Experience({ setBackToStart,backToStart})
                     linePoints.length - 1
                 );
 
-                console.log(scroll.offset);
+                // console.log(scroll.offset);
                 // scroll.offset.set(0.14);
                 const curPoint = linePoints[curPointIndex]
                 // wenn normalScroll = true :

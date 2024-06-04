@@ -90,38 +90,26 @@ function Animals() {
    <>
    <group position={[groupPosition.x, groupPosition.y, groupPosition.z]}>
        <ButterflyFish position={[4, 0.7, -4]} />
-       <ButterflyFish position={[4.2, 0, -4.6]} />
        <ButterflyFish position={[4, 0.2, -4]} />
-       {/* <ButterflyFish position={[4, -0.3, -3.7]} /> */}
        <ButterflyFish position={[4, 0, -2.6]} />
 
        <Clownfish position={[3, 0.18, -2.3]} />
-       <Clownfish position={[4, -0.1, -2.6]} />
-       {/* <Clownfish position={[3.1, -0.1, -2.2]} /> */}
        <Clownfish position={[3.1, -0.3, -2.3]} />
 
        <YellowBoxFish position={[3, -0.7, -1.8]} />
-       {/* <YellowBoxFish position={[3, -0.9, -2.4]} /> */}
        <YellowBoxFish position={[3, -0.6, -2.7]} />
        {/*  */}
 
-       <ButterflyFish position={[10, 2, -7]} />
-       {/* <ButterflyFish position={[8, 0.7, -6]} /> */}
-       <ButterflyFish position={[8.5, 0, -7.5]} />
-
        <Clownfish position={[10, 1, -4]} />
-       {/* <Clownfish position={[9, 0.8, -6.5]} /> */}
        <Clownfish position={[9, 0.3, -8]} />
 
         </group>
         <group position={[groupPosition2.x, groupPosition2.y, groupPosition2.z]}>
          <Clownfish position={[3, 1, 0]} />
-         <Clownfish position={[3, 1.1, -1]} />
          <Clownfish position={[3.1, 0.7, -1.3]} />
 
          <ButterflyFish position={[3, 0.2, 2.5]} />
-         {/* <ButterflyFish position={[3.1, -0.1, 3]} /> */}
-         {/* <ButterflyFish position={[3.4, -0.4, 3]} /> */}
+         
          <ButterflyFish position={[1, -0.4, 3]} />
 
        </group>

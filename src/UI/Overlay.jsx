@@ -60,8 +60,8 @@ export default function Overlay() {
           if (event.key === 'Enter') {
             setActive(null); // Set the active state back to null
             setHovered(null); 
-            setIdleVideo(true);
             // only important for wdr project:
+            setIdleVideo(true);
             setVirtualGame(false); 
             setGenerationSpeaks(false);
           }
@@ -200,12 +200,12 @@ export default function Overlay() {
 
         ) : (
         <>
-        <div className="max-w-64 h-fit bg-gray-400/75 px-2 rounded-lg z-50 text-sm flex flex-col gap-y-1 fixed top-3 left-3 cursor-pointer text-black/75 ">
-                <div onClick={handleBackToRoadClick}>
+        <div className="max-w-64 h-fit bg-gray-400/75 px-2 rounded-lg z-50 text-sm flex flex-col gap-y-1 fixed top-3 left-3 text-black/75 ">
+                <div>
                   Press 'Enter' to leave
                 </div>
                 {(virtualGame || generationSpeaks) && (
-                  <div className='flex items-center gap-x-1' onClick={handleBackToWDRMenu}>
+                  <div className='cursor-pointer flex items-center gap-x-1' onClick={handleBackToWDRMenu}>
                     <svg width="10" height="11" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M3 15V13H10.1C11.15 13 12.0625 12.6667 12.8375 12C13.6125 11.3333 14 10.5 14 9.5C14 8.5 13.6125 7.66667 12.8375 7C12.0625 6.33333 11.15 6 10.1 6H3.8L6.4 8.6L5 10L0 5L5 0L6.4 1.4L3.8 4H10.1C11.7167 4 13.1042 4.525 14.2625 5.575C15.4208 6.625 16 7.93333 16 9.5C16 11.0667 15.4208 12.375 14.2625 13.425C13.1042 14.475 11.7167 15 10.1 15H3Z" fill="#475577" />
                     </svg>

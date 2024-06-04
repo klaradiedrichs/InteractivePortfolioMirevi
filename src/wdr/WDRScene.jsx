@@ -22,6 +22,7 @@ export default function Experience() {
     const setStart = useGameStore((state) => state.setStart);
     
     const { scene } = useGLTF('/earthNew.glb');
+    const active = useStore((state) => state.active);
 
     const handleGame = () => {
         setVirtualGame(true)
@@ -100,7 +101,7 @@ export default function Experience() {
         <>
         {/* <Environment preset='night' background blur={0.5} /> */}
         <PerspectiveCamera makeDefault fov={48} position={[0,-0.3,7]} far={1000}/>
-
+        {active !== null && <OrbitControls enablePan={false} enableRotate={false} target={[0, -0.5, -5]} /> }
         <color attach="background" args={['#101010']} />
         <ambientLight intensity={0.7}/>
         <group>
@@ -108,8 +109,6 @@ export default function Experience() {
         </group>
 
         {/* Main Scene  */}
-        
-        {/* <OrbitControls target={[-1,1.8,-84]}/> */}
         
         <group>
         <animated.primitive rotation={[earthRotation.x, earthRotation.y, earthRotation.z]} position={[0, 0, -3]} scale={earth} object={scene} />

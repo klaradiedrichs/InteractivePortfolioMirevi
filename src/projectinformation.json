@@ -56,7 +56,7 @@
           "Screen",
           "Projects"
         ],
-        "link": "",
+        "link": "about:blank",
         "controls": ["Control camera with WASD or arrow keys",
         "Click to rotate view direction",
         "Press 'ESC' to lock view direction"
