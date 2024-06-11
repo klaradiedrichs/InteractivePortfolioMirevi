@@ -323,45 +323,45 @@ export default function Experience({ setBackToStart,backToStart})
 
         {/* PROJEKTE */}
         {/* Erstes Projekt (Fraktale) */}
-        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame1.x  -0.5, framePosition.frame1.y -0.8, framePosition.frame1.z + 15))} position={framePosition.frame1} name="persona fractalis" color="#38adcf" img="/poster/fraktalePoster3.png" portalImg="/poster/fraktalePortal.png" show={showInformation} > 
+        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame1.x  -0.5, framePosition.frame1.y -0.8, framePosition.frame1.z + 17.3))} position={framePosition.frame1} name="persona fractalis" color="#38adcf" img="/poster/fraktalePoster3.png" portalImg="/poster/fraktalePortal.png" show={showInformation} > 
             <Fraktale />
         </Frame>
         <TextComp name="persona fractalis" position={titlePosition.title1} rotation={[0, 0, 0]}/>
 
         {/* Zweites Projekt (kin) */}
-        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame2.x, framePosition.frame2.y -0.8, framePosition.frame2.z + 15))} position={framePosition.frame2} name="kin_" color="#38adcf" img="/poster/kinPoster3.png" portalImg="/poster/kinPortal.png" show={showInformation} > 
+        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame2.x, framePosition.frame2.y -0.8, framePosition.frame2.z + 17.3))} position={framePosition.frame2} name="kin_" color="#38adcf" img="/poster/kinPoster3.png" portalImg="/poster/kinPortal.png" show={showInformation} > 
             <Kin />
         </Frame>
         <TextComp name="kin_" position={titlePosition.title2} rotation={[0, 0, 0]}/>
         
         {/* Drittes Projekt (Klima) */}
-        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame3.x, framePosition.frame3.y -0.8, framePosition.frame3.z + 15))} position={framePosition.frame3} name="WDR Klima" color="#38adcf" img="/poster/wdrPosterNew.png" portalImg="/poster/wdrPortal2.png" show={showInformation} > 
+        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame3.x, framePosition.frame3.y -0.8, framePosition.frame3.z + 17.3))} position={framePosition.frame3} name="WDR Klima" color="#38adcf" img="/poster/wdrPosterNew.png" portalImg="/poster/wdrPortal2.png" show={showInformation} > 
             <WDRScene />
         </Frame>
         <TextComp name="WDR Klima" position={titlePosition.title3} rotation={[0, 0.1, 0]}/>
         
         {/* Viertes Projekt (Wall)  */}
-        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame4.x, framePosition.frame4.y -0.8, framePosition.frame4.z + 15))} position={framePosition.frame4} name="Video Wall" color="#38adcf" img="/poster/videowallPosterNew.png" portalImg="/poster/wdrPortal2.png" show={showInformation}> 
+        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame4.x, framePosition.frame4.y -0.8, framePosition.frame4.z + 17.3))} position={framePosition.frame4} name="Video Wall" color="#38adcf" img="/poster/videowallPosterNew.png" portalImg="/poster/wdrPortal2.png" show={showInformation}> 
             <WallExperience/>
         </Frame>
         <TextComp name="Video Wall" position={titlePosition.title4} rotation={[0, -0.2, 0]} />
         
         {/* Fünftes Projekt (leer) */}
-        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame5.x, framePosition.frame5.y -0.8, framePosition.frame5.z + 15))} position={framePosition.frame5} name="Five" color="#38adcf" img={null} portalImg={null} show={showInformation} > 
+        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame5.x, framePosition.frame5.y -0.8, framePosition.frame5.z + 17.3))} position={framePosition.frame5} name="Five" color="#38adcf" img={null} portalImg={null} show={showInformation} > 
         </Frame>
         <TextComp name="Five" position={titlePosition.title5} rotation={[0, -0.2, 0]} />
         
         {/* Sechstes Projekt (leer) */}
-        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame6.x, framePosition.frame6.y -0.8, framePosition.frame6.z + 15))} position={framePosition.frame6} name="Six" color="#38adcf" img={null} portalImg={null} show={showInformation}> 
+        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame6.x, framePosition.frame6.y -0.8, framePosition.frame6.z + 17.3))} position={framePosition.frame6} name="Six" color="#38adcf" img={null} portalImg={null} show={showInformation}> 
         </Frame>
         <TextComp name="Six" position={titlePosition.title6} rotation={[0, -0.2, 0]} />
         
         {/* Siebtes Projekt (leer) */}
-        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame7.x, framePosition.frame7.y -0.8, framePosition.frame7.z + 15))} position={framePosition.frame7} name="Seven" color="#38adcf" img={null} portalImg={null} show={showInformation}> 
+        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame7.x, framePosition.frame7.y -0.8, framePosition.frame7.z + 17.3))} position={framePosition.frame7} name="Seven" color="#38adcf" img={null} portalImg={null} show={showInformation}> 
         </Frame>
         <TextComp name="Seven" position={titlePosition.title7} rotation={[0, -0.2, 0]} />
         
-        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame8.x, framePosition.frame8.y -0.8, framePosition.frame8.z + 15))} position={framePosition.frame8} name="Eight" color="#38adcf" img={null} portalImg={null} show={showInformation}> 
+        <Frame onClick={() => goToProject(new THREE.Vector3(framePosition.frame8.x, framePosition.frame8.y -0.8, framePosition.frame8.z + 17.3))} position={framePosition.frame8} name="Eight" color="#38adcf" img={null} portalImg={null} show={showInformation}> 
         </Frame>
         <TextComp name="Eight" position={titlePosition.title8} rotation={[0, -0.2, 0]} />
         
