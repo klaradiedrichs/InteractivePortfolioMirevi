@@ -119,9 +119,12 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
 
   // enter Portal: 
   const handleRoundedBoxDoubleClick = () => {
-    setClickedFrame(name);
-    setActive(name);
+    setTimeout(() => {
+      setClickedFrame(name);
+      setActive(name);
+    }, 300);
   };
+
   const handleText = () => {
     window.open(project.link, "_blank"); // Open the link in a new tab
   };
@@ -185,9 +188,13 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
             </Text>
           </group>
           
-          <mesh onClick={handleRoundedBoxDoubleClick} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} anchorY="bottom" position={[-4.4, -4.25, 0.12]}>
+          <mesh onClick={handleRoundedBoxDoubleClick} anchorY="bottom" position={[-4.4, -4.25, 0.12]}>
             <planeGeometry args={[2.16,0.55,1]} />
             <meshStandardMaterial color="#FFF0F5" opacity={0.3} transparent/>
+          </mesh>
+          <mesh onClick={handleRoundedBoxDoubleClick} onPointerOver={() => setHovered(true)} onPointerOut={() => setHovered(false)} anchorY="bottom" position={[-4.4, -4.25, 0.12]}>
+            <planeGeometry args={[2.7,0.85,1]} />
+            <meshStandardMaterial opacity={0} transparent/>
           </mesh>
           <Text position={[-4.4, -4.25, 0.122]} color="white" fontSize={0.3}>
             EXPLORE
