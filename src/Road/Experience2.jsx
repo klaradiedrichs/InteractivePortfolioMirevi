@@ -79,7 +79,6 @@ export default function Experience({ setBackToStart,backToStart})
     const logo = useTexture("logoNew.png")
     const cameraRef = useRef();
     const cameraOverview = useRef();
-    const cameraGroup = useRef();
     // Camera Position -> safe in useState to be able to change depending on CameraRoad
     const [initialYPos, setinitialYPos] = useState(0);
     const [initialZPos, setInitialZPos] = useState(68.5)
@@ -96,13 +95,10 @@ export default function Experience({ setBackToStart,backToStart})
     // scroll.offset = 0.2;
 
     const cameraRoad = useStore((state) => state.cameraRoad);
-    const setCameraRoad = useStore((state) => state.setCameraRoad);
-    const [beginning, setBeginning] = useState(true);
     const textYPos = 0.3;
     const clickedSpecificPoint = useStore((state) => state.clickedSpecificPoint);
     const setClickedSpecificPoint = useStore((state) => state.setClickedSpecificPoint);
     const [viewPoint,setViewpoint] = useState();
-    const [lookAt,setLookAt] = useState();
   
     const titlePosition = {
         title1: new THREE.Vector3(-4, textYPos, 23),
@@ -127,18 +123,6 @@ export default function Experience({ setBackToStart,backToStart})
         // Add more frames as needed
       };
 
-      -4, 1, 11
-    
-    const closeToFrame = {
-        frame1: false,
-        frame2: false,
-        frame3: false,
-        frame4: false,
-        frame5: false,
-        frame6: false,
-        frame7: false,
-        // Add more planes as needed
-      };
 
     const [showInformation, setShowInformation] = useState(true);
 
@@ -186,30 +170,13 @@ export default function Experience({ setBackToStart,backToStart})
       useFrame((_state, delta) => {
         if (active === null) {
             if (cameraRoad) {
-                // const cameraPos = cameraRef.current.position;
-    
-                // Get an array of all frame positions
-                // const allFramePositions = Object.values(framePosition);
-                // Calculate distances to all frame positions
-                // const distances = allFramePositions.map(framePos => cameraPos.distanceTo(framePos));
-    
-                // const range = 23;
-    
-                // if (distances.some(distance => distance <= range)) {
-                //     setShowInformation(true);
-                // } else if (distances.some(distance => distance >= range)) {
-                //     setShowInformation(false);
-                // }
     
                 const curPointIndex = Math.min(
                     Math.round(scroll.offset * linePoints.length),
                     linePoints.length - 1
                 );
 
-                // console.log(scroll.offset);
-                // scroll.offset.set(0.14);
                 const curPoint = linePoints[curPointIndex]
-                // wenn normalScroll = true :
                 
                 const pointAhead = linePoints[Math.min(curPointIndex + 1, linePoints.length - 1)];
                 const xDisplacement = (pointAhead.x - curPoint.x) * 50;
@@ -222,23 +189,16 @@ export default function Experience({ setBackToStart,backToStart})
                         cameraRef.current.rotation.z
                     )
                 );
-                // am Anfang: 
-                // 
-                // dann: 
                 cameraRef.current.quaternion.slerp(targetCameraQuaternion, delta * 1);
                 cameraRef.current.position.lerp(curPoint, delta * 24);
-                
-                // wenn normalScroll false (also eine Stelle geklickt wurde ): 
-               
+                               
                 if(curPointIndex === 0){
                     setLoaded(true);
                 }
                 
             } else if(!cameraRoad) {
-                // Blickrichtung für normale Overview
 
                 if(clickedSpecificPoint){
-                    
                     // Blickrichtung für ausgewählten Frame (selbe Position aber auf z Achse 5 nach vorne / - )
                     // cameraOverview.current.lookAt(lookAt);
                     cameraOverview.current.lookAt(0, 0, -1000);
@@ -365,8 +325,6 @@ export default function Experience({ setBackToStart,backToStart})
         </Frame>
         <TextComp name="Eight" position={titlePosition.title8} rotation={[0, -0.2, 0]} />
         
-        {/* {!cameraRoad && active === null && <OrbitControls />} */}
-        {/* Camera  */}
         <>
             {cameraRoad  ? (
                 <>
@@ -388,8 +346,6 @@ export default function Experience({ setBackToStart,backToStart})
             
         </>
         
-        {/* Player muss immer aktiv sein, um nach Portal wieder an selbe Stelle zu gelangen */}
-        {/* <PlayerRoad active={active} setBackToStart={setBackToStart} backToStart={backToStart} cameraRoad={cameraRoad} /> */}
     </>
     )
 };

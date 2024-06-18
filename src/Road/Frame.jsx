@@ -13,8 +13,6 @@ import linksvgWhite from '/svgs/linkiconWhite.svg';
 const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => {
 
   const image = img ? useTexture(img) : null ;
-  const button = useTexture("/svgs/Explore.png");
-  const portalElement = portalImg ? useTexture(portalImg) : null;
   const portalMaterial = useRef();
 
   const project = projectsData.projects.find(project => project.title === name);
@@ -34,26 +32,10 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
     'Video Wall' : [4.5,3.34, 0],
     // Add more sizes for other names as needed
   };
-  const positionPortalElement = {
-    'persona fractalis': [-1.48, -1.75, 0.4],
-    'kin_':  [3.3, -1.66, 0.4], // Example position for 'kin_'. Adjust as needed.
-    'WDR Klima': [1, -1.8, 0.04], // Example position for 'kin_'. Adjust as needed.
-    'Video Wall': [-3.25, -1.68, 0.04], // Example position for 'kin_'. Adjust as needed.
-    // Add more positions for other names as needed
-  };
+  
   const { scale: scaleWindow } = useSpring({
     scale: hovered ? [8, 4.4, 1] : sizePortalElements[name],
     delay: hovered ? 200 : 0
-  });
-
-  const { position: positionWindow } = useSpring({ 
-    position: hovered ?  [0,0,0.04] : positionPortalElement[name],
-    delay: hovered ? 200 : 0
-  });
-
-  const { scale: scaleText } = useSpring({ 
-    scale: boxactive ? 1 : 0,
-    delay: 200 
   });
 
   const { opacity: opacityPoster } = useSpring({ 
@@ -159,7 +141,6 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
               {project.owner}
               <meshBasicMaterial color="white" toneMapped={false} />
             </Text>
-            {/* {Array.isArray(project.support) && project.support.length > 0 && ( */}
             <group position-y={-1.6}>
               <Text position-y={0} maxWidth={2.5} color="gray" font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.23} textAlign="right" anchorY="top-baseline" anchorX="right">
                 {project.support[0]}
@@ -170,7 +151,6 @@ const Frame = ({children,name,color,img,portalImg, spherePos,show,...props}) => 
                 <meshBasicMaterial color="white" toneMapped={false} />
               </Text>
             </group>
-            {/* )} */}
          
                        
             <Text onPointerOver={() => setLinkHovered(true)} onPointerOut={() => setLinkHovered(false)} onClick={handleText} color={linkHovered ? "white" : "gray"} font="fonts/static/Montserrat-LightItalic.ttf" fontSize={0.28} position-y={-0.8} anchorX="right">
